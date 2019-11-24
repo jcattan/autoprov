@@ -1,0 +1,25 @@
+{
+  "data": {
+    "name": "UC9XX[ / HTEK]",
+    "id": "1",
+    "version": "1.0",
+    "directory": "UC9XX",
+    "firmware_ver": "",
+    "firmware_md5sum": "",
+    "firmware_pkg": "NULL",
+    "configuration_files": "cfg$mac",
+    "model_list": [
+	{
+        "model": "UC912",
+        "lines": "4",
+        "id": "1",
+        "template_data": [
+            "template_data.json",
+            "LAN.json",
+            "repertoire.json",
+            "VLAN.json"
+        ]
+      }
+    ]
+  }
+}

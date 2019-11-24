@@ -1,0 +1,1087 @@
+{
+  "template_data":{
+    "category":[
+      {
+        "name":"keys",
+        "subcategory":[
+          {
+            "name":"Hard Keys",
+            "item":[
+              {
+                "variable":"$hardkey_up_type",
+                "default_value":"36",
+                "description":"Up Button Type",
+                "type":"list",
+                "data":[
+                {
+                  "text":"N\/A",
+                  "value":"0"
+                },
+                {
+                  "text":"Speed Dial",
+                  "value":"2"
+                },
+                {
+                  "text":"Direct Pickup",
+                  "value":"6"
+                },
+                {
+                  "text":"Group Pickup",
+                  "value":"7"
+                },
+                {
+                  "text":"Intercom",
+                  "value":"9"
+                },
+                {
+                  "text":"Local Group",
+                  "value":"12"
+                },
+                {
+                  "text":"XML Group",
+                  "value":"13"
+                },
+                {
+                  "text":"XML Browser",
+                  "value":"14"
+                },
+                {
+                  "text":"BroadSoft Group",
+                  "value":"16"
+                },
+                {
+                  "text":"Forward",
+                  "value":"18"
+                },
+                {
+                  "text":"DND",
+                  "value":"21"
+                },
+                {
+                  "text":"Redial",
+                  "value":"22"
+                },
+                {
+                  "text":"Call Return",
+                  "value":"23"
+                },
+                {
+                  "text":"SMS",
+                  "value":"24"
+                },
+                {
+                  "text":"History",
+                  "value":"36"
+                },
+                {
+                  "text":"Directory",
+                  "value":"37"
+                },
+                {
+                  "text":"Menu",
+                  "value":"38"
+                },
+                {
+                  "text":"NewSMS",
+                  "value":"39"
+                },
+                {
+                  "text":"Status",
+                  "value":"40"
+                },
+                {
+                  "text":"Switch Account Up",
+                  "value":"41"
+                },
+                {
+                  "text":"Switch Account Down",
+                  "value":"42"
+                },
+                {
+                  "text":"Local Phone Book",
+                  "value":"43"
+                },
+                {
+                  "text":"BroadSoft Phone Book",
+                  "value":"44"
+                },
+                {
+                  "text":"XML Phone Book",
+                  "value":"45"
+                },
+                {
+                  "text":"NetWork Call Log",
+                  "value":"46"
+                }
+                ]
+              },
+              {
+                "variable":"$hardkey_up_account",
+                "default_value":"",
+                "description":"Up Button Account",
+                "type":"list",
+                "data":[
+                  {
+                    "text":"Auto",
+                    "value":"255"
+                  },
+                  {
+                    "text":"Account 1",
+                    "value":"0"
+                  },
+                  {
+                    "text":"Account 2",
+                    "value":"1"
+                  },
+                  {
+                    "text":"Account 3",
+                    "value":"2"
+                  },
+                  {
+                    "text":"Account 4",
+                    "value":"3"
+                  },
+                  {
+                    "text":"Account 5",
+                    "value":"4"
+                  },
+                  {
+                    "text":"Account 6",
+                    "value":"5"
+                  }                 
+                ]
+              },
+              {
+                "variable":"$hardkey_up_value",
+                "default_value":"",
+                "description":"Up Button Value",
+                "type":"input"
+              },
+              {
+                "type":"break"
+              },
+              {
+                "variable":"$hardkey_down_type",
+                "default_value":"37",
+                "description":"Down Button Type",
+                "type":"list",
+                "data":[
+                {
+                  "text":"N\/A",
+                  "value":"0"
+                },
+                {
+                  "text":"Speed Dial",
+                  "value":"2"
+                },
+                {
+                  "text":"Direct Pickup",
+                  "value":"6"
+                },
+                {
+                  "text":"Group Pickup",
+                  "value":"7"
+                },
+                {
+                  "text":"Intercom",
+                  "value":"9"
+                },
+                {
+                  "text":"Local Group",
+                  "value":"12"
+                },
+                {
+                  "text":"XML Group",
+                  "value":"13"
+                },
+                {
+                  "text":"XML Browser",
+                  "value":"14"
+                },
+                {
+                  "text":"BroadSoft Group",
+                  "value":"16"
+                },
+                {
+                  "text":"Forward",
+                  "value":"18"
+                },
+                {
+                  "text":"DND",
+                  "value":"21"
+                },
+                {
+                  "text":"Redial",
+                  "value":"22"
+                },
+                {
+                  "text":"Call Return",
+                  "value":"23"
+                },
+                {
+                  "text":"SMS",
+                  "value":"24"
+                },
+                {
+                  "text":"History",
+                  "value":"36"
+                },
+                {
+                  "text":"Directory",
+                  "value":"37"
+                },
+                {
+                  "text":"Menu",
+                  "value":"38"
+                },
+                {
+                  "text":"NewSMS",
+                  "value":"39"
+                },
+                {
+                  "text":"Status",
+                  "value":"40"
+                },
+                {
+                  "text":"Switch Account Up",
+                  "value":"41"
+                },
+                {
+                  "text":"Switch Account Down",
+                  "value":"42"
+                },
+                {
+                  "text":"Local Phone Book",
+                  "value":"43"
+                },
+                {
+                  "text":"BroadSoft Phone Book",
+                  "value":"44"
+                },
+                {
+                  "text":"XML Phone Book",
+                  "value":"45"
+                },
+                {
+                  "text":"NetWork Call Log",
+                  "value":"46"
+                }
+                ]
+              },
+              {
+                "variable":"$hardkey_down_account",
+                "default_value":"",
+                "description":"Down Button Account",
+                "type":"list",
+                "data":[
+                  {
+                    "text":"Auto",
+                    "value":"255"
+                  },
+                  {
+                    "text":"Account 1",
+                    "value":"0"
+                  },
+                  {
+                    "text":"Account 2",
+                    "value":"1"
+                  },
+                  {
+                    "text":"Account 3",
+                    "value":"2"
+                  },
+                  {
+                    "text":"Account 4",
+                    "value":"3"
+                  },
+		  {
+                    "text":"Account 5",
+                    "value":"4"
+                  },
+                  {
+                    "text":"Account 6",
+                    "value":"5"
+                  }       
+                ]
+              },
+              {
+                "variable":"$hardkey_down_value",
+                "default_value":"",
+                "description":"Down Button Value",
+                "type":"input"
+              },
+              {
+                "type":"break"
+              },
+              {
+                "variable":"$hardkey_left_type",
+                "default_value":"0",
+                "description":"Left Button Type",
+                "type":"list",
+                "data":[
+                {
+                  "text":"N\/A",
+                  "value":"0"
+                },
+                {
+                  "text":"Speed Dial",
+                  "value":"2"
+                },
+                {
+                  "text":"Direct Pickup",
+                  "value":"6"
+                },
+                {
+                  "text":"Group Pickup",
+                  "value":"7"
+                },
+                {
+                  "text":"Intercom",
+                  "value":"9"
+                },
+                {
+                  "text":"Local Group",
+                  "value":"12"
+                },
+                {
+                  "text":"XML Group",
+                  "value":"13"
+                },
+                {
+                  "text":"XML Browser",
+                  "value":"14"
+                },
+                {
+                  "text":"BroadSoft Group",
+                  "value":"16"
+                },
+                {
+                  "text":"Forward",
+                  "value":"18"
+                },
+                {
+                  "text":"DND",
+                  "value":"21"
+                },
+                {
+                  "text":"Redial",
+                  "value":"22"
+                },
+                {
+                  "text":"Call Return",
+                  "value":"23"
+                },
+                {
+                  "text":"SMS",
+                  "value":"24"
+                },
+                {
+                  "text":"History",
+                  "value":"36"
+                },
+                {
+                  "text":"Directory",
+                  "value":"37"
+                },
+                {
+                  "text":"Menu",
+                  "value":"38"
+                },
+                {
+                  "text":"NewSMS",
+                  "value":"39"
+                },
+                {
+                  "text":"Status",
+                  "value":"40"
+                },
+                {
+                  "text":"Switch Account Up",
+                  "value":"41"
+                },
+                {
+                  "text":"Switch Account Down",
+                  "value":"42"
+                },
+                {
+                  "text":"Local Phone Book",
+                  "value":"43"
+                },
+                {
+                  "text":"BroadSoft Phone Book",
+                  "value":"44"
+                },
+                {
+                  "text":"XML Phone Book",
+                  "value":"45"
+                },
+                {
+                  "text":"NetWork Call Log",
+                  "value":"46"
+                }
+                ]
+              },
+              {
+                "variable":"$hardkey_left_account",
+                "default_value":"",
+                "description":"Left Button Account",
+                "type":"list",
+                "data":[
+                  {
+                    "text":"Auto",
+                    "value":"255"
+                  },
+                  {
+                    "text":"Account 1",
+                    "value":"0"
+                  },
+                  {
+                    "text":"Account 2",
+                    "value":"1"
+                  },
+                  {
+                    "text":"Account 3",
+                    "value":"2"
+                  },
+                  {
+                    "text":"Account 4",
+                    "value":"3"
+                  },
+		  {
+                    "text":"Account 5",
+                    "value":"4"
+                  },
+                  {
+                    "text":"Account 6",
+                    "value":"5"
+                  }       
+                ]
+              },
+              {
+                "variable":"$hardkey_left_value",
+                "default_value":"",
+                "description":"Left Button Value",
+                "type":"input"
+              },
+              {
+                "type":"break"
+              },
+              {
+                "variable":"$hardkey_right_type",
+                "default_value":"0",
+                "description":"Right Button Type",
+                "type":"list",
+                "data":[
+                {
+                  "text":"N\/A",
+                  "value":"0"
+                },
+                {
+                  "text":"Speed Dial",
+                  "value":"2"
+                },
+                {
+                  "text":"Direct Pickup",
+                  "value":"6"
+                },
+                {
+                  "text":"Group Pickup",
+                  "value":"7"
+                },
+                {
+                  "text":"Intercom",
+                  "value":"9"
+                },
+                {
+                  "text":"Local Group",
+                  "value":"12"
+                },
+                {
+                  "text":"XML Group",
+                  "value":"13"
+                },
+                {
+                  "text":"XML Browser",
+                  "value":"14"
+                },
+                {
+                  "text":"BroadSoft Group",
+                  "value":"16"
+                },
+                {
+                  "text":"Forward",
+                  "value":"18"
+                },
+                {
+                  "text":"DND",
+                  "value":"21"
+                },
+                {
+                  "text":"Redial",
+                  "value":"22"
+                },
+                {
+                  "text":"Call Return",
+                  "value":"23"
+                },
+                {
+                  "text":"SMS",
+                  "value":"24"
+                },
+                {
+                  "text":"History",
+                  "value":"36"
+                },
+                {
+                  "text":"Directory",
+                  "value":"37"
+                },
+                {
+                  "text":"Menu",
+                  "value":"38"
+                },
+                {
+                  "text":"NewSMS",
+                  "value":"39"
+                },
+                {
+                  "text":"Status",
+                  "value":"40"
+                },
+                {
+                  "text":"Switch Account Up",
+                  "value":"41"
+                },
+                {
+                  "text":"Switch Account Down",
+                  "value":"42"
+                },
+                {
+                  "text":"Local Phone Book",
+                  "value":"43"
+                },
+                {
+                  "text":"BroadSoft Phone Book",
+                  "value":"44"
+                },
+                {
+                  "text":"XML Phone Book",
+                  "value":"45"
+                },
+                {
+                  "text":"NetWork Call Log",
+                  "value":"46"
+                }
+                ]
+              },
+              {
+                "variable":"$hardkey_right_account",
+                "default_value":"",
+                "description":"Right Button Account",
+                "type":"list",
+                "data":[
+                  {
+                    "text":"Auto",
+                    "value":"255"
+                  },
+                  {
+                    "text":"Account 1",
+                    "value":"0"
+                  },
+                  {
+                    "text":"Account 2",
+                    "value":"1"
+                  },
+                  {
+                    "text":"Account 3",
+                    "value":"2"
+                  },
+                  {
+                    "text":"Account 4",
+                    "value":"3"
+                  },
+		  {
+                    "text":"Account 5",
+                    "value":"4"
+                  },
+                  {
+                    "text":"Account 6",
+                    "value":"5"
+                  }       
+                ]
+              },
+              {
+                "variable":"$hardkey_right_value",
+                "default_value":"",
+                "description":"Right Button Value",
+                "type":"input"
+              },
+              {
+                "type":"break"
+              },
+              {
+                "variable":"$hardkey_ok_type",
+                "default_value":"40",
+                "description":"OK Button Type",
+                "type":"list",
+                "data":[
+                {
+                  "text":"N\/A",
+                  "value":"0"
+                },
+                {
+                  "text":"Speed Dial",
+                  "value":"2"
+                },
+                {
+                  "text":"Direct Pickup",
+                  "value":"6"
+                },
+                {
+                  "text":"Group Pickup",
+                  "value":"7"
+                },
+                {
+                  "text":"Intercom",
+                  "value":"9"
+                },
+                {
+                  "text":"Local Group",
+                  "value":"12"
+                },
+                {
+                  "text":"XML Group",
+                  "value":"13"
+                },
+                {
+                  "text":"XML Browser",
+                  "value":"14"
+                },
+                {
+                  "text":"BroadSoft Group",
+                  "value":"16"
+                },
+                {
+                  "text":"Forward",
+                  "value":"18"
+                },
+                {
+                  "text":"DND",
+                  "value":"21"
+                },
+                {
+                  "text":"Redial",
+                  "value":"22"
+                },
+                {
+                  "text":"Call Return",
+                  "value":"23"
+                },
+                {
+                  "text":"SMS",
+                  "value":"24"
+                },
+                {
+                  "text":"History",
+                  "value":"36"
+                },
+                {
+                  "text":"Directory",
+                  "value":"37"
+                },
+                {
+                  "text":"Menu",
+                  "value":"38"
+                },
+                {
+                  "text":"NewSMS",
+                  "value":"39"
+                },
+                {
+                  "text":"Status",
+                  "value":"40"
+                },
+                {
+                  "text":"Switch Account Up",
+                  "value":"41"
+                },
+                {
+                  "text":"Switch Account Down",
+                  "value":"42"
+                },
+                {
+                  "text":"Local Phone Book",
+                  "value":"43"
+                },
+                {
+                  "text":"BroadSoft Phone Book",
+                  "value":"44"
+                },
+                {
+                  "text":"XML Phone Book",
+                  "value":"45"
+                },
+                {
+                  "text":"NetWork Call Log",
+                  "value":"46"
+                }
+                ]
+              },
+              {
+                "variable":"$hardkey_ok_account",
+                "default_value":"",
+                "description":"OK Button Account",
+                "type":"list",
+                "data":[
+                  {
+                    "text":"Auto",
+                    "value":"255"
+                  },
+                  {
+                    "text":"Account 1",
+                    "value":"0"
+                  },
+                  {
+                    "text":"Account 2",
+                    "value":"1"
+                  },
+                  {
+                    "text":"Account 3",
+                    "value":"2"
+                  },
+                  {
+                    "text":"Account 4",
+                    "value":"3"
+                  },
+		  {
+                    "text":"Account 5",
+                    "value":"4"
+                  },
+                  {
+                    "text":"Account 6",
+                    "value":"5"
+                  }       
+                ]
+              },
+              {
+                "variable":"$hardkey_ok_value",
+                "default_value":"",
+                "description":"OK Button Value",
+                "type":"input"
+              },
+              {
+                "type":"break"
+              },
+              {
+                "variable":"$hardkey_cancel_type",
+                "default_value":"0",
+                "description":"Cancel Button Type",
+                "type":"list",
+                "data":[
+                {
+                  "text":"N\/A",
+                  "value":"0"
+                },
+                {
+                  "text":"Speed Dial",
+                  "value":"2"
+                },
+                {
+                  "text":"Direct Pickup",
+                  "value":"6"
+                },
+                {
+                  "text":"Group Pickup",
+                  "value":"7"
+                },
+                {
+                  "text":"Intercom",
+                  "value":"9"
+                },
+                {
+                  "text":"Local Group",
+                  "value":"12"
+                },
+                {
+                  "text":"XML Group",
+                  "value":"13"
+                },
+                {
+                  "text":"XML Browser",
+                  "value":"14"
+                },
+                {
+                  "text":"BroadSoft Group",
+                  "value":"16"
+                },
+                {
+                  "text":"Forward",
+                  "value":"18"
+                },
+                {
+                  "text":"DND",
+                  "value":"21"
+                },
+                {
+                  "text":"Redial",
+                  "value":"22"
+                },
+                {
+                  "text":"Call Return",
+                  "value":"23"
+                },
+                {
+                  "text":"SMS",
+                  "value":"24"
+                },
+                {
+                  "text":"History",
+                  "value":"36"
+                },
+                {
+                  "text":"Directory",
+                  "value":"37"
+                },
+                {
+                  "text":"Menu",
+                  "value":"38"
+                },
+                {
+                  "text":"NewSMS",
+                  "value":"39"
+                },
+                {
+                  "text":"Status",
+                  "value":"40"
+                },
+                {
+                  "text":"Switch Account Up",
+                  "value":"41"
+                },
+                {
+                  "text":"Switch Account Down",
+                  "value":"42"
+                },
+                {
+                  "text":"Local Phone Book",
+                  "value":"43"
+                },
+                {
+                  "text":"BroadSoft Phone Book",
+                  "value":"44"
+                },
+                {
+                  "text":"XML Phone Book",
+                  "value":"45"
+                },
+                {
+                  "text":"NetWork Call Log",
+                  "value":"46"
+                }
+                ]
+              },
+              {
+                "variable":"$hardkey_cancel_account",
+                "default_value":"",
+                "description":"Cancel Button Account",
+                "type":"list",
+                "data":[
+                  {
+                    "text":"Auto",
+                    "value":"255"
+                  },
+                  {
+                    "text":"Account 1",
+                    "value":"0"
+                  },
+                  {
+                    "text":"Account 2",
+                    "value":"1"
+                  },
+                  {
+                    "text":"Account 3",
+                    "value":"2"
+                  },
+                  {
+                    "text":"Account 4",
+                    "value":"3"
+                  },
+		  {
+                    "text":"Account 5",
+                    "value":"4"
+                  },
+                  {
+                    "text":"Account 6",
+                    "value":"5"
+                  }       
+                ]
+              },
+              {
+                "variable":"$hardkey_cancel_value",
+                "default_value":"",
+                "description":"Cancel Button Value",
+                "type":"input"
+              },
+              {
+                "type":"break"
+              },
+              {
+                "variable":"$hardkey_fwd_type",
+                "default_value":"18",
+                "description":"Transfer Button Type",
+                "type":"list",
+                "data":[
+                {
+                  "text":"N\/A",
+                  "value":"0"
+                },
+                {
+                  "text":"Speed Dial",
+                  "value":"2"
+                },
+                {
+                  "text":"Direct Pickup",
+                  "value":"6"
+                },
+                {
+                  "text":"Group Pickup",
+                  "value":"7"
+                },
+                {
+                  "text":"Intercom",
+                  "value":"9"
+                },
+                {
+                  "text":"Local Group",
+                  "value":"12"
+                },
+                {
+                  "text":"XML Group",
+                  "value":"13"
+                },
+                {
+                  "text":"XML Browser",
+                  "value":"14"
+                },
+                {
+                  "text":"BroadSoft Group",
+                  "value":"16"
+                },
+                {
+                  "text":"Forward",
+                  "value":"18"
+                },
+                {
+                  "text":"DND",
+                  "value":"21"
+                },
+                {
+                  "text":"Redial",
+                  "value":"22"
+                },
+                {
+                  "text":"Call Return",
+                  "value":"23"
+                },
+                {
+                  "text":"SMS",
+                  "value":"24"
+                },
+                {
+                  "text":"History",
+                  "value":"36"
+                },
+                {
+                  "text":"Directory",
+                  "value":"37"
+                },
+                {
+                  "text":"Menu",
+                  "value":"38"
+                },
+                {
+                  "text":"NewSMS",
+                  "value":"39"
+                },
+                {
+                  "text":"Status",
+                  "value":"40"
+                },
+                {
+                  "text":"Switch Account Up",
+                  "value":"41"
+                },
+                {
+                  "text":"Switch Account Down",
+                  "value":"42"
+                },
+                {
+                  "text":"Local Phone Book",
+                  "value":"43"
+                },
+                {
+                  "text":"BroadSoft Phone Book",
+                  "value":"44"
+                },
+                {
+                  "text":"XML Phone Book",
+                  "value":"45"
+                },
+                {
+                  "text":"NetWork Call Log",
+                  "value":"46"
+                }
+                ]
+              },
+              {
+                "variable":"$hardkey_fwd_account",
+                "default_value":"",
+                "description":"Transfer Button Account",
+                "type":"list",
+                "data":[
+                  {
+                    "text":"Auto",
+                    "value":"255"
+                  },
+                  {
+                    "text":"Account 1",
+                    "value":"0"
+                  },
+                  {
+                    "text":"Account 2",
+                    "value":"1"
+                  },
+                  {
+                    "text":"Account 3",
+                    "value":"2"
+                  },
+                  {
+                    "text":"Account 4",
+                    "value":"3"
+                  },
+		  {
+                    "text":"Account 5",
+                    "value":"4"
+                  },
+                  {
+                    "text":"Account 6",
+                    "value":"5"
+                  }  
+                ]
+              },
+              {
+                "variable":"$hardkey_fwd_value",
+                "default_value":"",
+                "description":"Transfer Button Value",
+                "type":"input"
+              },
+              {
+                "type":"break"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

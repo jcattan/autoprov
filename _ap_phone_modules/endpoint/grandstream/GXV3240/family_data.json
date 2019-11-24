@@ -1,0 +1,27 @@
+{
+  "data": {
+    "name": "GXV3240[ / Grandstream]",
+    "id": "5",
+    "version": "1.0",
+    "directory": "GXV3240",
+    "firmware_ver": "1404918972",
+    "firmware_md5sum": "8b76528870f720f9393252b3e408014a",
+    "firmware_pkg": "gxv_3240_firmware.tgz",
+    "description": "Use Grandstream Encrypted Compiler By Default",
+    "configuration_files": "cfg$mac",
+    "model_list": [
+	{
+      "model": "GXV3240",
+      "lines": "4",
+      "id": "1",
+      "template_data": [
+          "template_data.json",
+          "key_exten.json",
+          "LAN.json",
+          "repertoire.json",
+          "VLAN.json"
+        ]
+      }
+    ]
+  }
+}

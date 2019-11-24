@@ -1,0 +1,58 @@
+{
+    "data": {
+        "brands": {
+            "name": "grandstream",
+            "directory": "grandstream",
+            "brand_id": "2",
+            "package": "grandstream.tgz",
+            "md5sum": "b9c8776e0f4d5dbc217679e771c94cc6",
+            "last_modified": "1511449597",
+            "family_list":  [
+                   {
+                        "name": "GXP16XX[ / Grandstream]",
+                        "directory": "GXP16XX",
+                        "description": "GXP16XX",
+                        "changelog": "",
+                        "id": "2",
+                        "last_modified": "1511449597"
+                    },
+                    {
+                        "name": "GXP21XX[ / Grandstream]",
+                        "directory": "GXP21XX",
+                        "description": "GXP21XX",
+                        "changelog": "",
+                        "id": "3",
+                        "last_modified": "1511449597"
+                    },
+  		    {
+                        "name": "GXW4XXX[ / Grandstream]",
+                        "directory": "GXW4XXX",
+                        "description": "GXW4XXX",
+                        "changelog": "",
+                        "id": "4",
+                        "last_modified": "1511449597"
+                    },
+                    {
+                        "name": "GXV3240[ / Grandstream]",
+                        "directory": "GXV3240",
+                        "description": "GXV3240",
+                        "changelog": "",
+                        "id": "5",
+                        "last_modified": "1511449597"
+                    },
+                    {
+						"name": "GXV3275[ / Grandstream]",
+                        "directory": "GXV3275",
+                        "description": "GXV3275",
+                        "changelog": "",
+                        "id": "6",
+                        "last_modified": "1511449597"
+                    }
+                ],
+            "oui_list": [
+				"000B82"
+            ],
+	      "changelog": "PACKAGER: "
+        }
+    }
+}

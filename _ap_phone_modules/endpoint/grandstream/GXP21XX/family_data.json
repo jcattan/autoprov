@@ -1,0 +1,26 @@
+{
+  "data": {
+    "name": "GXP21XX[ / Grandstream]",
+    "id": "3",
+    "version": "1.0",
+    "directory": "GXP21XX",
+    "firmware_ver": "",
+    "firmware_md5sum": "",
+    "firmware_pkg": "NULL",
+    "description": "Use Grandstream Encrypted Compiler By Default",
+    "configuration_files": "cfg$mac",
+    "model_list": [
+	{
+        "model": "GXP2170",
+        "lines": "6",
+        "id": "1",
+        "template_data": [
+            "template_data.json",
+            "LAN.json",
+            "repertoire.json",
+            "VLAN.json"
+        ]
+      }
+    ]
+  }
+}

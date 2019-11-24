@@ -1,0 +1,53 @@
+{
+  "template_data":{
+    "category":[
+      {
+        "name":"Config",
+        "subcategory":[
+          {
+            "name":"Multicell",
+            "item":[
+              {
+                "variable":"$Multicell_active",
+                "default_value":"0",
+                "description":"Activer Multicell",
+                "type":"list",
+                "data":[
+                  {
+                    "text": "Non",
+                  "value": "0"
+                },
+                {
+                  "text": "Oui",
+                  "value": "1"
+				}
+                ]
+              },
+              {
+                "variable":"$Multicell_id",
+                "default_value":"55555",
+                "description":"ID Multicell",
+                "type":"input"
+              },
+              {
+                "variable":"$id_vlan",
+                "default_value":"0",
+                "description":"Num VLAN (0 si pas de VLAN)",
+                "type":"input"
+              },
+			{
+              "variable": "$vlan_priorite",
+              "default_value": "0",
+              "description": "Priorite VLAN",
+              "type": "input"
+			},
+			{
+                "type":"break"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

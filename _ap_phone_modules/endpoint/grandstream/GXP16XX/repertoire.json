@@ -1,0 +1,100 @@
+{
+  "template_data": {
+    "category": [
+	{
+      "name": "Repertoire",
+      "subcategory": [
+	  {
+        "name": "Repertoire",
+        "item": [
+          {
+            "variable": "$ldap_ip",
+            "description": "Serveur LDAP",
+            "default_value": "{$server.ip.1}",
+            "type": "input"
+          },
+          {
+            "variable": "$ldap_base",
+            "description": "Base",
+            "default_value": "dc=freepbx,dc=local",
+            "type": "input"
+          },
+          {
+            "variable": "$ldap_user",
+            "description": "Nom d utilisateur",
+            "type": "input"
+          },
+          {
+            "variable": "$ldap_password",
+            "description": "Mot de passe",
+            "type": "input"
+          },
+          {
+            "variable": "$ldap_attribut",
+            "description": "Attribut Nom",
+            "default_value": "cn givenName",
+            "type": "input"
+          },
+          {
+            "variable": "$ldap_attribut2",
+            "description": "Attribut numero",
+            "default_value": "telephoneNumber Mobile",
+            "type": "input"
+          },
+          {
+            "variable": "$ldap_nom",
+            "description": "Filtre Nom",
+            "default_value": "(|(cn=%)(givenName=%))",
+            "type": "input"
+          },
+          {
+            "variable": "$ldap_num",
+            "description": "Filtre Numero",
+            "default_value": "(|(telephoneNumber=%)(Mobile=%))",
+            "type": "input"
+          },
+          {
+            "variable": "$ldap_entrant",
+            "default_value": "1",
+            "description": "Rechercher sur Appel Entrant",
+            "type": "list",
+            "data": [
+              {
+                "text": "Oui",
+                "value": "1"
+              },
+              {
+                "text": "Non",
+                "value": "0"
+              }
+            ]
+          },
+          {
+            "variable": "$ldap_recherche",
+            "default_value": "1",
+            "description": "Recherche sur Composition",
+            "type": "list",
+            "data": [
+              {
+                "text": "Oui",
+                "value": "1"
+              },
+              {
+                "text": "Non",
+                "value": "0"
+              }
+            ]
+          },
+          {
+            "variable": "$affiche",
+            "default_value": "cn",
+            "description": "Nom Affiche",
+            "type": "input"
+          }
+        ]
+      }
+	  ]
+    }
+	]
+  }
+}

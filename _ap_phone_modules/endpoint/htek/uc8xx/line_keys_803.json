@@ -1,0 +1,386 @@
+{
+  "template_data":{
+    "category":[
+      {
+        "name":"keys",
+        "subcategory":[
+          {
+            "name":"Line Keys (1-4) ",
+            "item":[
+              {
+                "variable":"$linekey_type_01",
+                "default_value":"1",
+                "description":"Line Key 1 Type",
+                "type":"list",
+                "data":[
+                {
+                    "text":"Line",
+                    "value":"1"
+                },
+                {
+                    "text":"Speeddial",
+                    "value":"2"
+                },
+                {
+                    "text":"BLF",
+                    "value":"3"
+                },
+                {
+                    "text":"BLF List",
+                    "value":"4"
+                },
+                {
+                    "text":"Voicemail",
+                    "value":"5"
+                },
+                {
+                    "text":"Direct Pickup",
+                    "value":"6"
+                },
+                {
+                    "text":"Group Pickup",
+                    "value":"7"
+                },
+                {
+                    "text":"Call Park",
+                    "value":"8"
+                },
+                {
+                    "text":"Intercom",
+                    "value":"9"
+                },
+                {
+                    "text":"DTMF",
+                    "value":"10"
+                },
+                {
+                    "text":"Frefix",
+                    "value":"11"
+                },
+                {
+                    "text":"Local Group",
+                    "value":"12"
+                },
+                {
+                    "text":"XML Group",
+                    "value":"13"
+                },
+                {
+                    "text":"XML Browser",
+                    "value":"14"
+                },
+                {
+                    "text":"LDAP",
+                    "value":"15"
+                },
+                {
+                    "text":"BroadSoft Group",
+                    "value":"16"
+                },
+                {
+                    "text":"Conference",
+                    "value":"17"
+                },
+                {
+                    "text":"Forward",
+                    "value":"18"
+                },
+                {
+                    "text":"Transfer",
+                    "value":"19"
+                },
+                {
+                    "text":"Hold",
+                    "value":"20"
+                },
+                {
+                    "text":"DND",
+                    "value":"21"
+                },
+                {
+                    "text":"Redial",
+                    "value":"22"
+                },
+                {
+                    "text":"Call Return",
+                    "value":"23"
+                },
+                {
+                    "text":"SMS",
+                    "value":"24"
+                },
+                {
+                    "text":"Record",
+                    "value":"25"
+                },
+                {
+                    "text":"URL Record",
+                    "value":"26"
+                },
+                {
+                    "text":"Paging",
+                    "value":"27"
+                },
+                {
+                    "text":"Group Listening",
+                    "value":"28"
+                },
+                {
+                    "text":"Public Hold",
+                    "value":"29"
+                },
+                {
+                    "text":"Private Hold",
+                    "value":"30"
+                },
+                {
+                    "text":"Shine Line",
+                    "value":"31"
+                },
+                {
+                    "text":"Hot Desking",
+                    "value":"32"
+                },
+                {
+                    "text":"ACD",
+                    "value":"33"
+                },
+                {
+                    "text":"Zero Touch",
+                    "value":"34"
+                }
+                ]
+              },
+              {
+                  "variable":"$linekey_value_01",
+                  "default_value":"",
+                  "description":"Line Key 1 Value",
+                  "type":"input"
+              },
+              {
+                  "variable":"$linekey_label_01",
+                  "default_value":"",
+                  "description":"Line Key 1 Label",
+                  "type":"input"
+              },
+              {
+                  "variable":"$linekey_account_01",
+                  "default_value":"255",
+                  "description":"Line Key 1 Account",
+                  "type":"list",
+                  "data":[
+                  {
+                      "text":"Auto",
+                      "value":"255"
+                  },
+                  {
+                      "text":"Account 1",
+                      "value":"0"
+                  },
+                  {
+                      "text":"Account 2",
+                      "value":"1"
+                  }
+                  ]
+              },
+              {
+                  "variable":"$linekey_pickup_01",
+                  "default_value":"",
+                  "description":"Line Key 1 pickup code",
+                  "type":"input"
+              },
+              {
+                "type":"break"
+              },
+              {
+                "variable":"$linekey_type_02",
+                "default_value":"15",
+                "description":"Line Key 2 Type",
+                "type":"list",
+                "data":[
+                {
+                    "text":"Line",
+                    "value":"1"
+                },
+                {
+                    "text":"Speeddial",
+                    "value":"2"
+                },
+                {
+                    "text":"BLF",
+                    "value":"3"
+                },
+                {
+                    "text":"BLF List",
+                    "value":"4"
+                },
+                {
+                    "text":"Voicemail",
+                    "value":"5"
+                },
+                {
+                    "text":"Direct Pickup",
+                    "value":"6"
+                },
+                {
+                    "text":"Group Pickup",
+                    "value":"7"
+                },
+                {
+                    "text":"Call Park",
+                    "value":"8"
+                },
+                {
+                    "text":"Intercom",
+                    "value":"9"
+                },
+                {
+                    "text":"DTMF",
+                    "value":"10"
+                },
+                {
+                    "text":"Frefix",
+                    "value":"11"
+                },
+                {
+                    "text":"Local Group",
+                    "value":"12"
+                },
+                {
+                    "text":"XML Group",
+                    "value":"13"
+                },
+                {
+                    "text":"XML Browser",
+                    "value":"14"
+                },
+                {
+                    "text":"LDAP",
+                    "value":"15"
+                },
+                {
+                    "text":"BroadSoft Group",
+                    "value":"16"
+                },
+                {
+                    "text":"Conference",
+                    "value":"17"
+                },
+                {
+                    "text":"Forward",
+                    "value":"18"
+                },
+                {
+                    "text":"Transfer",
+                    "value":"19"
+                },
+                {
+                    "text":"Hold",
+                    "value":"20"
+                },
+                {
+                    "text":"DND",
+                    "value":"21"
+                },
+                {
+                    "text":"Redial",
+                    "value":"22"
+                },
+                {
+                    "text":"Call Return",
+                    "value":"23"
+                },
+                {
+                    "text":"SMS",
+                    "value":"24"
+                },
+                {
+                    "text":"Record",
+                    "value":"25"
+                },
+                {
+                    "text":"URL Record",
+                    "value":"26"
+                },
+                {
+                    "text":"Paging",
+                    "value":"27"
+                },
+                {
+                    "text":"Group Listening",
+                    "value":"28"
+                },
+                {
+                    "text":"Public Hold",
+                    "value":"29"
+                },
+                {
+                    "text":"Private Hold",
+                    "value":"30"
+                },
+                {
+                    "text":"Shine Line",
+                    "value":"31"
+                },
+                {
+                    "text":"Hot Desking",
+                    "value":"32"
+                },
+                {
+                    "text":"ACD",
+                    "value":"33"
+                },
+                {
+                    "text":"Zero Touch",
+                    "value":"34"
+                }
+                ]
+              },
+              {
+                  "variable":"$linekey_value_02",
+                  "default_value":"",
+                  "description":"Line Key 2 Value",
+                  "type":"input"
+              },
+              {
+                  "variable":"$linekey_label_02",
+                  "default_value":"",
+                  "description":"Line Key 2 Label",
+                  "type":"input"
+              },
+              {
+                  "variable":"$linekey_account_02",
+                  "default_value":"255",
+                  "description":"Line Key 2 Account",
+                  "type":"list",
+                  "data":[
+                  {
+                      "text":"Auto",
+                      "value":"255"
+                  },
+                  {
+                      "text":"Account 1",
+                      "value":"0"
+                  },
+                  {
+                      "text":"Account 2",
+                      "value":"1"
+                  }
+                  ]
+              },
+              {
+                  "variable":"$linekey_pickup_02",
+                  "default_value":"",
+                  "description":"Line Key 2 pickup code",
+                  "type":"input"
+              },
+              {
+                "type":"break"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

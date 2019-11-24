@@ -1,0 +1,28 @@
+{
+  "data": {
+    "name": "DECT RTX 8660",
+    "id": "1",
+    "directory": "8660",
+    "firmware_ver": "",
+    "firmware_pkg": "",
+    "firmware_md5sum": "",
+    "description": "Bornes DECT RTX 8660",
+    "configuration_files": "$mac.cfg",
+    "changelog": "",
+            "provisioning_types": [
+            "tftp",
+            "http"
+        ],
+    "model_list": [
+      {
+        "model": "8660",
+        "lines": "150",
+        "id": "1",
+        "template_data": [
+          "template_data.json"
+        ]
+      }
+    ]
+  }
+}
+

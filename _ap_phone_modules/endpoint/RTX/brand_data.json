@@ -1,0 +1,26 @@
+{
+  "data": {
+    "brands": {
+      "name": "RTX",
+      "brand_id": "5",
+      "directory": "RTX",
+      "package": "",
+      "md5sum": "",
+      "last_modified": 1511425854,
+      "family_list": [
+        {
+          "id": "1",
+          "name": "[DECT ]RTX 8660",
+          "directory": "8660",
+          "description": "Bornes DECT RTX 8660",
+          "changelog": "",
+          "last_modified": null
+        }
+      ],
+      "oui_list": [
+        "00087B"
+      ],
+      "changelog": "PACKAGER: "
+    }
+  }
+}

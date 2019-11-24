@@ -1,0 +1,34 @@
+{
+  "data": {
+    "brands": {
+      "name": "Patton",
+      "brand_id": "20",
+      "directory": "patton",
+      "package": "patton.tgz",
+      "md5sum": "3a0cc64cafa56c0b72952ca3a4a59867",
+      "last_modified": 1511441849,
+      "family_list": [
+        {
+          "id": "1",
+          "name": "Patton SN411X [ 4112, 4114, 4118 ]",
+          "directory": "SN411X",
+          "description": "Make more configuration settings available from UI",
+          "changelog": "",
+          "last_modified": null
+        },
+		{
+          "id": "2",
+          "name": "Patton SN43XX [ 4312, 4316, 4324, 4332 ]",
+          "directory": "SN43XX",
+          "description": "Make more configuration settings available from UI",
+          "changelog": "",
+          "last_modified": null
+        }
+      ],
+      "oui_list": [
+        "00A0BA"
+      ],
+      "changelog": "PACKAGER: "
+    }
+  }
+}

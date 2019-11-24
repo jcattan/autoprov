@@ -1,0 +1,2284 @@
+#############################################################################################
+## Configuration template for GXW42XX firmware version 1.0.5.8                             ##
+#############################################################################################
+# Reply to ICMP on WAN port. 0 - No, 1 - Yes. Unit will not respond to PING from WAN side if set to No.
+# Number: 0,1 
+# Mandatory 
+P189 = 1
+
+# WAN side HTTP/Telnet access. 0 - No, 1 - Yes (WAN side access will be rejected if set to No)
+# Number: 0,1 
+# Mandatory 
+P190 = 1
+
+#-------------------------------------------------------------------------------
+#Maintenance-Network setting
+#-------------------------------------------------------------------------------
+
+#IP Address Mode. 0 - DHCP, 1 - Static IP, 2 - PPPoE
+#Number: 0,1,2
+#Mandatory 
+#Reboot required 
+P8={$lan|0}
+
+#Preferred DNS server
+#Mandatory 
+#P92=0
+#P93=0
+#P94=0
+#P95=0
+
+#Host name (Option 12). Max length allowed is 32 bytes.
+#String: address 
+#P146=
+
+#DHCP Domain
+#String: address 
+#P147=
+
+#Vendor Class ID (Option 60). Max length allowed is 32 bytes.
+#String Max Length: 32 
+P148=GXW4200
+
+#PPPoE account ID
+#P82=
+
+#PPPoE password
+#P83=
+
+#PPPoE Service Name
+#String Max Length: 64
+#Reboot required 
+#P269=
+	
+#IP Address. Ignore if DHCP or PPPoE is used
+#P9 = {$addr1}
+#P10 = {$addr2}
+#P11 = {$addr3}
+#P12 = {$addr4}
+
+#Subnet mask. Ignore if DHCP or PPPoE is used
+#P13 = {$mask1}
+#P14 = {$mask2}
+#P15 = {$mask3}
+#P16 = {$mask4}
+
+#Gateway. Ignore if DHCP or PPPoE is used
+#P17 = {$gw1}
+#P18 = {$gw2}
+#P19 = {$gw3}
+#P20 = {$gw4}
+
+#DNS server 1. Ignore if DHCP or PPPoE is used
+#P21 = {$dns1}
+#P22 = {$dns2}
+#P23 = {$dns3}
+#P24 = {$dns4}
+
+#DNS server 2. Ignore if DHCP or PPPoE is used
+#P25 = {$dns5}
+#P26 = {$dns6}
+#P27 = {$dns7}
+#P28 = {$dns8}
+
+#Enable LLDP. 0 - Disable, 1 - Enable
+#Number: 0,1
+#Mandatory                                      
+P1684=0
+
+#Layer 2 QoS 802.1Q/VLAN Tag
+#Number
+#Mandatory
+P51=0
+
+#Layer 2 QoS 802.1p Priority Value for SIP signaling
+#Number: 0 to 7
+#Mandatory
+P5038=0
+
+#Layer 2 QoS 802.1p Priority Value for RTP media
+#Number: 0 to 7
+#Mandatory
+P5042=0
+
+#Use STUN to detect network connectivity. 0 - No, 1 - Yes. 
+#Number: 0,1
+#Mandatory
+P474=0
+
+#STUN server
+#String: serveraddress 
+P76=
+
+#Number of STUN Response Misses Allowed
+#Number: 3 to 15
+#Mandatory
+P475=3
+
+#Keep-alive interval (in seconds. default 20 seconds)
+#Number: 10 to 160
+#Mandatory
+P84=20
+
+#-------------------------------------------------------------------------------
+#Maintenance-Upgrade and Provisioning
+#-------------------------------------------------------------------------------
+
+#Lock keypad update.  0 - No, 1 - Yes.
+#Number: 0,1
+#Mandatory
+P88=0
+
+#Use firmware pre/postfix to determine if f/w is required
+#0=Always Check for New Firmware 
+#1=Check New Firmware only when F/W pre/suffix changes 
+#2=Always Skip the Firmware Check
+#For Firmware only.
+#Number: 0,1,2
+#Mandatory 
+P238=0
+
+#XML Config File Password
+#String Max Length: 40
+#Mandatory; between ascii values 33 and 126
+P1359=
+
+#HTTP/HTTPS User Name
+#String Max Length: 40; between ascii values 33 and 126
+P1360=
+
+#HTTP/HTTPS Password
+#String Max Length: 40; between ascii values 33 and 126
+#Mandatory
+P1361=
+
+#Always send HTTP Basic Authentication Information. 0 - No, 1- Yes.
+#Number: 0,1
+#Mandatory
+P20713=0
+
+#Firmware Upgrade and Privisioning. 0 - TFTP Upgrade, 1 - HTTP Upgrade, 2 - HTTPS Upgrade.
+#Number: 0 to 2
+#Mandatory
+P212=0
+
+#Firmware Server Path
+#String: serveraddress 
+#P192=fm.grandstream.com/gs
+P192={$firmware_srv_path}
+
+#Config Server Path
+#String: serveraddress 
+#P237=fm.grandstream.com/gs
+P237={$server.ip.1}
+
+#Firmware File Prefix
+#String Max Length: 32; between ascii values 33 and 126
+P232=
+
+#Firmware File Postfix
+#String Max Length: 32; between ascii values 33 and 126
+P233=
+
+#Config File Prefix
+#String Max Length: 32; between ascii values 33 and 126
+P234=
+
+#Config File Postfix
+#String Max Length: 32; between ascii values 33 and 126
+P235=
+
+#Allow DHCP Option 66 to override server. 0 - No, 1 - Yes. Default is Yes.
+#When set to Yes(1), it will override the configured provision path and method.
+#Number: 0,1
+#Mandatory
+#Reboot required 
+P145=0
+P144=0
+
+#Automatic Upgrade. 0 - No, 1 - Check daily, 2 - Check weekly, 3 - Check every () minutes. Default is No.
+#Number: 0,1,2,3
+#Mandatory
+P194=0
+
+#Automatic Upgrade. Check for new firmware/config file every () minutes, unit is in minute, minimum 60 minutes, default is 7 days. P194=3
+#Number: 60 to 5256000
+#Mandatory 
+P193=10080
+
+#Automatic Upgrade. Daily at hour(0-23). P194=1
+#Number: 0 to 23
+#Mandatory
+P285=1
+
+#Automatic Upgrade. Weekly on day (0-6). P194=2
+#Number: 0 to 6
+#Mandatory 
+P286=1
+
+#Authenticate Conf File
+#Number: 0 No, 1 Yes  (cfg file would be authenticated before acceptance if set to Yes) 
+#Mandatory
+P240=0
+
+#Firmware Key (AES 128, in Hexadecimal Representation)
+#String Max Length: 32 0-9,A-Z,a-z
+P242=
+
+#-------------------------------------------------------------------------------
+#Maintenance-Web/Telnet Access
+#-------------------------------------------------------------------------------
+
+#Web Port. Default HTTP is 80.
+#Number: 1 to 65535
+#Mandatory 
+#Reboot required 
+P901=80
+
+#Disable Telnet. 0 - No, 1 - Yes
+#Number: 0,1
+#Mandatory 
+P276=0
+
+#User Password
+#P196=123
+
+#Admin password
+#String Max Length: 30; between ascii values 33 and 126
+#Mandatory
+#P2=admin
+
+#-------------------------------------------------------------------------------
+#Maintenance-TR-069
+#-------------------------------------------------------------------------------
+
+#ACS URL
+#P4503=
+
+#ACS Username
+#String Max Length: 64
+P4504=
+
+#ACS Password
+#String Max Length: 64
+#Mandatory 
+P4505=
+
+#Periodic Inform Enable 0 - No, 1 - Yes (default is No)
+#Number: 0,1
+#Mandatory
+P4506=  0
+
+#Periodic Inform Interval (default is 300)
+#String Max Length: 5 
+P4507= 300
+
+#Conncetion Request Username
+#String Max Length: 64
+P4511=
+
+#Connection Request Password
+#String Max Length: 64
+#Mandatory 
+P4512=
+
+#-------------------------------------------------------------------------------
+#Maintenance-SNMP
+#-------------------------------------------------------------------------------
+
+#SNMP enable/disable. 0 - No, 1 - Yes (default is No)
+#Number: 0,1
+#Mandatory
+P21896= 0
+
+#Trap Community
+P21900=
+
+#IP Address
+#IP format
+P21897=
+
+#Port (default 162)
+#Number: 1 to 65535
+#Mandatory
+P21898= 162
+
+#Version. 1 - Version 1, 2 - Version 2c (default 2)
+#Number: 1 or 2
+#Mandatory
+P21899= 2
+
+#Trap interval (default 5)
+#Mandatory
+P21901= 5
+
+#-------------------------------------------------------------------------------
+#Maintenance-Security Settings
+#-------------------------------------------------------------------------------
+
+#SIP TLS Certificate
+#String
+#P280=
+
+#SIP TLS Private Key
+#String
+#P279=
+
+#SIP TLS Private Key Password
+#String
+#Max Length: 64 characters
+#P281=
+
+#Primary RADIUS Server
+#P4550=
+
+#Primary RADIUS Auth Port (default 1812). 
+#Number: 1 to 65535
+#Mandatory
+P4551=1812
+
+#Primary RADIUS Acct Port (default 1813).
+#Number: 1 to 65535
+#Mandatory
+P4552=1813
+
+#Primary RADIUS Server Secret
+#String Max Length: 32
+#Mandatory 
+P4553=
+
+#Secondary RADIUS Server
+#P4554=
+
+#Secondary RADIUS Auth Port (default 1812).
+#Number: 1 to 65535
+#Mandatory 
+P4555=1812
+
+#Secondary RADIUS Acct Port (default 1813).
+#Number: 1 to 65535 
+#Mandatory
+P4556=1813
+
+#Secondary RADIUS Server Secret
+#String Max Length: 32
+#Mandatory 
+P4557=
+
+#RADIUS Timeout (default 2).
+#Number: 1 to 65535
+#Mandatory 
+P4558=2
+
+#RADIUS Retry (default 3).
+#Number: 1 to 65535
+#Mandatory
+P4559=3
+
+#-------------------------------------------------------------------------------
+#Maintenance-Date and Time
+#-------------------------------------------------------------------------------
+
+#NTP Server
+#String: serveraddress 
+P30={$time_server}
+
+#NTP Update Interval in minutes(5-1440)(Default is set to 60 minutes)
+#Number: 5 to 1440
+#Mandatory 
+P5005=5
+
+#Time Zone. Offset in minutes to GMT
+#<value="TZA+12"> GMT-12:00 </option>
+#<value="TZB+11"> GMT-11:00 </option>
+#<value="TZC+10"> GMT-10:00 </option>
+#<value="TZD+9"> GMT-09:00 </option>
+#<value="TZE+8"> GMT-08:00 </option>
+#<value="TZF+7"> GMT-07:00 </option>
+#<value="TZG+6"> GMT-06:00 </option>
+#<value="TZH+5"> GMT-05:00 </option>
+#<value="TZf+4:30"> GMT-04:30 </option>
+#<value="TZI+4"> GMT-04:00 </option>
+#<value="TZJ+3:30"> GMT-03:30 </option>
+#<value="TZK+3"> GMT-03:00 </option>
+#<value="TZL+2"> GMT-02:00 </option>
+#<value="TZM+1"> GMT-01:00 </option>
+#<value="TZN+0"> GMT </option>
+#<value="TZO-1"> GMT+01:00 </option>
+#<value="TZP-2"> GMT+02:00 </option>
+#<value="TZQ-3"> GMT+03:00 </option>
+#<value="TZR-4"> GMT+04:00 </option>
+#<value="TZS-5"> GMT+05:00 </option>
+#<value="TZT-5:30"> GMT+05:30 </option>
+#<value="TZU-5:45"> GMT+05:45 </option>
+#<value="TZV-6"> GMT+06:00 </option>
+#<value="TZW-6:30"> GMT+06:30 </option>
+#<value="TZX-7"> GMT+07:00 </option>
+#<value="TZY-8"> GMT+08:00 </option>
+#<value="TZZ-9"> GMT+09:00 </option>
+#<value="TZa-9:30"> GMT+09:30 </option>
+#<value="TZb-10"> GMT+10:00 </option>
+#<value="TZc-11"> GMT+11:00 </option>
+#<value="TZd-12"> GMT+12:00 </option>
+#<value="TZe-13"> GMT+13:00 </option>
+#<value="customize"> Self-Defined Time Zone </option>
+#Mandatory Category: string Max Length: 9 Range0: Min=a Max=z Range1: Min=A Max=Z Range2: Min=+ Max=:
+P64=customize
+
+#Self-Defined Time Zone
+#String Max Length: 32 a-z, A-Z, +,:
+#P246=CET-1CEST-2,M3.5.0,M10.5.0
+P246=MTZ-1MDT-2,M3.5.0,M10.5.0
+
+#-------------------------------------------------------------------------------
+#Maintenance-Syslog
+#-------------------------------------------------------------------------------
+
+#Syslog Server (name of the server, max length is 64 charactors)
+#String: serveraddress 
+P207=
+
+#Syslog Level (Default setting is NONE)
+#0 - NONE, 1 - DEBUG, 2 - INFO, 3 - WARNING, 4 - ERROR
+#Number: 0,1,2,3,4
+#Mandatory
+P208=0
+
+#Send SIP Log (0 - No, 1 - Yes, Default set to No)
+#Number: 0,1 
+P1387=0
+
+#-------------------------------------------------------------------------------
+#Advanced Settings-Ring Tones
+#-------------------------------------------------------------------------------
+
+#System Ring Cadence 
+#Syntax: c=on1/ off1[- on2/ off2[- on3/ off3]](Cadence on and off are in 10 ms units)
+#String Max Length: 256
+P4040=c=1500/3500;
+
+#Call Progress Tones
+#Syntax: f1=val, f2=val[, c=on1/ off1[- on2/ off2[- on3/ off3]]](Frequencies are in Hz and cadence on and off are in 10 ms units) 
+
+#Dial Tone
+#String Max Length: 256 
+P4000=f1=440@-13,f2=440@-13,c=0/0;
+
+#Ringback Tone
+#String Max Length: 256 
+P4001=f1=440@-19,f2=440@-19,c=2000/4000;
+
+#Busy Tone
+#String Max Length: 256 
+P4002=f1=440@-24,f2=440@-24,c=500/500;
+
+#Reorder Tone
+#String Max Length: 256 
+P4003=f1=440@-24,f2=440@-24,c=250/250;
+
+#Confirmation Tone
+#String Max Length: 256 
+P4004=f1=440@-11,f2=440@-11,c=100/100-100/100-100/100;
+
+#Call Waiting tone
+#String Max Length: 256 
+P4005=f1=440@-13,c=300/10000-300/10000-0/0;
+
+#Prompt Tone
+#String Max Length: 256 
+P4041=f1=440@-13,f2=440@-13,c=0/0;
+
+#-------------------------------------------------------------------------------
+#Advanced Settings-FXO Failover
+#-------------------------------------------------------------------------------
+
+#Failover to FXO Gateway. 0 - Disable, 1 - Enable
+#Number: 0,1
+#Mandatory
+P4205=0
+
+#FXO Gateway. URI or IP address.
+#String: serveraddress 
+P4206=
+
+#-------------------------------------------------------------------------------
+#Advanced Settings-System Features
+#-------------------------------------------------------------------------------
+
+#Disable Direct IP Call. 0 - No, 1 - Yes.
+#Number: 0,1
+#Mandatory
+P277=0
+
+#Disable SIP NOTIFY Authentication
+#Number: 0 No, 1 Yes  (Device will not challenge NOTIFY with 401 when set to Yes) 
+#Mandatory
+#P4428=0
+
+#Disable voice prompt. 0 - No, 1 - Yes.
+#Number: 0,1
+#Mandatory
+P253=0
+
+#IVR Language. 0 - English, 4 - Chinese, 10 - Spanish
+#Number: 0,4,10
+#Mandatory 
+P342=0
+
+#LCD Display Language. en - English, zh - Chinese, fr - French, es - Spanish
+#String
+#Mandatory 
+P1362=fr
+
+#Prompt Dial Tone Code(Key pattern to get Prompt Tone. Maximum 20 digits. No default.)
+#String Max Length: 20 
+P4042=
+
+#Country Specific Deployment. 0 - None(default), zh - China, zh1 - China Custom #1, zh2 - China Custom #2
+#String
+#Mandatory
+P400=0
+
+#-------------------------------------------------------------------------------
+#Profile 1-General Settings
+#-------------------------------------------------------------------------------
+
+#Profile Active.  0 - no, 1 - yes
+#Number: 0,1
+#Mandatory
+P271=1
+
+#Primary SIP Server
+#String: serveraddress 
+P47={$server.ip.1}
+
+#Failover SIP Server
+#String: serveraddress 
+P967=
+
+#Prefer Primary SIP Server. 0 - No, 1 - Yes.
+#Number: 0,1
+#Mandatory
+P4567=0
+
+#Outbound Proxy
+#String: serveraddress 
+P48={$server.ip.1}
+
+#-------------------------------------------------------------------------------
+#Profile 1-Network Settings
+#-------------------------------------------------------------------------------
+
+#Layer 3 QoS SIP Diff-Serv (default 24)
+#Number
+#Mandatory
+P5046=24
+
+#Layer 3 QoS RTP Diff-Serv (default 46)
+#Number
+#Mandatory
+P5050=46
+
+#DNS Mode. 0 - A Record, 1 - SRV, 2 - NAPTR/SRV, 3 - Use Configured IP .
+#Number: 0,1,2,3
+#Mandatory 
+P103=0
+
+#Primary IP
+#IP address
+P2308=
+
+#Backup IP1
+#IP address
+P2309=
+
+#Backup IP2
+#IP address
+P2310=
+
+#NAT Traversal (STUN). 0 - No, 2 - No but send keep-alive, 1 - Yes
+#Number: 0,1,2
+#Mandatory
+P52=0
+
+#Use NAT IP.  This will enable our SIP client to use this IP in the SIP message. Example 64.3.153.50.
+#String: ipaddress 
+P101=
+
+#Proxy-Require (A SIP extension to enable firewall penetration)
+#String: ipaddress 
+P197=
+
+#-------------------------------------------------------------------------------
+#Profile 1-SIP Settings
+#-------------------------------------------------------------------------------
+
+#Basic Settings----------------------------------------------------------------
+
+#SIP Transport. 0 - UDP, 1 - TCP, 2 - TLS
+#Number: 0,1,2
+#Mandatory
+P130=0
+
+#SIP Registration. 0 - no, 1 - yes
+#Number: 0,1
+#Mandatory 
+P31=1
+
+#Unregister On Reboot. 0 - no, 1 - yes
+#Number: 0,1
+#Mandatory 
+P81=1
+
+#Add Auth Header On Initial REGISTER
+#Number: 0,1
+#Mandatory 
+P2359=0
+
+#Outgoing call without Registration. 0 - no, 1 - yes
+#Number: 0,1
+#Mandatory 
+P109=0
+
+#Register Expiration (in minutes. default 1 hour, max 45 days)
+#Number: 1 to 64800
+#Mandatory 
+P32=5
+
+#SIP Registration Failure Retry Wait Time (in seconds. Between 1-3600, default is 30)
+#Number: 1 to 3600
+#Mandatory 
+P138=30
+
+#Reregister before Expiration
+#Number
+#Mandatory
+P2330=0
+
+#Local SIP port (default 5060)
+#Number: 1 to 65535
+#Mandatory 
+P40=5060
+
+#Use Random SIP Port 0 - no, 1 - yes
+#Number: 0,1
+#Mandatory 
+P78=0
+
+#SIP T1 Timeout. RFC 3261 T1 value.
+#50 - 0.5 sec, 100 - 1 sec, 200 - 2 sec, 400 - 4 sec, 800 - 8 sec. Default 100.
+#Number: 50,100,200,400,800
+#Mandatory
+P209=50
+
+#SIP T2 Timeout. RFC 3261 T2 value.
+#200 - 2 sec, 400 - 4 sec, 800 - 8 sec, 1600 - 16 sec, 3200 - 32 sec. Default 400.
+#Number: 1600,3200,200,400,800
+#Mandatory 
+P250=400
+
+#Remove OBP from Route Header. 0 - no, 1 - yes
+#NUmber: 0,1
+#Mandatory
+P4562=0
+
+#Support SIP Instance ID. 0 - no, 1 - yes
+#Number: 0,1
+#Mandatory
+P288=1
+
+#Refer-To Use Target Contact. 0 - no, 1 - yes
+#Number: 0,1
+#Mandatory 
+P135=
+
+#SUBSCRIBE for MWI. 0 - No, 1 - Yes.
+#Number: 0,1
+#Mandatory
+P99=0
+
+#Enable 100rel. 0 - No, 1 - Yes
+#Number: 0 to 1
+#Mandatory 
+P272=0
+
+#Tel URI. 0 - Disabled, 1 - User=Phone, 2 - Enabled
+#Number: 0,1,2
+#Mandatory 
+P63=0
+
+#Use Request Routing ID in SIP Headers, 0 - No, 1 - Yes
+#Number: 0,1
+#Mandatory 
+P4891=0
+
+#Do Not Escape '#' as %23 in SIP URI. 0 - No, 1 - Yes
+#Number: 0, 1
+#Mandatory
+P1406= 0
+
+#Disable Multiple m Line in SDP. 0 - No, 1 - Yes
+P137= 0
+
+#Use Privacy Header. 0 - Default, 1 - No, 2 - Yes
+#Number: 0, 1, 2
+#Mandatory
+P2338= 0
+
+#Use P-Preferred-Identity Header. 0 - Default, 1 - No, 2 - Yes
+#Number: 0, 1, 2
+#Mandatory
+P2339= 0
+
+#SIP REGISTER Contact Header Uses. 0 - LAN Address, 1 - WAN Address
+#Number: 0, 1
+#Mandatory
+#P4437=0
+
+#Session Timer-----------------------------------------------------------------
+
+#Session Expiration (in seconds. default 180 seconds. Allowed value: 90-65535)
+#Number: 90 to 64800
+#Mandatory 
+P260=180
+
+#Minimum SE (in seconds. default 90 seconds, must be lower than or equal to P260)
+#Number 90 to 64800
+#Mandatory 
+P261=90
+
+#Caller Request Timer (Request for timer when calling) 0 - no, 1 - yes
+#Number: 0,1
+#Mandatory 
+P262=0
+
+#Callee Request Timer (Request for timer when called. i.e. if remote party supports timer but did not request for one) 0 - no, 1 - yes
+#Number: 0,1
+#Mandatory 
+P263=0
+
+#Force Timer (Still use timer when remote party does not support timer) 0 - no, 1 - yes
+#Number: 0,1
+#Mandatory 
+P264=0
+
+#UAC Specify Refresher. 0 - omit, 1 - UAC, 2 - UAS
+#Number: 0,1,2
+#Mandatory 
+P266=0
+
+#UAS Specify Refresher. 1 - UAC, 2 - UAS
+#Number: 1,2
+#Mandatory 
+P267=1
+
+#Force INVITE (Always refresh with INVITE instead of UPDATE even when remote party supports UPDATE) 0 - no, 1 - yes
+#Number: 0,1
+#Mandatory 
+P265=0
+
+#Security Settings-------------------------------------------------------------
+
+#Validate Incoming Messages. 0 - No, 1 - Yes
+#Number: 0,1
+#Mandatory 
+P4340=0
+
+#Check SIP User ID for Incoming INVITE. 0 - No, 1 - Yes (no direct IP calling if Yes)
+#Number: 0,1
+#Mandatory 
+P258=0 
+
+#Allow Incoming SIP Messages from SIP Proxy Only
+#Number: 0,1
+#Mandatory 
+P243=0
+
+#Authenticate incoming INVITE 
+#Number: 0,1
+P2346=0
+
+#-------------------------------------------------------------------------------
+#Profile 1-Fax Settings
+#-------------------------------------------------------------------------------
+
+#FAX Mode. 0 - T.38 (Auto Detect), 1 - Pass Through
+#Number: 0,1
+#Mandatory 
+P228=0
+
+#Fax Tone Detection Mode. 1 - Caller, 0 - Callee, 2 - Caller or Callee
+#Number: 0,1,2
+#Mandatory 
+P894=0
+
+#Send Re-INVITE After Fax. 0 - No, 1 - Yes
+#Number: 0,1
+#Mandatory 
+P4367=0
+
+#Send Re-INVITE After Fax Tone. 0 - No, 1 - Yes
+#Number: 0,1
+#Mandatory 
+P4416=1
+
+#Enable Silence Detection for Fax Disconnect. 0 - No, 1 - Yes
+#Number: 0 to 1
+#Mandatory 
+P4406=1
+
+#-------------------------------------------------------------------------------
+#Profile 1-Audio Settings
+#-------------------------------------------------------------------------------
+
+#Preferred DTMF Method 1 
+#100 - In-audio, 101 - RFC2833, 102 - SIP INFO
+#Priority 1
+#Number: 100 to 102
+#Mandatory
+P850=101
+
+#Preferred DTMF Method 2
+#Number: 100 to 102
+#Mandatory 
+P851=102
+
+#Preferred DTMF Method 3
+#Number: 100 to 102
+#Mandatory 
+P852=100
+
+#Disable DTMF Negotiation. 0 - no, 1 - yes 
+#Number: 0,1
+#Mandatory
+P4825=0
+
+#Enable Fast RFC2833. 0 - No, 1 - Yes
+#Number: 0,1
+#Mandatory
+P21917=0
+
+#DTMF Payload Type
+#Number: 96 to 127
+P79=101
+
+#Preferred Vocoder
+#0 - PCMU, 8 - PCMA, 4 - G.723, 18 - G.729, 2 - G.726-32, 100 - AAL2-G.726-16,
+#102 - AAL2-G.726-24, 104 - AAL2-G726-32, 103 - AAL2-G.726-40, 98 - iLBC, 9 - G.722(wide band)
+#Choice 1. 
+#Mandatory
+P57=8
+
+#Choice 2. 
+#Mandatory
+P58=0
+
+#Choice 3. 
+#Mandatory
+P59=8
+
+#Choice 4. 
+#Mandatory 
+P60=0
+
+#Choice 5. 
+#Mandatory
+P61=8
+
+#Choice 6. 
+#Mandatory 
+P62=0
+
+#Choice 7. 
+#Mandatory
+P46=8
+
+#Choice 8. 
+#Mandatory
+P98=0
+
+#Voice Frame per TX. (Default 2, from 1 to 4 for G711/G726/G729)
+#Number: 1 to 4
+P37=2
+
+#G723 rate. 0 - 6.3kbps encoding rate, 1 - 5.3kbps encoding rate
+#Number: 0,1
+#Mandatory 
+P49=0
+
+#G726-32 Packing Mode. 0 - ITU, 1 - IETF
+#Number: 0,1
+#Mandatory 
+P2323=0
+
+#iLBC Frame Size. 0 - 20ms(default), 1 - 30ms.
+#Number: 0,1
+#Mandatory 
+P97=0
+
+#iLBC payload type. Between 96 and 127, default is 97.
+#Number: 96 to 127
+#Mandatory 
+P96=97
+
+#AAL2-G.726-16 Payload type. (between 96 and 127, default is 100)
+#Number: 96 to 127
+#Mandatory 
+P125=100
+
+#AAL2-G.726-24 Payload type. (between 96 and 127, default is 99)
+#Number: 96 to 127
+#Mandatory 
+P126=99
+
+#AAL2-G726-32 payload type. (between 96 and 127, default is 104)
+#Number: 96 to 127
+#Mandatory 
+P127=104
+
+#AAL2-G.726-40 Payload type. (between 96 and 127, default is 103)
+#Number: 96 to 127
+#Mandatory 
+P128=103
+
+#Use First Matching Vocoder in 200OK SDP. 0 - No, 1 - Yes
+#Number: 0,1
+#Mandatory 
+P4363=0
+
+#SRTP Mode
+#0=Disabled
+#1=Enabled but not forced
+#2=Enabled and forced
+#Number: 0,1,2
+#Mandatory
+P183=0
+
+#Silence Suppression (VAD). 0 - No, 1 - Yes
+#Number: 0,1
+#Mandatory 
+P50=0
+
+#Jitter Buffer Type. 0 - Fixed, 1 - Adaptive
+#Number: 0,1
+#Mandatory
+P133= 1
+
+#Jitter Buffer Length. 0 - Low, 1 - Medium, 2 - High
+#Number: 0,1,2
+#Mandatory
+P132=1
+
+#SLIC Setting
+#0 - USA, 1 - AUSTRIA, 2 - BELGIUM, 3 - FINELAND, 4 - FRANCE, 5 - GERMANY
+#6 - GREECE, 7 -ITALY, 8 - JAPAN, 9 - NORWAY, 10 - SPAIN, 11 - SWEDEN,
+#12 - UK, 13 - AUSTRALIA/NEW ZEALAND, 14 - CHINA
+#Number: 0 to 14
+#Mandatory 
+P854=5
+
+#Caller ID Scheme
+#0  - Bellcore/Telcordia
+#1  - ETSI-FSK during ringing
+#2  - ETSI-FSK prior to ringing with DTAS
+#3  - ETSI-FSK prior to ringing with LR
+#4  - ETSI-FSK prior to ringing with RP
+#5  - ETSI-DTMF during ringing
+#6  - ETSI-DTMF prior to ringing with DTAS
+#7  - ETSI-DTMF prior to ringing with LR
+#8  - ETSI-DTMF prior to ringing with RP
+#9  - SIN 227 - BT
+#10 - NTT Japan
+#Number: 0 to 10
+#Mandatory 
+P853=1
+
+#Polarity Reversal.  0 - No, 1 - Yes
+#Number: 0,1
+#Mandatory 
+P205=1
+
+#Loop Current Disconnect. 0 - No, 1 - Yes
+#Number: 0,1
+#Mandatory 
+P892=1
+
+#Loop Current Disconnect Duration. In 100 - 10000 milliseconds range, default is 200.
+#Number: 100 to 10000
+#Mandatory 
+P856=200
+
+#Enable Hook Flash
+#Number: 0, 1
+#Mandatory
+P4424=1
+
+#Hook Flash Timing. In 40-2000 milliseconds range
+#minimum
+#Number: 40 to 2000
+#Mandatory
+P251=200
+#maximum
+#Number: 40 to 2000
+#Mandatory 
+P252=500
+
+#On Hook Timing. (In 40-2000 milliseconds range, default is 400)
+#Number: 40 to 2000
+#Mandatory 
+P833=800
+
+#Gain:
+#TX 
+#<value=1> +6dB
+#<value=2> +4dB
+#<value=3> +2dB
+#<value=0> 0dB
+#<value=4> -2dB
+#<value=5> -4dB
+#<value=6> -6dB
+#Number: 0 to 6
+#Mandatory 
+P247=0 
+
+#RX 
+#<value=1> +6dB
+#<value=2> +4dB
+#<value=3> +2dB
+#<value=0> 0dB
+#<value=4> -2dB
+#<value=5> -4dB
+#<value=6> -6dB
+#Number: 0 to 6
+#Mandatory 
+P249=0
+
+#Disable Line Echo Canceller (LEC).  0 - No, 1 - Yes
+#Number: 0,1
+#Mandatory
+P824=0
+
+#-------------------------------------------------------------------------------
+#Profile 1-Call Settings
+#-------------------------------------------------------------------------------
+
+#Early Dial. 0 - No, 1 - Yes (use "Yes" only if proxy supports 484 response). 0 - no, 1 - yes
+#Number: 0,1
+#Mandatory 
+P29=0
+
+#Dial Plan Prefix.(this prefix string is added to each dialed number)
+#String Max Length: 32
+P66=
+
+#Dial Plan 
+#String Max Length: 1024 defaut : { x+ | *x+ | *xx*x+ }
+P4200={ 0[1-9]xxxxxxxx | x+ | *x+ | *xx*x+ }
+
+#Use #as Dial Key (if set to Yes, "#" will function as the "(Re-)Dial" key). 0 - no, 1 - yes
+#Number: 0,1
+#Mandatory 
+P72=1
+
+#No Key Entry Timeout. Default - 4 seconds.
+#Number: 1 to 15
+#Mandatory
+P85=4
+
+#Offhook Auto-Dial Delay (default is 0)
+#String: 0 to 60
+P4045=0
+
+#Disable Call Waiting. 0 - no, 1 - yes
+#Number: 0,1
+#Mandatory 
+P91=0
+
+#Disable Call-Waiting Caller ID. 0 - no, 1 - yes
+#Number: 0,1
+#Mandatory 
+P714=0
+
+#Disable Call-Waiting Tone. 0 - no, 1 - yes
+#Number: 0,1
+#Mandatory 
+P186=0
+
+#Disable Receiver Offhook Tone. 0 - No, 1 - Yes.
+#Number: 0,1
+#Mandatory 
+P4793=0
+
+#Disable Reminder Ring for On-Hold Call:
+#Number: 0,1
+#Mandatory 
+P4360=0
+
+#Disable Visual MWI. 0 - No, 1 - Yes
+#Number: 0,1
+#Mandatory 
+P855=0
+
+#Visual MWI type: 0 - FSK, 1 - Neon
+#Number: 0,1,2
+#Mandatory
+P4371=0
+
+#Transfer on Conference Hangup. 0 - no, 1 - yes
+#Number: 0,1
+#Mandatory 
+P4560=0
+
+#Send Hook Flash Event. 0 - no, 1 - yes 
+#Number: 0 to 1
+#Mandatory 
+P74=0
+
+#Ring Timeout. (10-300, default is 60 seconds)
+#Number: 10 to 300
+#Mandatory 
+P185=60
+
+#Delayed Call Forward Wait Time. Allowed range 1-120, in seconds. Default 20 seconds.
+#Number: 1 to 120
+#Mandatory
+P139=20
+
+#Send Anonymous. 0 - no, 1 - yes (caller ID will be blocked if set to Yes).
+#Number: 0 to 1
+#Mandatory 
+P65=0
+
+#Anonymous Call Rejection. 0 - No, 1 - Yes.
+#Number: 0 to 1
+#Mandatory 
+P129=0
+
+#Hunting Group Type. 0 - Circular, 1 - Linear
+#Number: 0,1
+#Mandatory
+P4395=0
+
+#Hunting Group Ring Timeout. (5-300, default is 20 seconds)
+#Number: 5 to 300
+#Mandatory 
+P4330=20
+
+#Special Feature
+#100 - Standard, 102 - BroadSoft, 108 - CBCOM, 109 - RNK, 111 - Huawei, 114 - ZTE IMS, 119 - PhonePower, 120 - TELKOM SA.
+#Number: 100, 102, 108, 109, 111, 114, 119, 120
+#Mandatory 
+P198=100
+
+#-------------------------------------------------------------------------------
+#Profile 1-Call Features Settings
+#-------------------------------------------------------------------------------
+
+#Enable Call Features. 0 - No, 1 - Yes, 2 - Enable All
+P191=0
+
+#SRTP Feature.
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Enable feature code numbers
+#Third value - Disable feature code numbers
+P24060=1
+P24001=16
+P24002=17
+
+#SRTP per call Feature.
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Enable feature code numbers
+#Third value - Disable feature code numbers
+P24061=1
+P24003=18
+P24004=19
+
+#CID Feature.
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Enable feature code numbers
+#Third value - Disable feature code numbers
+P24062=1
+P24005=31
+P24006=30
+
+#CID per call Feature.
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Enable feature code numbers
+#Third value - Disable feature code numbers
+P24065=1
+P24019=82
+P24010=67
+
+#Direct IP calling Feature.
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Code numbers
+P24063=1
+P24007=47
+
+#CW Feature. 
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Enable feature code numbers
+#Third value - Disable feature code numbers
+P24064=1
+P24009=51
+P24008=50
+
+#CW per call Feature. 
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Enable feature code numbers
+#Third value - Disable feature code numbers
+P24067=1
+P24013=71
+P24012=70
+
+#Call return Feature.
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Code numbers
+P24066=1
+P24011=69
+
+#Unconditional forward Feature.
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Enable feature code numbers
+#Third value - Disable feature code numbers
+P24068=1
+P24014=72
+P24015=73
+
+#Busy forward Feature.
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Enable feature code numbers
+#Third value - Disable feature code numbers
+P24072=1
+P24021=90
+P24022=91
+
+#Delayed forward Feature.
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Enable feature code numbers
+#Third value - Disable feature code numbers
+P24073=1
+P24023=92
+P24024=93
+
+#Paging Feature.
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Code numbers
+P24069=1
+P24016=74
+
+#DND Feature.
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Enable feature code numbers
+#Third value - Disable feature code numbers
+P24070=1
+P24017=78
+P24018=79
+
+#Blind Transfer Feature.
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Code numbers
+P24071=1
+P24020=87
+
+#Disable LEC per call Feature.
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Code numbers
+P24074=1
+P24025=03
+
+#Disable Bellcore-style 3-Way Conference. 0 - No, 1 - Yes
+P4830=0
+#Star Code 3WC Feature. 0 - No, 1 - Yes
+P24075=1
+#Star Code 3WC
+P24026=23
+
+#Provision start Feature.
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Code numbers
+P24086=1
+P24037=99
+
+#Play registration id Feature.
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Code numbers
+P24087=1
+P24038=98
+
+#Forced Codec Feature. 
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Code numbers
+P24059=1
+P24000=02
+
+#PCMU codec feature. 
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Code numbers
+P24076=1
+P24027=7110
+
+#PCMA codec feature
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Code numbers
+P24077=1
+P24028=7111
+
+#G723 codec feature
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Code numbers
+P24078=1
+P24029=723
+
+#G729 codec feature
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Code numbers
+P24079=1
+P24030=729
+
+#AAL2-G726-R16 codec 
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Code numbers
+P24080=1
+P24031=72616
+
+#AAL2-G726-R24 codec feature
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Code numbers
+P24081=1
+P24032=72624
+
+#AAL2-G726-R32 codec feature
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Code numbers
+P24082=1
+P24033=72632
+
+#AAL2-G726-R40 codec 
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Code numbers
+P24083=1
+P24034=72640
+
+#iLBC codec feature
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Code numbers
+P24084=1
+P24035=7201
+
+#G722 codec feature
+#First value - Enable/Disable feature, Mandatory 0 - No, 1 - Yes
+#Second value - Code numbers
+P24085=1
+P24036=722
+
+#-------------------------------------------------------------------------------
+#Profile 1-Ring Tones
+#-------------------------------------------------------------------------------
+
+#Distinctive Ring Tones--------------------------------------------------------
+
+#Distinctive Ring Tone 
+#0 - Ring Tone 1, 1 - Ring Tone 2, 2 - Ring Tone 3, 3 - Ring Tone 4, 4 - Ring Tone 5, 
+#5 - Ring Tone 6, 6 - Ring Tone 7, 7 - Ring Tone 8, 8 - Ring Tone 9, 9 - Ring Tone 10
+#Distinctive Ring Tone 1
+#Number: 0 to 9
+#Mandatory
+P870=0
+
+#Choice 1 incoming caller ID
+#String Max Length: 64
+P871=
+
+#Distinctive Ring Tone 2
+#Number: 0 to 9
+#Mandatory
+P872=0
+
+#Choice 2 incoming caller ID
+#String Max Length: 64 
+P873=
+
+#Distinctive Ring Tone 3
+#Number: 0 to 9
+#Mandatory 
+P874=0
+
+#Choice 3 incoming caller ID
+#String Max Length: 64
+P875=
+
+#Ring Tone Cadences------------------------------------------------------------
+#Syntax: c=on1/ off1[- on2/ off2[- on3/ off3]];(Cadence on and off are in 10 ms units)
+
+#Ring Tone 1
+#String Max Length: 256
+P4010=c=1500/3500;
+
+#Ring Tone 2
+#String Max Length: 256 
+P4011=c=2000/4000;
+
+#Ring Tone 3
+#String Max Length: 256 
+P4012=c=2000/4000; 
+
+#Ring Tone 4
+#String Max Length: 256 
+P4013=c=2000/4000;
+
+#Ring Tone 5
+#String Max Length: 256
+P4014=c=2000/4000;
+
+#Ring Tone 6
+#String Max Length: 256 
+P4015=c=2000/4000;
+
+#Ring Tone 7
+#String Max Length: 256
+P4016=c=2000/4000;
+
+#Ring Tone 8
+#String Max Length: 256 
+P4017=c=2000/4000;
+
+#Ring Tone 9
+#String Max Length: 256 
+P4018=c=2000/4000; 
+
+#Ring Tone 10
+#String Max Length: 256 
+P4019=c=2000/4000;
+
+#-------------------------------------------------------------------------------
+#Profile 2-General Settings
+#-------------------------------------------------------------------------------
+
+#Profile Active.  0 - no, 1 - yes
+#Number: 0,1
+#Mandatory
+P401=0
+
+#-------------------------------------------------------------------------------
+#Profile 3-General Settings
+#-------------------------------------------------------------------------------
+
+#Profile Active.  0 - no, 1 - yes
+#Number: 0,1
+#Mandatory
+P501=0
+
+#-------------------------------------------------------------------------------
+#Profile 4-General Settings
+#-------------------------------------------------------------------------------
+
+#Profile Active.  0 - no, 1 - yes
+#Number: 0,1
+#Mandatory
+P601=0
+
+
+#-------------------------------------------------------------------------------
+#FXS Ports
+#-------------------------------------------------------------------------------
+
+#FXS Port
+#SIP USER ID; String Max Length: 64
+#Authenticate ID; String Max Length: 64
+#Password; String Max Length: 64
+#Name; String Max Length: 64
+#Profile ID (0 - Profile 1, 1 - Profile 2, 2 - Profile 3, 3 - Profile 4);
+#Enable FXS (TR-069) (0 - No, 1 - Yes, default is Yes)
+
+#Offhook Auto-dial; String Max Length: 64 0 to 9,#,*
+#Hunting Group (0 - None, 1 - Active, 2~32 - hunting group number 2~32)
+#Request URI Routing ID
+
+#Map to FXO Port 
+#Map to FXO Gateway IP
+#Map to FXO Gateway Port
+
+#FXS 1-------------------------------------------------------------------------
+P4060={$username.line.1}
+P4090={$authname.line.1}
+P4120={$secret.line.1}
+P4180={$displayname.line.1}
+P4150=0
+P4595=1
+
+P4210=
+P4300=0
+P4669=
+
+P4521=1
+P4264=
+P4858=5060
+
+#FXS 2-------------------------------------------------------------------------
+P4061={$username.line.2}
+P4091={$authname.line.2}
+P4121={$secret.line.2}
+P4181={$displayname.line.2}
+P4151=0
+P4596=1
+
+P4211=
+P4301=0
+P4670=
+
+P4522=1
+P4265=
+P4859=5060
+
+#FXS 3-------------------------------------------------------------------------
+P4062={$username.line.3}
+P4092={$authname.line.3}
+P4122={$secret.line.3}
+P4182={$displayname.line.3}
+P4152=0
+P4597=1
+
+P4212=
+P4302=0
+P4671=
+
+P4523=1
+P4266=
+P4860=5060
+
+#FXS 4-------------------------------------------------------------------------
+P4063={$username.line.4}
+P4093={$authname.line.4}
+P4123={$secret.line.4}
+P4183={$displayname.line.4}
+P4153=0
+P4598=1
+
+P4213=
+P4303=0
+P4672=
+
+P4524=1
+P4267=
+P4861=5060
+
+#FXS 5-------------------------------------------------------------------------
+P4064={$username.line.5}
+P4094={$authname.line.5}
+P4124={$secret.line.5}
+P4184={$displayname.line.5}
+P4154=0
+P4599=1
+
+P4214=
+P4304=0
+P4673=
+
+P4525=1
+P4268=
+P4862=5060
+
+#FXS 6-------------------------------------------------------------------------
+P4065={$username.line.6}
+P4095={$authname.line.6}
+P4125={$secret.line.6}
+P4185={$displayname.line.6}
+P4155=0
+P4600=1
+
+P4215=
+P4305=0
+P4674=
+
+P4526=1
+P4269=
+P4863=5060
+
+#FXS 7-------------------------------------------------------------------------
+P4066={$username.line.7}
+P4096={$authname.line.7}
+P4126={$secret.line.7}
+P4186={$displayname.line.7}
+P4156=0
+P4601=1
+
+P4216=
+P4306=0
+P4675=
+
+P4527=1
+P4270=
+P4864=5060
+
+#FXS 8-------------------------------------------------------------------------
+P4067={$username.line.8}
+P4097={$authname.line.8}
+P4127={$secret.line.8}
+P4187={$displayname.line.8}
+P4157=0
+P4602=1
+
+P4217=
+P4307=0
+P4676=
+
+P4528=1
+P4271=
+P4865=5060
+
+#FXS 9-------------------------------------------------------------------------
+P4068={$username.line.9}
+P4098={$authname.line.9}
+P4128={$secret.line.9}
+P4188={$displayname.line.9}
+P4158=0
+P4603=1
+
+P4218=
+P4308=0
+P4677=
+
+P4529=1
+P4272=
+P4866=5060
+
+#FXS 10------------------------------------------------------------------------
+P4069={$username.line.10}
+P4099={$authname.line.10}
+P4129={$secret.line.10}
+P4189={$displayname.line.10}
+P4159=0
+P4604=1
+
+P4219=
+P4309=0
+P4678=
+
+P4530=1
+P4273=
+P4867=5060
+
+#FXS 11------------------------------------------------------------------------
+P4070={$username.line.11}
+P4100={$authname.line.11}
+P4130={$secret.line.11}
+P4190={$displayname.line.11}
+P4160=0
+P4605=1
+
+P4220=
+P4310=0
+P4679=
+
+P4531=1
+P4274=
+P4868=5060
+
+#FXS 12------------------------------------------------------------------------
+P4071={$username.line.12}
+P4101={$authname.line.12}
+P4131={$secret.line.12}
+P4191={$displayname.line.12}
+P4161=0
+P4606=1
+
+P4221=
+P4311=0
+P4680=
+
+P4532=1
+P4275=
+P4869=5060
+
+#FXS 13------------------------------------------------------------------------
+P4072={$username.line.13}
+P4102={$authname.line.13}
+P4132={$secret.line.13}
+P4192={$displayname.line.13}
+P4162=0
+P4607=1
+
+P4222=
+P4312=0
+P4681=
+
+P4533=1
+P4276=
+P4870=5060
+
+#FXS 14------------------------------------------------------------------------
+P4073={$username.line.14}
+P4103={$authname.line.14}
+P4133={$secret.line.14}
+P4193={$displayname.line.14}
+P4163=0
+P4608=1
+
+P4223=
+P4313=0
+P4682=
+
+P4534=1
+P4277=
+P4871=5060
+
+#FXS 15------------------------------------------------------------------------
+P4074={$username.line.15}
+P4104={$authname.line.15}
+P4134={$secret.line.15}
+P4194={$displayname.line.15}
+P4164=0
+P4609=1
+
+P4224=
+P4314=0
+P4683=
+
+P4535=1
+P4278=
+P4872=5060
+
+#FXS 16------------------------------------------------------------------------
+P4075={$username.line.16}
+P4105={$authname.line.16}
+P4135={$secret.line.16}
+P4195={$displayname.line.16}
+P4165=0
+P4610=1
+
+P4225=
+P4315=0
+P4684=
+
+P4536=1
+P4279=
+P4873=5060
+
+#FXS 17------------------------------------------------------------------------
+P4076={$username.line.17}
+P4106={$authname.line.17}
+P4136={$secret.line.17}
+P4196={$displayname.line.17}
+P4166=0
+P4611=1
+
+P4226=
+P4316=0
+P4685=
+
+P4537=1
+P4280=
+P4874=5060
+
+#FXS 18------------------------------------------------------------------------
+P4077={$username.line.18}
+P4107={$authname.line.18}
+P4137={$secret.line.18}
+P4197={$displayname.line.18}
+P4167=0
+P4612=1
+
+P4227=
+P4317=0
+P4686=
+
+P4538=1
+P4281=
+P4875=5060
+
+#FXS 19------------------------------------------------------------------------
+P4078={$username.line.19}
+P4108={$authname.line.19}
+P4138={$secret.line.19}
+P4198={$displayname.line.19}
+P4168=0
+P4613=1
+
+P4228=
+P4318=0
+P4687=
+
+P4539=1
+P4282=
+P4876=5060
+
+#FXS 20------------------------------------------------------------------------
+P4079={$username.line.20}
+P4109={$authname.line.20}
+P4139={$secret.line.20}
+P4199={$displayname.line.20}
+P4169=0
+P4614=1
+
+P4229=
+P4319=0
+P4688=
+
+P4540=1
+P4283=
+P4877=5060
+
+#FXS 21------------------------------------------------------------------------
+P4080={$username.line.21}
+P4110={$authname.line.21}
+P4140={$secret.line.21}
+P4252={$displayname.line.21}
+P4170=0
+P4615=1
+
+P4230=
+P4320=0
+P4689=
+
+P4541=1
+P4284=
+P4878=5060
+
+#FXS 22------------------------------------------------------------------------
+P4081={$username.line.22}
+P4111={$authname.line.22}
+P4141={$secret.line.22}
+P4253={$displayname.line.22}
+P4171=0
+P4616=1
+
+P4231=
+P4321=0
+P4690=
+
+P4542=1
+P4285=
+P4879=5060
+
+#FXS 23------------------------------------------------------------------------
+P4082={$username.line.23}
+P4112={$authname.line.23}
+P4142={$secret.line.23}
+P4254={$displayname.line.23}
+P4172=0
+P4617=1
+
+P4232=
+P4322=0
+P4691=
+
+P4543=1
+P4286=
+P4880=5060
+
+#FXS 24------------------------------------------------------------------------
+P4083={$username.line.24}
+P4113={$authname.line.24}
+P4143={$secret.line.24}
+P4255={$displayname.line.24}
+P4173=0
+P4618=1
+
+P4233=
+P4323=0
+P4692=
+
+P4544=1
+P4287=
+P4881=5060
+
+#FXS 25------------------------------------------------------------------------
+P4084={$username.line.25}
+P4114={$authname.line.25}
+P4144={$secret.line.25}
+P4256={$displayname.line.25}
+P4174=0
+P4619=1
+
+P4800=
+P4324=0
+P4693=
+
+P4545=1
+P4288=
+P4882=5060
+
+
+#FXS 26------------------------------------------------------------------------
+P4085={$username.line.26}
+P4115={$authname.line.26}
+P4145={$secret.line.26}
+P4257={$displayname.line.26}
+P4175=0
+P4620=1
+
+P4801=
+P4325=0
+P4694=
+
+P4546=1
+P4289=
+P4883=5060
+
+#FXS 27------------------------------------------------------------------------
+P4086={$username.line.27}
+P4116={$authname.line.27}
+P4146={$secret.line.27}
+P4258={$displayname.line.27}
+P4176=0
+P4621=1
+
+P4802=
+P4326=0
+P4695=
+
+P4547=1
+P4290=
+P4884=5060
+
+#FXS 28------------------------------------------------------------------------
+P4087={$username.line.28}
+P4117={$authname.line.28}
+P4147={$secret.line.28}
+P4259={$displayname.line.28}
+P4177=0
+P4622=1
+
+P4803=
+P4327=0
+P4696=
+
+P4548=1
+P4291=
+P4885=5060
+
+#FXS 29------------------------------------------------------------------------
+P4088={$username.line.29}
+P4118={$authname.line.29}
+P4148={$secret.line.29}
+P4260={$displayname.line.29}
+P4178=0
+P4623=1
+
+P4804=
+P4328=0
+P4697=
+
+P4549=1
+P4292=
+P4886=5060
+
+#FXS 30------------------------------------------------------------------------
+P4089={$username.line.30}
+P4119={$authname.line.30}
+P4149={$secret.line.30}
+P4261={$displayname.line.30}
+P4179=0
+P4624=1
+
+P4805=
+P4329=0
+P4698=
+
+P4808=1
+P4293=
+P4887=5060
+
+#FXS 31------------------------------------------------------------------------
+P4240={$username.line.31}
+P4242={$authname.line.31}
+P4244={$secret.line.31}
+P4262={$displayname.line.31}
+P4246=0
+P4625=1
+
+P4806=
+P4250=0
+P4699=
+
+P4809=1
+P4294=
+P4888=5060
+
+#FXS 32------------------------------------------------------------------------
+P4241={$username.line.32}
+P4243={$authname.line.32}
+P4245={$secret.line.32}
+P4263={$displayname.line.32}
+P4247=0
+P4626=1
+
+P4807=
+P4251=0
+P4700=
+
+P4810=1
+P4295=
+P4889=5060
+
+#FXS 33------------------------------------------------------------------------
+P21000={$username.line.33}
+P21064={$authname.line.33}
+P21128={$secret.line.33}
+P21192={$displayname.line.33}
+P21256=0
+P21384=1
+
+P21448=
+P21320=0
+P21704=
+
+P21512=1
+P21576=
+P21640=5060
+
+#FXS 34------------------------------------------------------------------------
+P21001={$username.line.34}
+P21065={$authname.line.34}
+P21129={$secret.line.34}
+P21193={$displayname.line.34}
+P21257=0
+P21385=1
+
+P21449=
+P21321=0
+P21705=
+
+P21513=1
+P21577=
+P21641=5060
+
+#FXS 35------------------------------------------------------------------------
+P21002={$username.line.35}
+P21066={$authname.line.35}
+P21130={$secret.line.35}
+P21194={$displayname.line.35}
+P21258=0
+P21386=1
+
+P21450=
+P21322=0
+P21706=
+
+P21514=1
+P21578=
+P21642=5060
+
+#FXS 36------------------------------------------------------------------------
+P21003={$username.line.36}
+P21067={$authname.line.36}
+P21131={$secret.line.36}
+P21195={$displayname.line.36}
+P21259=0
+P21387=1
+
+P21451=
+P21323=0
+P21707=
+
+P21515=1
+P21579=
+P21643=5060
+
+#FXS 37------------------------------------------------------------------------
+P21004={$username.line.37}
+P21068={$authname.line.37}
+P21132={$secret.line.37}
+P21196={$displayname.line.37}
+P21260=0
+P21388=1
+
+P21452=
+P21324=0
+P21708=
+
+P21516=1
+P21580=
+P21644=5060
+
+#FXS 38------------------------------------------------------------------------
+P21005={$username.line.38}
+P21069={$authname.line.38}
+P21133={$secret.line.38}
+P21197={$displayname.line.38}
+P21261=0
+P21389=1
+
+P21453=
+P21325=0
+P21709=
+
+P21517=1
+P21581=
+P21645=5060
+
+#FXS 39------------------------------------------------------------------------
+P21006={$username.line.39}
+P21070={$authname.line.39}
+P21134={$secret.line.39}
+P21198={$displayname.line.39}
+P21262=0
+P21390=1
+
+P21454=
+P21326=0
+P21710=
+
+P21518=1
+P21582=
+P21646=5060
+
+#FXS 40------------------------------------------------------------------------
+P21007={$username.line.40}
+P21071={$authname.line.40}
+P21135={$secret.line.40}
+P21199={$displayname.line.40}
+P21263=0
+P21391=1
+
+P21455=
+P21327=0
+P21711=
+
+P21519=1
+P21583=
+P21647=5060
+
+#FXS 41------------------------------------------------------------------------
+P21008={$username.line.41}
+P21072={$authname.line.41}
+P21136={$secret.line.41}
+P21200={$displayname.line.41}
+P21264=0
+P21392=1
+
+P21456=
+P21328=0
+P21712=
+
+P21520=1
+P21584=
+P21648=5060
+
+#FXS 42------------------------------------------------------------------------
+P21009={$username.line.42}
+P21073={$authname.line.42}
+P21137={$secret.line.42}
+P21201={$displayname.line.42}
+P21265=0
+P21393=1
+
+P21457=
+P21329=0
+P21713=
+
+P21521=1
+P21585=
+P21649=5060
+
+#FXS 43------------------------------------------------------------------------
+P21010={$username.line.43}
+P21074={$authname.line.43}
+P21138={$secret.line.43}
+P21202={$displayname.line.43}
+P21266=0
+P21394=1
+
+P21458=
+P21330=0
+P21714=
+
+P21522=1
+P21586=
+P21650=5060
+
+#FXS 44------------------------------------------------------------------------
+P21011={$username.line.44}
+P21075={$authname.line.44}
+P21139={$secret.line.44}
+P21203={$displayname.line.44}
+P21267=0
+P21395=1
+
+P21459=
+P21331=0
+P21715=
+
+P21523=1
+P21587=
+P21651=5060
+
+#FXS 45------------------------------------------------------------------------
+P21012={$username.line.45}
+P21076={$authname.line.45}
+P21140={$secret.line.45}
+P21204={$displayname.line.45}
+P21268=0
+P21396=1
+
+P21460=
+P21332=0
+P21716=
+
+P21524=1
+P21588=
+P21652=5060
+
+#FXS 46------------------------------------------------------------------------
+P21013={$username.line.46}
+P21077={$authname.line.46}
+P21141={$secret.line.46}
+P21205={$displayname.line.46}
+P21269=0
+P21397=1
+
+P21461=
+P21333=0
+P21717=
+
+P21525=1
+P21589=
+P21653=5060
+
+#FXS 47------------------------------------------------------------------------
+P21014={$username.line.47}
+P21078={$authname.line.47}
+P21142={$secret.line.47}
+P21206={$displayname.line.47}
+P21270=0
+P21398=1
+
+P21462=
+P21334=0
+P21718=
+
+P21526=1
+P21590=
+P21654=5060
+
+#FXS 48------------------------------------------------------------------------
+P21015={$username.line.48}
+P21079={$authname.line.48}
+P21143={$secret.line.48}
+P21207={$displayname.line.48}
+P21271=0
+P21399=1
+
+P21463=
+P21335=0
+P21719=
+
+P21527=1
+P21591=
+P21655=5060
+
+##############################################################################
+## Telnet P values                                                          ##
+##############################################################################
+#Ping/traceroute tool destination IP/URL
+#IP address or URL
+#P22005=
+
+##############################################################################
+## P values not on WEB                                                      ##
+##############################################################################
+#TTL values for keep alive messages
+#Number: 1 to 255
+#P20517=64(FXS1)
+#P20518=64(FXS2)

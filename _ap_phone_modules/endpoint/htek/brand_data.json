@@ -1,0 +1,32 @@
+{
+    "data": {
+        "brands": {
+            "name": "htek",
+            "directory": "htek",
+            "brand_id": "22",
+            "last_modified": "1511449597",
+            "family_list":  [
+					{
+						"id": "1",
+						"name": "Htek Enterprise HD series [926,924,862,842,860,840,806,804,803,802]",
+						"directory": "uc8xx",
+						"description": "Use Htek Encrypted Compiler By Default",
+						"changelog": "",
+						"last_modified": null
+					},
+					{
+                        "id": "2",
+						"name": "UC9XX [ / HTEK]",
+                        "directory": "UC9XX",
+                        "description": "UC9XX",
+                        "changelog": "",                        
+                        "last_modified": "1511449597"
+                    }
+                ],
+            "oui_list": [
+				"001FC1"
+            ],
+	      "changelog": "PACKAGER: "
+        }
+    }
+}

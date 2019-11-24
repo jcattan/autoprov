@@ -1,0 +1,26 @@
+{
+  "data": {
+    "brands": {
+      "name": "Hanlong",
+      "directory": "hanlong",
+      "brand_id": "15",
+      "package": "hanlong.tgz",
+      "md5sum": "7ea7e6c9c5c758d62a493c04cd882695",
+      "last_modified": 1374806769,
+      "family_list": [
+        {
+          "id": "1",
+          "name": "Hanlong Enterprise HD series [926,924,862,842,860,840,806,804,803,802]",
+          "directory": "uc8xx",
+          "description": "Use Hanlong Encrypted Compiler By Default",
+          "changelog": "",
+          "last_modified": null
+        }
+      ],
+      "oui_list": [
+        "001FC1"
+      ],
+      "changelog": "PACKAGER: update by htek Nancy and clyde"
+    }
+  }
+}

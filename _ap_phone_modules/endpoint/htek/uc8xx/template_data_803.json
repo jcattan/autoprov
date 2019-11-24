@@ -1,0 +1,909 @@
+{
+    "template_data": {
+        "category": [
+            {
+                "name": "General",
+                "subcategory": [
+                    {
+                        "name": "General Settings",
+                        "item": [
+                            {
+                                "description": "General Settings",
+                                "type": "group"
+                            },
+                            {
+                                "variable": "$admin_pass",
+                                "default_value": "admin",
+                                "description": "Administration Password",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$dialplan_01",
+                                "default_value": "{x+|[*x]+}",
+                                "description": "Account 1 Dial Plan",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$dialplan_02",
+                                "default_value": "{x+|[*x]+}",
+                                "description": "Account 2 Dial Plan",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$Failover_SIP_Server_01",
+                                "default_value": "",
+                                "description": "Failover SIP Server_01",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$Second_Failover_SipServer_01",
+                                "default_value": "",
+                                "description": "Second Failover SipServer_01",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$SIP_Transport_01",
+                                "default_value": "0",
+                                "description": "SIP Transport_01",
+                                "type": "radio",
+                                "data": [
+                                    {
+                                        "text": "UDP",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "TCP",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "TLS",
+                                        "value": "2"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$NAT_Traversal_01",
+                                "default_value": "0",
+                                "description": "NAT Traversal_01",
+                                "type": "radio",
+                                "data": [
+                                    {
+                                        "text": "NO",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "STUN",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "No,but send keep alive",
+                                        "value": "2"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$outbound_proxy_01",
+                                "default_value": "",
+                                "description": "Account 1 outbound proxy",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$backup_outbound_proxy_01",
+                                "default_value": "",
+                                "description": "Account 1 backup outbound proxy",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$outbound_proxy_02",
+                                "default_value": "",
+                                "description": "Account 2 outbound proxy",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$backup_outbound_proxy_02",
+                                "default_value": "",
+                                "description": "Account 2 backup outbound proxy",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$voice_mail_UserID_01",
+                                "default_value": "",
+                                "description": "Account 1 Voice Mail UserID",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$voice_mail_UserID_02",
+                                "default_value": "",
+                                "description": "Account 2 Voice Mail UserID",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$Web_Language",
+                                "default_value": "1",
+                                "description": "Web Language",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "English",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "French",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "German",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "Spanish",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "Portuguese",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Russian",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "text": "Italian",
+                                        "value": "6"
+                                    },
+                                    {
+                                        "text": "Polish",
+                                        "value": "7"
+                                    },
+                                    {
+                                        "text": "Turkish",
+                                        "value": "8"
+                                    },
+                                    {
+                                        "text": "ChineseSimplified",
+                                        "value": "9"
+                                    },
+                                    {
+                                        "text": "ChineseTraditional",
+                                        "value": "10"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$LCD_Language",
+                                "default_value": "1",
+                                "description": "LCD Language",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "English",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "French",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "German",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "Spanish",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "Portuguese",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Russian",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "text": "Italian",
+                                        "value": "6"
+                                    },
+                                    {
+                                        "text": "Polish",
+                                        "value": "7"
+                                    },
+                                    {
+                                        "text": "Turkish",
+                                        "value": "8"
+                                    },
+                                    {
+                                        "text": "Serbian",
+                                        "value": "9"
+                                    },
+                                    {
+                                        "text": "ChineseSimplified",
+                                        "value": "10"
+                                    },
+                                    {
+                                        "text": "ChineseTraditional",
+                                        "value": "11"
+                                    },
+                                    {
+                                        "text": "Slovenian",
+                                        "value": "12"
+                                    },
+                                    {
+                                        "text": "Farsi",
+                                        "value": "13"
+                                    },
+                                    {
+                                        "text": "Hebrew",
+                                        "value": "14"
+                                    },
+                                    {
+                                        "text": "Slovak",
+                                        "value": "15"
+                                    },
+                                    {
+                                        "text": "Czech",
+                                        "value": "16"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$Backlight_Time",
+                                "default_value": "0",
+                                "description": "Backlight Time",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$Screen_Time_Out",
+                                "default_value": "10",
+                                "description": "Screen Time Out",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "off",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "1 min",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "2 min",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "5 min",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "10 min",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "30 min",
+                                        "value": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$Expansion_screensaver_time",
+                                "default_value": "10",
+                                "description": "Expansion screensaver time",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "off",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "1 min",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "5 min",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "10 min",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "20 min",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "30 min",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "text": "60 min",
+                                        "value": "6"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$Text_Logo",
+                                "default_value": "",
+                                "description": "Text Logo",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$ScreenSaver_Type",
+                                "default_value": "0",
+                                "description": "ScreenSaver Type",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "time&logo",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "logo only",
+                                        "value": "1"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$Wallpaper",
+                                "default_value": "1",
+                                "description": "Wallpaper",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "Wallpaper1",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Wallpaper2",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Wallpaper3",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "Wallpaper4",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "Wallpaper5",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Wallpaper6",
+                                        "value": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$Ring_Tones",
+                                "default_value": "2",
+                                "description": "Ring Tones",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "default",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "ring1",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "ring2",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "ring3",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "ring4",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "ring5",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "text": "ring6",
+                                        "value": "6"
+                                    },
+                                    {
+                                        "text": "ring7",
+                                        "value": "7"
+                                    },
+                                    {
+                                        "text": "ring8",
+                                        "value": "8"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$NO_Key_Entry_Timeout",
+                                "default_value": "0",
+                                "description": "NO Key Entry Timeout(seconds)",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$Dial_now_Time_out",
+                                "default_value": "0",
+                                "description": "Dial-now Time-out (seconds)",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$HeadSet_Priority",
+                                "default_value": "0",
+                                "description": "HeadSet Priority",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "disable",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Enable",
+                                        "value": "1"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$Ringer_Device_For_HeadSet",
+                                "default_value": "0",
+                                "description": "Ringer Device For HeadSet",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "Use Speaker",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Use HeadSet",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Speaker & Headset",
+                                        "value": "2"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$Redial_Mode",
+                                "default_value": "0",
+                                "description": "Redial Mode",
+                                "type": "radio",
+                                "data": [
+                                    {
+                                        "text": "Direct Mode",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Select Mode",
+                                        "value": "1"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$PhoneBook_URL_01",
+                                "default_value": "",
+                                "description": "PhoneBook URL 01",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$Name_01",
+                                "default_value": "",
+                                "description": "Name 01",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$PhoneBook_URL_02",
+                                "default_value": "",
+                                "description": "PhoneBook URL 02",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$Name_02",
+                                "default_value": "",
+                                "description": "Name 02",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$PhoneBook_URL_03",
+                                "default_value": "",
+                                "description": "PhoneBook URL 03",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$Name_03",
+                                "default_value": "",
+                                "description": "Name 03",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$PhoneBook_URL_04",
+                                "default_value": "",
+                                "description": "PhoneBook URL 04",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$Name_04",
+                                "default_value": "",
+                                "description": "Name 04",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$PhoneBook_URL_05",
+                                "default_value": "",
+                                "description": "PhoneBook URL 05",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$Name_05",
+                                "default_value": "",
+                                "description": "Name 05",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$Update_Time_Interval",
+                                "default_value": "360",
+                                "description": "Update Time Interval(minutes)",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$LDAP_Name_Filter",
+                                "default_value": "(|(cn=%)(givenName=%))",
+                                "description": "LDAP Name Filter",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$LDAP_Number_Filter",
+                                "default_value": "(|(telephoneNumber=%)(Mobile=%))",
+                                "description": "LDAP Number Filter",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$Server_Address",
+                                "default_value": "",
+                                "description": "Server Address",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$Server_Port",
+                                "default_value": "389",
+                                "description": "Port",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$Base",
+                                "default_value": "dc=freepbx,dc=local",
+                                "description": "Base",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$User_Name",
+                                "default_value": "",
+                                "description": "User Name",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$Password",
+                                "default_value": "",
+                                "description": "Password",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$Max_Hits",
+                                "default_value": "32000",
+                                "description": "Max.Hits(1~32000)",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$LDAP_Name_Attributes",
+                                "default_value": "cn",
+                                "description": "LDAP Name Attributes",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$LDAP_Number_Attributes",
+                                "default_value": "telephoneNumber Mobile",
+                                "description": "LDAP Number Attributes",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$LDAP_Display_Name",
+                                "default_value": "%cn",
+                                "description": "LDAP Display Name",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$Search_Delay",
+                                "default_value": "",
+                                "description": "Search Delay(0~2000ms)",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$Protocol",
+                                "default_value": "1",
+                                "description": "Protocol",
+                                "type": "radio",
+                                "data": [
+                                    {
+                                        "text": "version2",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "version3",
+                                        "value": "1"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$LDAP_Lookup_For_Call",
+                                "default_value": "",
+                                "description": "LDAP Lookup For Call",
+                                "type": "radio",
+                                "data": [
+                                    {
+                                        "text": "Off",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "On",
+                                        "value": "1"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$LDAP_Sorting_Results",
+                                "default_value": "1",
+                                "description": "LDAP Sorting Results",
+                                "type": "radio",
+                                "data": [
+                                    {
+                                        "text": "Off",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "On",
+                                        "value": "1"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$LDAP_Synchronize_Time",
+                                "default_value": "",
+                                "description": "LDAP Synchronize Time(0~9999mins)",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$firmware_srv_path",
+                                "default_value": "",
+                                "description": "Firmware Server Path",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$cfg_srv_path",
+                                "default_value": "",
+                                "description": "Config Server Path",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$Voice_Qos",
+                                "default_value": "46",
+                                "description": "Voice Qos",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$SIP_Qos",
+                                "default_value": "26",
+                                "description": "SIP Qos",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$802.1Q_VLAN_Tag",
+                                "default_value": "0",
+                                "description": "802.1Q_VLAN_Tag",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$802.1p_priority_value",
+                                "default_value": "0",
+                                "description": "802.1p priority value",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$Data_VLAN_Tag",
+                                "default_value": "0",
+                                "description": "Data VLAN Tag",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$firmware_upgrade_type",
+                                "default_value": "0",
+                                "description": "Firmware Upgrade Server Type",
+                                "type": "radio",
+                                "data": [
+                                    {
+                                        "text": "TFTP",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "HTTP",
+                                        "value": "1"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$auto_up",
+                                "default_value": "",
+                                "description": "Automatic Upgrade",
+                                "type": "radio",
+                                "data": [
+                                    {
+                                        "text": "Yes",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "No",
+                                        "value": "0"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$check_upgrade_interval",
+                                "default_value": "10800",
+                                "description": "interval of checking for upgrade(Minutes)",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$enable_xml_phonebook",
+                                "default_value": "",
+                                "description": "Enable XML Phone Book",
+                                "type": "radio",
+                                "data": [
+                                    {
+                                        "text": "Yes(HTTP)",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Yes(TFTP)",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "No",
+                                        "value": "0"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$xml_server_path",
+                                "default_value": "",
+                                "description": "XML Phone Book Server Path",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$enable_call_features",
+                                "default_value": "1",
+                                "description": "Enable Call Features",
+                                "type": "radio",
+                                "data": [
+                                    {
+                                        "text": "Yes",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "No",
+                                        "value": "0"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

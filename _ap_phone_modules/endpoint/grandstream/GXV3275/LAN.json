@@ -1,0 +1,161 @@
+{
+  "template_data": {
+    "category": [
+	{
+      "name": "Parametres Reseau",
+      "subcategory": [
+	  {
+        "name": "Parametres Reseau",
+        "item": [
+          {
+            "description": "Parametres Reseau",
+            "type": "group"
+          },
+          {
+            "variable": "$lan",
+            "default_value": "0",
+            "description": "Type",
+            "type": "list",
+            "data": [
+              {
+                "text": "DHCP",
+                "value": "0"
+              },
+              {
+                "text": "Static",
+                "value": "1"
+              }
+            ]
+          },
+          { "type": "break" },
+          {
+            "variable": "$addr1",
+            "description": "Adresse IP A",
+            "default_value": "192",
+            "type": "input"
+          },
+          {
+            "variable": "$addr2",
+            "description": "Adresse IP B",
+            "default_value": "168",
+            "type": "input"
+          },
+          {
+            "variable": "$addr3",
+            "description": "Adresse IP C",
+            "default_value": "0",
+            "type": "input"
+          },
+          {
+            "variable": "$addr4",
+            "description": "Adresse IP D",
+            "default_value": "1",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$mask1",
+            "description": "Masque Sous Reseau A",
+            "default_value": "255",
+            "type": "input"
+          },
+          {
+            "variable": "$mask2",
+            "description": "Masque Sous Reseau B",
+            "default_value": "255",
+            "type": "input"
+          },
+          {
+            "variable": "$mask3",
+            "description": "Masque Sous Reseau C",
+            "default_value": "255",
+            "type": "input"
+          },
+          {
+            "variable": "$mask4",
+            "description": "Masque Sous Reseau D",
+            "default_value": "0",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$gw1",
+            "description": "Passerelle A",
+            "default_value": "192",
+            "type": "input"
+          },
+          {
+            "variable": "$gw2",
+            "description": "Passerelle B",
+            "default_value": "168",
+            "type": "input"
+          },
+          {
+            "variable": "$gw3",
+            "description": "Passerelle C",
+            "default_value": "0",
+            "type": "input"
+          },
+          {
+            "variable": "$gw4",
+            "description": "Passerelle D",
+            "default_value": "254",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$dns1",
+            "description": "DNS Primaire A",
+            "default_value": "192",
+            "type": "input"
+          },
+          {
+            "variable": "$dns2",
+            "description": "DNS Primaire B",
+            "default_value": "168",
+            "type": "input"
+          },
+          {
+            "variable": "$dns3",
+            "description": "DNS Primaire C",
+            "default_value": "0",
+            "type": "input"
+          },
+          {
+            "variable": "$dns4",
+            "description": "DNS Primaire D",
+            "default_value": "254",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$dns5",
+            "description": "DNS Secondaire A",
+            "default_value": "8",
+            "type": "input"
+          },
+          {
+            "variable": "$dns6",
+            "description": "DNS Secondaire B",
+            "default_value": "8",
+            "type": "input"
+          },
+          {
+            "variable": "$dns7",
+            "description": "DNS Secondaire C",
+            "default_value": "8",
+            "type": "input"
+          },
+          {
+            "variable": "$dns8",
+            "description": "DNS Secondaire D",
+            "default_value": "8",
+            "type": "input"
+          }
+        ]
+      }
+	  ]
+    }
+	]
+  }
+}

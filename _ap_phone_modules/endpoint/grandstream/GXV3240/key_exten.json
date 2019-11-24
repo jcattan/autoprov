@@ -1,0 +1,1096 @@
+{
+  "template_data": {
+    "category": [
+	{
+      "name": "Module Touches",
+      "subcategory": [
+	  {
+        "name": "Multi Function Keys",
+        "item": [
+          {
+            "variable": "$key_mode_100",
+            "default_value": "1",
+            "description": "Mode Touche 01",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_100",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_100",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_101",
+            "default_value": "1",
+            "description": "Mode Touche 02",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_101",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_101",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_102",
+            "default_value": "1",
+            "description": "Mode Touche 03",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_102",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_102",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_103",
+            "default_value": "1",
+            "description": "Mode Touche 04",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_103",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_103",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_104",
+            "default_value": "1",
+            "description": "Mode Touche 05",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_104",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_104",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_105",
+            "default_value": "1",
+            "description": "Mode Touche 06",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_105",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_105",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_106",
+            "default_value": "1",
+            "description": "Mode Touche 07",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_106",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_106",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_107",
+            "default_value": "1",
+            "description": "Mode Touche 08",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_107",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_107",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_108",
+            "default_value": "1",
+            "description": "Mode Touche 09",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_108",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_108",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_109",
+            "default_value": "1",
+            "description": "Mode Touche 10",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_109",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_109",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_110",
+            "default_value": "1",
+            "description": "Mode Touche 11",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_110",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_110",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_111",
+            "default_value": "1",
+            "description": "Mode Touche 12",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_111",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_111",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_112",
+            "default_value": "1",
+            "description": "Mode Touche 13",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_112",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_112",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_113",
+            "default_value": "1",
+            "description": "Mode Touche 14",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_113",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_113",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_114",
+            "default_value": "1",
+            "description": "Mode Touche 15",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_114",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_114",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_115",
+            "default_value": "1",
+            "description": "Mode Touche 16",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_115",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_115",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_116",
+            "default_value": "1",
+            "description": "Mode Touche 17",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_116",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_116",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_117",
+            "default_value": "1",
+            "description": "Mode Touche 18",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_117",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_117",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_118",
+            "default_value": "1",
+            "description": "Mode Touche 19",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_118",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_118",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_119",
+            "default_value": "1",
+            "description": "Mode Touche 20",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_119",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_119",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_120",
+            "default_value": "1",
+            "description": "Mode Touche 21",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_120",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_120",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_121",
+            "default_value": "1",
+            "description": "Mode Touche 22",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_121",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_121",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_122",
+            "default_value": "1",
+            "description": "Mode Touche 23",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_122",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_122",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_123",
+            "default_value": "1",
+            "description": "Mode Touche 24",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_123",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_123",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_124",
+            "default_value": "1",
+            "description": "Mode Touche 25",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_124",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_124",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_125",
+            "default_value": "1",
+            "description": "Mode Touche 26",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_125",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_125",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_126",
+            "default_value": "1",
+            "description": "Mode Touche 27",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_126",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_126",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_127",
+            "default_value": "1",
+            "description": "Mode Touche 28",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_127",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_127",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_128",
+            "default_value": "1",
+            "description": "Mode Touche 29",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_128",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_128",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_129",
+            "default_value": "1",
+            "description": "Mode Touche 30",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_129",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_129",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_130",
+            "default_value": "1",
+            "description": "Mode Touche 31",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_130",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_130",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_131",
+            "default_value": "1",
+            "description": "Mode Touche 32",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_131",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_131",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_132",
+            "default_value": "1",
+            "description": "Mode Touche 33",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_132",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_132",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_133",
+            "default_value": "1",
+            "description": "Mode Touche 34",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_133",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_133",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_134",
+            "default_value": "1",
+            "description": "Mode Touche 35",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_134",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_134",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_135",
+            "default_value": "1",
+            "description": "Mode Touche 36",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_135",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_135",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_136",
+            "default_value": "1",
+            "description": "Mode Touche 37",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_136",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_136",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_137",
+            "default_value": "1",
+            "description": "Mode Touche 38",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_137",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_137",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_138",
+            "default_value": "1",
+            "description": "Mode Touche 39",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_138",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_138",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$key_mode_139",
+            "default_value": "1",
+            "description": "Mode Touche 40",
+            "type": "list",
+            "data": [
+              {
+                "text": "Numerotation Rapide",
+                "value": "0"
+              },
+              {
+                "text": "BLF (supervision)",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "variable": "$key_name_139",
+            "description": "Nom Touche",
+            "type": "input"
+          },
+          {
+            "variable": "$speed_dial_139",
+            "description": "Valeur",
+            "type": "input"
+          },
+          { "type": "break" }
+        ]
+      }
+	  ]
+    }
+	]
+  }
+}

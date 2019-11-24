@@ -1,0 +1,19 @@
+{
+  "template_data":{
+    "category":[
+      {
+        "name":"rien a configurer",
+        "subcategory":[
+          {
+            "name":"rien a configurer",
+            "item":[
+              {
+                "type":"break"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

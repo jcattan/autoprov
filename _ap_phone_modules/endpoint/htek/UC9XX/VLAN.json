@@ -1,0 +1,32 @@
+{
+  "template_data": {
+    "category": [
+	{
+      "name": "Parametres VLAN",
+      "subcategory": [
+	  {
+        "name": "Parametres VLAN",
+        "item": [
+          {
+            "description": "Parametres VLAN",
+            "type": "group"
+          },
+          {
+            "variable": "$vlan",
+            "default_value": "0",
+            "description": "Numero de VLAN Telephone",
+            "type": "input"
+          },
+          {
+            "variable": "$vlan2",
+            "default_value": "0",
+            "description": "Numero de VLAN PC",
+            "type": "input"
+          }
+        ]
+      }
+	  ]
+    }
+	]
+  }
+}

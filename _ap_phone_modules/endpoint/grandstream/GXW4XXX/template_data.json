@@ -1,0 +1,91 @@
+{
+    "template_data":{
+        "category":[
+        {
+            "name":"general",
+            "subcategory":[
+            {
+        "name":"General Settings",
+        "item":[
+          {
+            "description": "General Settings",
+            "type": "group"
+          },
+          {
+            "variable": "$update",
+            "default_value": "0",
+            "description": "Mise a jour de la config a chaque demarrage",
+            "type": "list",
+            "data": [
+              {
+                "text": "Active",
+                "value": "0"
+              },
+              {
+                "text": "Desactive",
+                "value": "1"
+              }
+            ]
+          },
+          { "type": "break" },
+          {
+            "variable": "$admin_pass",
+            "default_value": "admin",
+            "description": "Mot de passe du poste",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$firmware_srv_path",
+            "default_value": "{$server.ip.1}",
+            "description": "Serveur de mise a jour",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$time_server",
+            "default_value": "{$server.ip.1}",
+            "description": "Serveur de Temps",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$call_waiting",
+            "default_value": "0",
+            "description": "Double Appel",
+            "type": "list",
+            "data": [
+              {
+                "text": "Active",
+                "value": "0"
+              },
+              {
+                "text": "Desactive",
+                "value": "1"
+              }
+            ]
+          },
+          { "type": "break" },
+          {
+            "variable": "$language",
+            "default_value": "fr",
+            "description": "Langue du Poste",
+            "type": "list",
+            "data": [
+              {
+                "text": "Francais",
+                "value": "fr"
+              },
+              {
+                "text": "Anglais",
+                "value": "en"
+              }
+            ]
+          }
+			]
+			}
+			]
+		}
+        ]
+    }
+}

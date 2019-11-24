@@ -1,0 +1,63 @@
+{
+  "data": {
+    "name": "GXW4XXX[ / Grandstream]",
+    "id": "4",
+    "version": "1.0",
+    "directory": "GXW4XXX",
+    "firmware_ver": "",
+    "firmware_md5sum": "",
+    "firmware_pkg": "NULL",
+    "description": "Use Grandstream Encrypted Compiler By Default",
+    "configuration_files": "cfg$mac",
+    "model_list": [
+		{
+        "model": "GXW4216",
+        "lines": "16",
+        "id": "1",
+        "template_data": [
+            "template_data.json"
+        ]
+      },
+		{
+        "model": "GXW4224",
+        "lines": "24",
+        "id": "2",
+        "template_data": [
+            "template_data.json"
+        ]
+      },
+	  	{
+        "model": "GXW4232",
+        "lines": "32",
+        "id": "3",
+        "template_data": [
+            "template_data.json"
+        ]
+      },
+		{
+        "model": "GXW4248",
+        "lines": "48",
+        "id": "4",
+        "template_data": [
+            "template_data.json"
+        ]
+      },
+		{
+        "model": "GXW4004",
+        "lines": "4",
+        "id": "5",
+        "template_data": [
+            "template_data.json"
+        ]
+      },
+		{
+        "model": "GXW4008",
+        "lines": "48",
+        "id": "6",
+        "template_data": [
+            "template_data.json"
+        ]
+      }	  
+    ]
+  }
+}

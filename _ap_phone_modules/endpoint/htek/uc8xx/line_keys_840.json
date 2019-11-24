@@ -1,0 +1,2392 @@
+{
+    "template_data": {
+        "category": [
+            {
+                "name": "keys",
+                "subcategory": [
+                    {
+                        "name": "Line Keys (1-4) ",
+                        "item": [
+                            {
+                                "variable": "$linekey_type_01",
+                                "default_value": "1",
+                                "description": "Line Key 1 Type",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "Line",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Speeddial",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "BLF",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "BLF List",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Voicemail",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "text": "Direct Pickup",
+                                        "value": "6"
+                                    },
+                                    {
+                                        "text": "Group Pickup",
+                                        "value": "7"
+                                    },
+                                    {
+                                        "text": "Call Park",
+                                        "value": "8"
+                                    },
+                                    {
+                                        "text": "Intercom",
+                                        "value": "9"
+                                    },
+                                    {
+                                        "text": "DTMF",
+                                        "value": "10"
+                                    },
+                                    {
+                                        "text": "Frefix",
+                                        "value": "11"
+                                    },
+                                    {
+                                        "text": "Local Group",
+                                        "value": "12"
+                                    },
+                                    {
+                                        "text": "XML Group",
+                                        "value": "13"
+                                    },
+                                    {
+                                        "text": "XML Browser",
+                                        "value": "14"
+                                    },
+                                    {
+                                        "text": "LDAP",
+                                        "value": "15"
+                                    },
+                                    {
+                                        "text": "BroadSoft Group",
+                                        "value": "16"
+                                    },
+                                    {
+                                        "text": "Conference",
+                                        "value": "17"
+                                    },
+                                    {
+                                        "text": "Forward",
+                                        "value": "18"
+                                    },
+                                    {
+                                        "text": "Transfer",
+                                        "value": "19"
+                                    },
+                                    {
+                                        "text": "Hold",
+                                        "value": "20"
+                                    },
+                                    {
+                                        "text": "DND",
+                                        "value": "21"
+                                    },
+                                    {
+                                        "text": "Redial",
+                                        "value": "22"
+                                    },
+                                    {
+                                        "text": "Call Return",
+                                        "value": "23"
+                                    },
+                                    {
+                                        "text": "SMS",
+                                        "value": "24"
+                                    },
+                                    {
+                                        "text": "Record",
+                                        "value": "25"
+                                    },
+                                    {
+                                        "text": "URL Record",
+                                        "value": "26"
+                                    },
+                                    {
+                                        "text": "Paging",
+                                        "value": "27"
+                                    },
+                                    {
+                                        "text": "Group Listening",
+                                        "value": "28"
+                                    },
+                                    {
+                                        "text": "Public Hold",
+                                        "value": "29"
+                                    },
+                                    {
+                                        "text": "Private Hold",
+                                        "value": "30"
+                                    },
+                                    {
+                                        "text": "Shine Line",
+                                        "value": "31"
+                                    },
+                                    {
+                                        "text": "Hot Desking",
+                                        "value": "32"
+                                    },
+                                    {
+                                        "text": "ACD",
+                                        "value": "33"
+                                    },
+                                    {
+                                        "text": "Zero Touch",
+                                        "value": "34"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_value_01",
+                                "default_value": "",
+                                "description": "Line Key 1 Value",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_label_01",
+                                "default_value": "",
+                                "description": "Line Key 1 Label",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_account_01",
+                                "default_value": "255",
+                                "description": "Line Key 1 Account",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "Auto",
+                                        "value": "255"
+                                    },
+                                    {
+                                        "text": "Account 1",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Account 2",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Account 3",
+                                        "value": "2"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_pickup_01",
+                                "default_value": "",
+                                "description": "Line Key 1 pickup code",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$linekey_type_02",
+                                "default_value": "1",
+                                "description": "Line Key 2 Type",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "Line",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Speeddial",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "BLF",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "BLF List",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Voicemail",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "text": "Direct Pickup",
+                                        "value": "6"
+                                    },
+                                    {
+                                        "text": "Group Pickup",
+                                        "value": "7"
+                                    },
+                                    {
+                                        "text": "Call Park",
+                                        "value": "8"
+                                    },
+                                    {
+                                        "text": "Intercom",
+                                        "value": "9"
+                                    },
+                                    {
+                                        "text": "DTMF",
+                                        "value": "10"
+                                    },
+                                    {
+                                        "text": "Frefix",
+                                        "value": "11"
+                                    },
+                                    {
+                                        "text": "Local Group",
+                                        "value": "12"
+                                    },
+                                    {
+                                        "text": "XML Group",
+                                        "value": "13"
+                                    },
+                                    {
+                                        "text": "XML Browser",
+                                        "value": "14"
+                                    },
+                                    {
+                                        "text": "LDAP",
+                                        "value": "15"
+                                    },
+                                    {
+                                        "text": "BroadSoft Group",
+                                        "value": "16"
+                                    },
+                                    {
+                                        "text": "Conference",
+                                        "value": "17"
+                                    },
+                                    {
+                                        "text": "Forward",
+                                        "value": "18"
+                                    },
+                                    {
+                                        "text": "Transfer",
+                                        "value": "19"
+                                    },
+                                    {
+                                        "text": "Hold",
+                                        "value": "20"
+                                    },
+                                    {
+                                        "text": "DND",
+                                        "value": "21"
+                                    },
+                                    {
+                                        "text": "Redial",
+                                        "value": "22"
+                                    },
+                                    {
+                                        "text": "Call Return",
+                                        "value": "23"
+                                    },
+                                    {
+                                        "text": "SMS",
+                                        "value": "24"
+                                    },
+                                    {
+                                        "text": "Record",
+                                        "value": "25"
+                                    },
+                                    {
+                                        "text": "URL Record",
+                                        "value": "26"
+                                    },
+                                    {
+                                        "text": "Paging",
+                                        "value": "27"
+                                    },
+                                    {
+                                        "text": "Group Listening",
+                                        "value": "28"
+                                    },
+                                    {
+                                        "text": "Public Hold",
+                                        "value": "29"
+                                    },
+                                    {
+                                        "text": "Private Hold",
+                                        "value": "30"
+                                    },
+                                    {
+                                        "text": "Shine Line",
+                                        "value": "31"
+                                    },
+                                    {
+                                        "text": "Hot Desking",
+                                        "value": "32"
+                                    },
+                                    {
+                                        "text": "ACD",
+                                        "value": "33"
+                                    },
+                                    {
+                                        "text": "Zero Touch",
+                                        "value": "34"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_value_02",
+                                "default_value": "",
+                                "description": "Line Key 2 Value",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_label_02",
+                                "default_value": "",
+                                "description": "Line Key 2 Label",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_account_02",
+                                "default_value": "255",
+                                "description": "Line Key 2 Account",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "Auto",
+                                        "value": "255"
+                                    },
+                                    {
+                                        "text": "Account 1",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Account 2",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Account 3",
+                                        "value": "2"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_pickup_02",
+                                "default_value": "",
+                                "description": "Line Key 2 pickup code",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$linekey_type_03",
+                                "default_value": "1",
+                                "description": "Line Key 3 Type",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "Line",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Speeddial",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "BLF",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "BLF List",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Voicemail",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "text": "Direct Pickup",
+                                        "value": "6"
+                                    },
+                                    {
+                                        "text": "Group Pickup",
+                                        "value": "7"
+                                    },
+                                    {
+                                        "text": "Call Park",
+                                        "value": "8"
+                                    },
+                                    {
+                                        "text": "Intercom",
+                                        "value": "9"
+                                    },
+                                    {
+                                        "text": "DTMF",
+                                        "value": "10"
+                                    },
+                                    {
+                                        "text": "Frefix",
+                                        "value": "11"
+                                    },
+                                    {
+                                        "text": "Local Group",
+                                        "value": "12"
+                                    },
+                                    {
+                                        "text": "XML Group",
+                                        "value": "13"
+                                    },
+                                    {
+                                        "text": "XML Browser",
+                                        "value": "14"
+                                    },
+                                    {
+                                        "text": "LDAP",
+                                        "value": "15"
+                                    },
+                                    {
+                                        "text": "BroadSoft Group",
+                                        "value": "16"
+                                    },
+                                    {
+                                        "text": "Conference",
+                                        "value": "17"
+                                    },
+                                    {
+                                        "text": "Forward",
+                                        "value": "18"
+                                    },
+                                    {
+                                        "text": "Transfer",
+                                        "value": "19"
+                                    },
+                                    {
+                                        "text": "Hold",
+                                        "value": "20"
+                                    },
+                                    {
+                                        "text": "DND",
+                                        "value": "21"
+                                    },
+                                    {
+                                        "text": "Redial",
+                                        "value": "22"
+                                    },
+                                    {
+                                        "text": "Call Return",
+                                        "value": "23"
+                                    },
+                                    {
+                                        "text": "SMS",
+                                        "value": "24"
+                                    },
+                                    {
+                                        "text": "Record",
+                                        "value": "25"
+                                    },
+                                    {
+                                        "text": "URL Record",
+                                        "value": "26"
+                                    },
+                                    {
+                                        "text": "Paging",
+                                        "value": "27"
+                                    },
+                                    {
+                                        "text": "Group Listening",
+                                        "value": "28"
+                                    },
+                                    {
+                                        "text": "Public Hold",
+                                        "value": "29"
+                                    },
+                                    {
+                                        "text": "Private Hold",
+                                        "value": "30"
+                                    },
+                                    {
+                                        "text": "Shine Line",
+                                        "value": "31"
+                                    },
+                                    {
+                                        "text": "Hot Desking",
+                                        "value": "32"
+                                    },
+                                    {
+                                        "text": "ACD",
+                                        "value": "33"
+                                    },
+                                    {
+                                        "text": "Zero Touch",
+                                        "value": "34"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_value_03",
+                                "default_value": "",
+                                "description": "Line Key 3 Value",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_label_03",
+                                "default_value": "",
+                                "description": "Line Key 3 Label",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_account_03",
+                                "default_value": "255",
+                                "description": "Line Key 3 Account",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "Auto",
+                                        "value": "255"
+                                    },
+                                    {
+                                        "text": "Account 1",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Account 2",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Account 3",
+                                        "value": "2"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_pickup_03",
+                                "default_value": "",
+                                "description": "Line Key 3 pickup code",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$linekey_type_04",
+                                "default_value": "21",
+                                "description": "Line Key 4 Type",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "Line",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Speeddial",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "BLF",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "BLF List",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Voicemail",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "text": "Direct Pickup",
+                                        "value": "6"
+                                    },
+                                    {
+                                        "text": "Group Pickup",
+                                        "value": "7"
+                                    },
+                                    {
+                                        "text": "Call Park",
+                                        "value": "8"
+                                    },
+                                    {
+                                        "text": "Intercom",
+                                        "value": "9"
+                                    },
+                                    {
+                                        "text": "DTMF",
+                                        "value": "10"
+                                    },
+                                    {
+                                        "text": "Frefix",
+                                        "value": "11"
+                                    },
+                                    {
+                                        "text": "Local Group",
+                                        "value": "12"
+                                    },
+                                    {
+                                        "text": "XML Group",
+                                        "value": "13"
+                                    },
+                                    {
+                                        "text": "XML Browser",
+                                        "value": "14"
+                                    },
+                                    {
+                                        "text": "LDAP",
+                                        "value": "15"
+                                    },
+                                    {
+                                        "text": "BroadSoft Group",
+                                        "value": "16"
+                                    },
+                                    {
+                                        "text": "Conference",
+                                        "value": "17"
+                                    },
+                                    {
+                                        "text": "Forward",
+                                        "value": "18"
+                                    },
+                                    {
+                                        "text": "Transfer",
+                                        "value": "19"
+                                    },
+                                    {
+                                        "text": "Hold",
+                                        "value": "20"
+                                    },
+                                    {
+                                        "text": "DND",
+                                        "value": "21"
+                                    },
+                                    {
+                                        "text": "Redial",
+                                        "value": "22"
+                                    },
+                                    {
+                                        "text": "Call Return",
+                                        "value": "23"
+                                    },
+                                    {
+                                        "text": "SMS",
+                                        "value": "24"
+                                    },
+                                    {
+                                        "text": "Record",
+                                        "value": "25"
+                                    },
+                                    {
+                                        "text": "URL Record",
+                                        "value": "26"
+                                    },
+                                    {
+                                        "text": "Paging",
+                                        "value": "27"
+                                    },
+                                    {
+                                        "text": "Group Listening",
+                                        "value": "28"
+                                    },
+                                    {
+                                        "text": "Public Hold",
+                                        "value": "29"
+                                    },
+                                    {
+                                        "text": "Private Hold",
+                                        "value": "30"
+                                    },
+                                    {
+                                        "text": "Shine Line",
+                                        "value": "31"
+                                    },
+                                    {
+                                        "text": "Hot Desking",
+                                        "value": "32"
+                                    },
+                                    {
+                                        "text": "ACD",
+                                        "value": "33"
+                                    },
+                                    {
+                                        "text": "Zero Touch",
+                                        "value": "34"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_value_04",
+                                "default_value": "",
+                                "description": "Line Key 4 Value",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_label_04",
+                                "default_value": "",
+                                "description": "Line Key 4 Label",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_account_04",
+                                "default_value": "255",
+                                "description": "Line Key 4 Account",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "Auto",
+                                        "value": "255"
+                                    },
+                                    {
+                                        "text": "Account 1",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Account 2",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Account 3",
+                                        "value": "2"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_pickup_04",
+                                "default_value": "",
+                                "description": "Line Key 4 pickup code",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$linekey_type_05",
+                                "default_value": "1",
+                                "description": "Line Key 5 Type",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "Line",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Speeddial",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "BLF",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "BLF List",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Voicemail",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "text": "Direct Pickup",
+                                        "value": "6"
+                                    },
+                                    {
+                                        "text": "Group Pickup",
+                                        "value": "7"
+                                    },
+                                    {
+                                        "text": "Call Park",
+                                        "value": "8"
+                                    },
+                                    {
+                                        "text": "Intercom",
+                                        "value": "9"
+                                    },
+                                    {
+                                        "text": "DTMF",
+                                        "value": "10"
+                                    },
+                                    {
+                                        "text": "Frefix",
+                                        "value": "11"
+                                    },
+                                    {
+                                        "text": "Local Group",
+                                        "value": "12"
+                                    },
+                                    {
+                                        "text": "XML Group",
+                                        "value": "13"
+                                    },
+                                    {
+                                        "text": "XML Browser",
+                                        "value": "14"
+                                    },
+                                    {
+                                        "text": "LDAP",
+                                        "value": "15"
+                                    },
+                                    {
+                                        "text": "BroadSoft Group",
+                                        "value": "16"
+                                    },
+                                    {
+                                        "text": "Conference",
+                                        "value": "17"
+                                    },
+                                    {
+                                        "text": "Forward",
+                                        "value": "18"
+                                    },
+                                    {
+                                        "text": "Transfer",
+                                        "value": "19"
+                                    },
+                                    {
+                                        "text": "Hold",
+                                        "value": "20"
+                                    },
+                                    {
+                                        "text": "DND",
+                                        "value": "21"
+                                    },
+                                    {
+                                        "text": "Redial",
+                                        "value": "22"
+                                    },
+                                    {
+                                        "text": "Call Return",
+                                        "value": "23"
+                                    },
+                                    {
+                                        "text": "SMS",
+                                        "value": "24"
+                                    },
+                                    {
+                                        "text": "Record",
+                                        "value": "25"
+                                    },
+                                    {
+                                        "text": "URL Record",
+                                        "value": "26"
+                                    },
+                                    {
+                                        "text": "Paging",
+                                        "value": "27"
+                                    },
+                                    {
+                                        "text": "Group Listening",
+                                        "value": "28"
+                                    },
+                                    {
+                                        "text": "Public Hold",
+                                        "value": "29"
+                                    },
+                                    {
+                                        "text": "Private Hold",
+                                        "value": "30"
+                                    },
+                                    {
+                                        "text": "Shine Line",
+                                        "value": "31"
+                                    },
+                                    {
+                                        "text": "Hot Desking",
+                                        "value": "32"
+                                    },
+                                    {
+                                        "text": "ACD",
+                                        "value": "33"
+                                    },
+                                    {
+                                        "text": "Zero Touch",
+                                        "value": "34"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_value_05",
+                                "default_value": "",
+                                "description": "Line Key 5 Value",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_label_05",
+                                "default_value": "",
+                                "description": "Line Key 5 Label",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_account_05",
+                                "default_value": "255",
+                                "description": "Line Key 5 Account",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "Auto",
+                                        "value": "255"
+                                    },
+                                    {
+                                        "text": "Account 1",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Account 2",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Account 3",
+                                        "value": "2"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_pickup_05",
+                                "default_value": "",
+                                "description": "Line Key 5 pickup code",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$linekey_type_06",
+                                "default_value": "1",
+                                "description": "Line Key 6 Type",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "Line",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Speeddial",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "BLF",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "BLF List",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Voicemail",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "text": "Direct Pickup",
+                                        "value": "6"
+                                    },
+                                    {
+                                        "text": "Group Pickup",
+                                        "value": "7"
+                                    },
+                                    {
+                                        "text": "Call Park",
+                                        "value": "8"
+                                    },
+                                    {
+                                        "text": "Intercom",
+                                        "value": "9"
+                                    },
+                                    {
+                                        "text": "DTMF",
+                                        "value": "10"
+                                    },
+                                    {
+                                        "text": "Frefix",
+                                        "value": "11"
+                                    },
+                                    {
+                                        "text": "Local Group",
+                                        "value": "12"
+                                    },
+                                    {
+                                        "text": "XML Group",
+                                        "value": "13"
+                                    },
+                                    {
+                                        "text": "XML Browser",
+                                        "value": "14"
+                                    },
+                                    {
+                                        "text": "LDAP",
+                                        "value": "15"
+                                    },
+                                    {
+                                        "text": "BroadSoft Group",
+                                        "value": "16"
+                                    },
+                                    {
+                                        "text": "Conference",
+                                        "value": "17"
+                                    },
+                                    {
+                                        "text": "Forward",
+                                        "value": "18"
+                                    },
+                                    {
+                                        "text": "Transfer",
+                                        "value": "19"
+                                    },
+                                    {
+                                        "text": "Hold",
+                                        "value": "20"
+                                    },
+                                    {
+                                        "text": "DND",
+                                        "value": "21"
+                                    },
+                                    {
+                                        "text": "Redial",
+                                        "value": "22"
+                                    },
+                                    {
+                                        "text": "Call Return",
+                                        "value": "23"
+                                    },
+                                    {
+                                        "text": "SMS",
+                                        "value": "24"
+                                    },
+                                    {
+                                        "text": "Record",
+                                        "value": "25"
+                                    },
+                                    {
+                                        "text": "URL Record",
+                                        "value": "26"
+                                    },
+                                    {
+                                        "text": "Paging",
+                                        "value": "27"
+                                    },
+                                    {
+                                        "text": "Group Listening",
+                                        "value": "28"
+                                    },
+                                    {
+                                        "text": "Public Hold",
+                                        "value": "29"
+                                    },
+                                    {
+                                        "text": "Private Hold",
+                                        "value": "30"
+                                    },
+                                    {
+                                        "text": "Shine Line",
+                                        "value": "31"
+                                    },
+                                    {
+                                        "text": "Hot Desking",
+                                        "value": "32"
+                                    },
+                                    {
+                                        "text": "ACD",
+                                        "value": "33"
+                                    },
+                                    {
+                                        "text": "Zero Touch",
+                                        "value": "34"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_value_06",
+                                "default_value": "",
+                                "description": "Line Key 6 Value",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_label_06",
+                                "default_value": "",
+                                "description": "Line Key 6 Label",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_account_06",
+                                "default_value": "255",
+                                "description": "Line Key 6 Account",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "Auto",
+                                        "value": "255"
+                                    },
+                                    {
+                                        "text": "Account 1",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Account 2",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Account 3",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "Account 4",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "Account 5",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Account 6",
+                                        "value": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_pickup_06",
+                                "default_value": "",
+                                "description": "Line Key 6 pickup code",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$linekey_type_07",
+                                "default_value": "0",
+                                "description": "Line Key 7 Type",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "N/A",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Line",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Speeddial",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "BLF",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "BLF List",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Voicemail",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "text": "Direct Pickup",
+                                        "value": "6"
+                                    },
+                                    {
+                                        "text": "Group Pickup",
+                                        "value": "7"
+                                    },
+                                    {
+                                        "text": "Call Park",
+                                        "value": "8"
+                                    },
+                                    {
+                                        "text": "Intercom",
+                                        "value": "9"
+                                    },
+                                    {
+                                        "text": "DTMF",
+                                        "value": "10"
+                                    },
+                                    {
+                                        "text": "Frefix",
+                                        "value": "11"
+                                    },
+                                    {
+                                        "text": "Local Group",
+                                        "value": "12"
+                                    },
+                                    {
+                                        "text": "XML Group",
+                                        "value": "13"
+                                    },
+                                    {
+                                        "text": "XML Browser",
+                                        "value": "14"
+                                    },
+                                    {
+                                        "text": "LDAP",
+                                        "value": "15"
+                                    },
+                                    {
+                                        "text": "BroadSoft Group",
+                                        "value": "16"
+                                    },
+                                    {
+                                        "text": "Conference",
+                                        "value": "17"
+                                    },
+                                    {
+                                        "text": "Forward",
+                                        "value": "18"
+                                    },
+                                    {
+                                        "text": "Transfer",
+                                        "value": "19"
+                                    },
+                                    {
+                                        "text": "Hold",
+                                        "value": "20"
+                                    },
+                                    {
+                                        "text": "DND",
+                                        "value": "21"
+                                    },
+                                    {
+                                        "text": "Redial",
+                                        "value": "22"
+                                    },
+                                    {
+                                        "text": "Call Return",
+                                        "value": "23"
+                                    },
+                                    {
+                                        "text": "SMS",
+                                        "value": "24"
+                                    },
+                                    {
+                                        "text": "Record",
+                                        "value": "25"
+                                    },
+                                    {
+                                        "text": "URL Record",
+                                        "value": "26"
+                                    },
+                                    {
+                                        "text": "Paging",
+                                        "value": "27"
+                                    },
+                                    {
+                                        "text": "Group Listening",
+                                        "value": "28"
+                                    },
+                                    {
+                                        "text": "Public Hold",
+                                        "value": "29"
+                                    },
+                                    {
+                                        "text": "Private Hold",
+                                        "value": "30"
+                                    },
+                                    {
+                                        "text": "Shine Line",
+                                        "value": "31"
+                                    },
+                                    {
+                                        "text": "Hot Desking",
+                                        "value": "32"
+                                    },
+                                    {
+                                        "text": "ACD",
+                                        "value": "33"
+                                    },
+                                    {
+                                        "text": "Zero Touch",
+                                        "value": "34"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_value_07",
+                                "default_value": "",
+                                "description": "Line Key 7 Value",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_label_07",
+                                "default_value": "",
+                                "description": "Line Key 7 Label",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_account_07",
+                                "default_value": "255",
+                                "description": "Line Key 7 Account",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "Auto",
+                                        "value": "255"
+                                    },
+                                    {
+                                        "text": "Account 1",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Account 2",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Account 3",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "Account 4",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "Account 5",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Account 6",
+                                        "value": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_pickup_07",
+                                "default_value": "",
+                                "description": "Line Key 7 pickup code",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$linekey_type_08",
+                                "default_value": "0",
+                                "description": "Line Key 8 Type",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "N/A",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Line",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Speeddial",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "BLF",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "BLF List",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Voicemail",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "text": "Direct Pickup",
+                                        "value": "6"
+                                    },
+                                    {
+                                        "text": "Group Pickup",
+                                        "value": "7"
+                                    },
+                                    {
+                                        "text": "Call Park",
+                                        "value": "8"
+                                    },
+                                    {
+                                        "text": "Intercom",
+                                        "value": "9"
+                                    },
+                                    {
+                                        "text": "DTMF",
+                                        "value": "10"
+                                    },
+                                    {
+                                        "text": "Frefix",
+                                        "value": "11"
+                                    },
+                                    {
+                                        "text": "Local Group",
+                                        "value": "12"
+                                    },
+                                    {
+                                        "text": "XML Group",
+                                        "value": "13"
+                                    },
+                                    {
+                                        "text": "XML Browser",
+                                        "value": "14"
+                                    },
+                                    {
+                                        "text": "LDAP",
+                                        "value": "15"
+                                    },
+                                    {
+                                        "text": "BroadSoft Group",
+                                        "value": "16"
+                                    },
+                                    {
+                                        "text": "Conference",
+                                        "value": "17"
+                                    },
+                                    {
+                                        "text": "Forward",
+                                        "value": "18"
+                                    },
+                                    {
+                                        "text": "Transfer",
+                                        "value": "19"
+                                    },
+                                    {
+                                        "text": "Hold",
+                                        "value": "20"
+                                    },
+                                    {
+                                        "text": "DND",
+                                        "value": "21"
+                                    },
+                                    {
+                                        "text": "Redial",
+                                        "value": "22"
+                                    },
+                                    {
+                                        "text": "Call Return",
+                                        "value": "23"
+                                    },
+                                    {
+                                        "text": "SMS",
+                                        "value": "24"
+                                    },
+                                    {
+                                        "text": "Record",
+                                        "value": "25"
+                                    },
+                                    {
+                                        "text": "URL Record",
+                                        "value": "26"
+                                    },
+                                    {
+                                        "text": "Paging",
+                                        "value": "27"
+                                    },
+                                    {
+                                        "text": "Group Listening",
+                                        "value": "28"
+                                    },
+                                    {
+                                        "text": "Public Hold",
+                                        "value": "29"
+                                    },
+                                    {
+                                        "text": "Private Hold",
+                                        "value": "30"
+                                    },
+                                    {
+                                        "text": "Shine Line",
+                                        "value": "31"
+                                    },
+                                    {
+                                        "text": "Hot Desking",
+                                        "value": "32"
+                                    },
+                                    {
+                                        "text": "ACD",
+                                        "value": "33"
+                                    },
+                                    {
+                                        "text": "Zero Touch",
+                                        "value": "34"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_value_08",
+                                "default_value": "",
+                                "description": "Line Key 8 Value",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_label_08",
+                                "default_value": "",
+                                "description": "Line Key 8 Label",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_account_08",
+                                "default_value": "255",
+                                "description": "Line Key 8 Account",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "Auto",
+                                        "value": "255"
+                                    },
+                                    {
+                                        "text": "Account 1",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Account 2",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Account 3",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "Account 4",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "Account 5",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Account 6",
+                                        "value": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_pickup_08",
+                                "default_value": "",
+                                "description": "Line Key 8 pickup code",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$linekey_type_09",
+                                "default_value": "0",
+                                "description": "Line Key 9 Type",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "N/A",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Line",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Speeddial",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "BLF",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "BLF List",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Voicemail",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "text": "Direct Pickup",
+                                        "value": "6"
+                                    },
+                                    {
+                                        "text": "Group Pickup",
+                                        "value": "7"
+                                    },
+                                    {
+                                        "text": "Call Park",
+                                        "value": "8"
+                                    },
+                                    {
+                                        "text": "Intercom",
+                                        "value": "9"
+                                    },
+                                    {
+                                        "text": "DTMF",
+                                        "value": "10"
+                                    },
+                                    {
+                                        "text": "Frefix",
+                                        "value": "11"
+                                    },
+                                    {
+                                        "text": "Local Group",
+                                        "value": "12"
+                                    },
+                                    {
+                                        "text": "XML Group",
+                                        "value": "13"
+                                    },
+                                    {
+                                        "text": "XML Browser",
+                                        "value": "14"
+                                    },
+                                    {
+                                        "text": "LDAP",
+                                        "value": "15"
+                                    },
+                                    {
+                                        "text": "BroadSoft Group",
+                                        "value": "16"
+                                    },
+                                    {
+                                        "text": "Conference",
+                                        "value": "17"
+                                    },
+                                    {
+                                        "text": "Forward",
+                                        "value": "18"
+                                    },
+                                    {
+                                        "text": "Transfer",
+                                        "value": "19"
+                                    },
+                                    {
+                                        "text": "Hold",
+                                        "value": "20"
+                                    },
+                                    {
+                                        "text": "DND",
+                                        "value": "21"
+                                    },
+                                    {
+                                        "text": "Redial",
+                                        "value": "22"
+                                    },
+                                    {
+                                        "text": "Call Return",
+                                        "value": "23"
+                                    },
+                                    {
+                                        "text": "SMS",
+                                        "value": "24"
+                                    },
+                                    {
+                                        "text": "Record",
+                                        "value": "25"
+                                    },
+                                    {
+                                        "text": "URL Record",
+                                        "value": "26"
+                                    },
+                                    {
+                                        "text": "Paging",
+                                        "value": "27"
+                                    },
+                                    {
+                                        "text": "Group Listening",
+                                        "value": "28"
+                                    },
+                                    {
+                                        "text": "Public Hold",
+                                        "value": "29"
+                                    },
+                                    {
+                                        "text": "Private Hold",
+                                        "value": "30"
+                                    },
+                                    {
+                                        "text": "Shine Line",
+                                        "value": "31"
+                                    },
+                                    {
+                                        "text": "Hot Desking",
+                                        "value": "32"
+                                    },
+                                    {
+                                        "text": "ACD",
+                                        "value": "33"
+                                    },
+                                    {
+                                        "text": "Zero Touch",
+                                        "value": "34"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_value_09",
+                                "default_value": "",
+                                "description": "Line Key 9 Value",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_label_09",
+                                "default_value": "",
+                                "description": "Line Key 9 Label",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_account_09",
+                                "default_value": "255",
+                                "description": "Line Key 9 Account",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "Auto",
+                                        "value": "255"
+                                    },
+                                    {
+                                        "text": "Account 1",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Account 2",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Account 3",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "Account 4",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "Account 5",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Account 6",
+                                        "value": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_pickup_09",
+                                "default_value": "",
+                                "description": "Line Key 9 pickup code",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$linekey_type_10",
+                                "default_value": "0",
+                                "description": "Line Key 10 Type",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "N/A",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Line",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Speeddial",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "BLF",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "BLF List",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Voicemail",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "text": "Direct Pickup",
+                                        "value": "6"
+                                    },
+                                    {
+                                        "text": "Group Pickup",
+                                        "value": "7"
+                                    },
+                                    {
+                                        "text": "Call Park",
+                                        "value": "8"
+                                    },
+                                    {
+                                        "text": "Intercom",
+                                        "value": "9"
+                                    },
+                                    {
+                                        "text": "DTMF",
+                                        "value": "10"
+                                    },
+                                    {
+                                        "text": "Frefix",
+                                        "value": "11"
+                                    },
+                                    {
+                                        "text": "Local Group",
+                                        "value": "12"
+                                    },
+                                    {
+                                        "text": "XML Group",
+                                        "value": "13"
+                                    },
+                                    {
+                                        "text": "XML Browser",
+                                        "value": "14"
+                                    },
+                                    {
+                                        "text": "LDAP",
+                                        "value": "15"
+                                    },
+                                    {
+                                        "text": "BroadSoft Group",
+                                        "value": "16"
+                                    },
+                                    {
+                                        "text": "Conference",
+                                        "value": "17"
+                                    },
+                                    {
+                                        "text": "Forward",
+                                        "value": "18"
+                                    },
+                                    {
+                                        "text": "Transfer",
+                                        "value": "19"
+                                    },
+                                    {
+                                        "text": "Hold",
+                                        "value": "20"
+                                    },
+                                    {
+                                        "text": "DND",
+                                        "value": "21"
+                                    },
+                                    {
+                                        "text": "Redial",
+                                        "value": "22"
+                                    },
+                                    {
+                                        "text": "Call Return",
+                                        "value": "23"
+                                    },
+                                    {
+                                        "text": "SMS",
+                                        "value": "24"
+                                    },
+                                    {
+                                        "text": "Record",
+                                        "value": "25"
+                                    },
+                                    {
+                                        "text": "URL Record",
+                                        "value": "26"
+                                    },
+                                    {
+                                        "text": "Paging",
+                                        "value": "27"
+                                    },
+                                    {
+                                        "text": "Group Listening",
+                                        "value": "28"
+                                    },
+                                    {
+                                        "text": "Public Hold",
+                                        "value": "29"
+                                    },
+                                    {
+                                        "text": "Private Hold",
+                                        "value": "30"
+                                    },
+                                    {
+                                        "text": "Shine Line",
+                                        "value": "31"
+                                    },
+                                    {
+                                        "text": "Hot Desking",
+                                        "value": "32"
+                                    },
+                                    {
+                                        "text": "ACD",
+                                        "value": "33"
+                                    },
+                                    {
+                                        "text": "Zero Touch",
+                                        "value": "34"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_value_10",
+                                "default_value": "",
+                                "description": "Line Key 10 Value",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_label_10",
+                                "default_value": "",
+                                "description": "Line Key 10 Label",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_account_10",
+                                "default_value": "255",
+                                "description": "Line Key 10 Account",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "Auto",
+                                        "value": "255"
+                                    },
+                                    {
+                                        "text": "Account 1",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Account 2",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Account 3",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "Account 4",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "Account 5",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Account 6",
+                                        "value": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_pickup_10",
+                                "default_value": "",
+                                "description": "Line Key 10 pickup code",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$linekey_type_11",
+                                "default_value": "0",
+                                "description": "Line Key 11 Type",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "N/A",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Line",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Speeddial",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "BLF",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "BLF List",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Voicemail",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "text": "Direct Pickup",
+                                        "value": "6"
+                                    },
+                                    {
+                                        "text": "Group Pickup",
+                                        "value": "7"
+                                    },
+                                    {
+                                        "text": "Call Park",
+                                        "value": "8"
+                                    },
+                                    {
+                                        "text": "Intercom",
+                                        "value": "9"
+                                    },
+                                    {
+                                        "text": "DTMF",
+                                        "value": "10"
+                                    },
+                                    {
+                                        "text": "Frefix",
+                                        "value": "11"
+                                    },
+                                    {
+                                        "text": "Local Group",
+                                        "value": "12"
+                                    },
+                                    {
+                                        "text": "XML Group",
+                                        "value": "13"
+                                    },
+                                    {
+                                        "text": "XML Browser",
+                                        "value": "14"
+                                    },
+                                    {
+                                        "text": "LDAP",
+                                        "value": "15"
+                                    },
+                                    {
+                                        "text": "BroadSoft Group",
+                                        "value": "16"
+                                    },
+                                    {
+                                        "text": "Conference",
+                                        "value": "17"
+                                    },
+                                    {
+                                        "text": "Forward",
+                                        "value": "18"
+                                    },
+                                    {
+                                        "text": "Transfer",
+                                        "value": "19"
+                                    },
+                                    {
+                                        "text": "Hold",
+                                        "value": "20"
+                                    },
+                                    {
+                                        "text": "DND",
+                                        "value": "21"
+                                    },
+                                    {
+                                        "text": "Redial",
+                                        "value": "22"
+                                    },
+                                    {
+                                        "text": "Call Return",
+                                        "value": "23"
+                                    },
+                                    {
+                                        "text": "SMS",
+                                        "value": "24"
+                                    },
+                                    {
+                                        "text": "Record",
+                                        "value": "25"
+                                    },
+                                    {
+                                        "text": "URL Record",
+                                        "value": "26"
+                                    },
+                                    {
+                                        "text": "Paging",
+                                        "value": "27"
+                                    },
+                                    {
+                                        "text": "Group Listening",
+                                        "value": "28"
+                                    },
+                                    {
+                                        "text": "Public Hold",
+                                        "value": "29"
+                                    },
+                                    {
+                                        "text": "Private Hold",
+                                        "value": "30"
+                                    },
+                                    {
+                                        "text": "Shine Line",
+                                        "value": "31"
+                                    },
+                                    {
+                                        "text": "Hot Desking",
+                                        "value": "32"
+                                    },
+                                    {
+                                        "text": "ACD",
+                                        "value": "33"
+                                    },
+                                    {
+                                        "text": "Zero Touch",
+                                        "value": "34"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_value_11",
+                                "default_value": "",
+                                "description": "Line Key 11 Value",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_label_11",
+                                "default_value": "",
+                                "description": "Line Key 11 Label",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_account_11",
+                                "default_value": "255",
+                                "description": "Line Key 11 Account",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "Auto",
+                                        "value": "255"
+                                    },
+                                    {
+                                        "text": "Account 1",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Account 2",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Account 3",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "Account 4",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "Account 5",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Account 6",
+                                        "value": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_pickup_11",
+                                "default_value": "",
+                                "description": "Line Key 11 pickup code",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            },
+                            {
+                                "variable": "$linekey_type_12",
+                                "default_value": "0",
+                                "description": "Line Key 12 Type",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "N/A",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Line",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Speeddial",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "BLF",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "BLF List",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Voicemail",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "text": "Direct Pickup",
+                                        "value": "6"
+                                    },
+                                    {
+                                        "text": "Group Pickup",
+                                        "value": "7"
+                                    },
+                                    {
+                                        "text": "Call Park",
+                                        "value": "8"
+                                    },
+                                    {
+                                        "text": "Intercom",
+                                        "value": "9"
+                                    },
+                                    {
+                                        "text": "DTMF",
+                                        "value": "10"
+                                    },
+                                    {
+                                        "text": "Frefix",
+                                        "value": "11"
+                                    },
+                                    {
+                                        "text": "Local Group",
+                                        "value": "12"
+                                    },
+                                    {
+                                        "text": "XML Group",
+                                        "value": "13"
+                                    },
+                                    {
+                                        "text": "XML Browser",
+                                        "value": "14"
+                                    },
+                                    {
+                                        "text": "LDAP",
+                                        "value": "15"
+                                    },
+                                    {
+                                        "text": "BroadSoft Group",
+                                        "value": "16"
+                                    },
+                                    {
+                                        "text": "Conference",
+                                        "value": "17"
+                                    },
+                                    {
+                                        "text": "Forward",
+                                        "value": "18"
+                                    },
+                                    {
+                                        "text": "Transfer",
+                                        "value": "19"
+                                    },
+                                    {
+                                        "text": "Hold",
+                                        "value": "20"
+                                    },
+                                    {
+                                        "text": "DND",
+                                        "value": "21"
+                                    },
+                                    {
+                                        "text": "Redial",
+                                        "value": "22"
+                                    },
+                                    {
+                                        "text": "Call Return",
+                                        "value": "23"
+                                    },
+                                    {
+                                        "text": "SMS",
+                                        "value": "24"
+                                    },
+                                    {
+                                        "text": "Record",
+                                        "value": "25"
+                                    },
+                                    {
+                                        "text": "URL Record",
+                                        "value": "26"
+                                    },
+                                    {
+                                        "text": "Paging",
+                                        "value": "27"
+                                    },
+                                    {
+                                        "text": "Group Listening",
+                                        "value": "28"
+                                    },
+                                    {
+                                        "text": "Public Hold",
+                                        "value": "29"
+                                    },
+                                    {
+                                        "text": "Private Hold",
+                                        "value": "30"
+                                    },
+                                    {
+                                        "text": "Shine Line",
+                                        "value": "31"
+                                    },
+                                    {
+                                        "text": "Hot Desking",
+                                        "value": "32"
+                                    },
+                                    {
+                                        "text": "ACD",
+                                        "value": "33"
+                                    },
+                                    {
+                                        "text": "Zero Touch",
+                                        "value": "34"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_value_12",
+                                "default_value": "",
+                                "description": "Line Key 12 Value",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_label_12",
+                                "default_value": "",
+                                "description": "Line Key 12 Label",
+                                "type": "input"
+                            },
+                            {
+                                "variable": "$linekey_account_12",
+                                "default_value": "255",
+                                "description": "Line Key 12 Account",
+                                "type": "list",
+                                "data": [
+                                    {
+                                        "text": "Auto",
+                                        "value": "255"
+                                    },
+                                    {
+                                        "text": "Account 1",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "text": "Account 2",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "text": "Account 3",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "text": "Account 4",
+                                        "value": "3"
+                                    },
+                                    {
+                                        "text": "Account 5",
+                                        "value": "4"
+                                    },
+                                    {
+                                        "text": "Account 6",
+                                        "value": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "variable": "$linekey_pickup_12",
+                                "default_value": "",
+                                "description": "Line Key 12 pickup code",
+                                "type": "input"
+                            },
+                            {
+                                "type": "break"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,131 @@
+{
+    "template_data":{
+        "category":[
+        {
+            "name":"general",
+            "subcategory":[
+            {
+        "name":"General Settings",
+        "item":[
+          {
+            "description": "General Settings",
+            "type": "group"
+          },
+          {
+            "variable": "$update",
+            "default_value": "0",
+            "description": "Mise a jour de la config a chaque demarrage",
+            "type": "list",
+            "data": [
+              {
+                "text": "Active",
+                "value": "0"
+              },
+              {
+                "text": "Desactive",
+                "value": "1"
+              }
+            ]
+          },
+          { "type": "break" },
+          {
+            "variable": "$admin_pass",
+            "default_value": "admin",
+            "description": "Mot de passe du poste",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$firmware_srv_path",
+            "default_value": "{$server.ip.1}",
+            "description": "Serveur de mise a jour",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$time_server",
+            "default_value": "{$server.ip.1}",
+            "description": "Serveur de Temps",
+            "type": "input"
+          },
+          {
+            "variable": "$gmt",
+            "default_value": "CET-1CEST-2,M3.5.0/02:00:00,M10.5.0/03:00:00",
+            "description": "Time Zone",
+            "type": "list",
+            "data": [
+              {
+                "text": "GMT +1 (Paris, Vienna, Warsaw, Roma, Madrid, Prague, Berlin, Budapest, Amsterdam, Belgium)",
+                "value": "CET-1CEST-2,M3.5.0/02:00:00,M10.5.0/03:00:00"
+              },
+              {
+                "text": "GMT+02:00 (Israel, Cairo, Athens, Istanbul, Buchrest)",
+                "value": "TZP-2 - GMT+02:00"
+              }
+            ]
+          },
+          { "type": "break" },
+          {
+            "variable": "$call_waiting",
+            "default_value": "0",
+            "description": "Double Appel",
+            "type": "list",
+            "data": [
+              {
+                "text": "Active",
+                "value": "0"
+              },
+              {
+                "text": "Desactive",
+                "value": "1"
+              }
+            ]
+          },
+          { "type": "break" },
+          {
+            "variable": "$vm",
+            "default_value": "*97",
+            "description": "Code d acces Mevo",
+            "type": "input"
+          },
+          { "type": "break" },
+          {
+            "variable": "$language",
+            "default_value": "fr",
+            "description": "Langue du Poste",
+            "type": "list",
+            "data": [
+              {
+                "text": "Francais",
+                "value": "fr"
+              },
+              {
+                "text": "Anglais",
+                "value": "en"
+              }
+            ]
+          },
+          { "type": "break" },
+          {
+            "variable": "$casque",
+            "default_value": "0",
+            "description": "Casque Plantronics EHS",
+            "type": "list",
+            "data": [
+              {
+                "text": "Active",
+                "value": "1"
+              },
+              {
+                "text": "Desactive",
+                "value": "0"
+              }
+            ]
+          }
+				]
+			}
+			]
+		}
+        ]
+    }
+}

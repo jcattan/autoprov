@@ -1,0 +1,36 @@
+<module>
+	<rawname>autoprov</rawname>
+	<repo>unsupported</repo>
+	<name>AutoProv End Point Manager</name>
+	<version>15.0.0.1</version>
+    <publisher>JCattan</publisher>
+	<category>Connectivity</category>
+	<license>GPLv3+</license>
+	<licenselink>http://www.gnu.org/licenses/gpl-3.0.txt</licenselink>
+	<menuitems>
+		<epm_devices sort="1">Autoprov Device List</epm_devices>
+		<epm_templates sort="2">Autoprov Template Manager</epm_templates>
+		<epm_config sort="3">Autoprov Package Manager</epm_config>
+		<epm_advanced sort="4">Autoprov Advanced Settings</epm_advanced>
+	</menuitems>
+	<description>
+		AutoProv End Point Manager est un fork du module OSS Endpoint Manager pour FreePBX ( https://github.com/FreePBX/endpointman ).
+		Il n'est *** PAS *** soutenu par Sangoma. Si vous recherchez un module pris en charge, veuillez installer le module Commercial Endpoint Manager de Sangoma.
+		Les sources de ce module sont dispo ici: https://github.com/jcattan/autoprov
+	</description>
+	<changelog>
+		*15.0.0.1* Version freepbx 15
+	</changelog>
+	<depends>
+		<version>15.0</version>
+		<phpversion>5.3.0</phpversion>
+	</depends>
+	<supported>
+		<version>15.0</version>
+	</supported>
+	<hooks>
+		<framework namespace="FreePBX\Console\Command" class="Chown">
+			<method namespace="FreePBX\modules" class="Autoprov" callingMethod="fwcChownFiles">chownFreepbx</method>
+		</framework>
+	</hooks>
+</module>
