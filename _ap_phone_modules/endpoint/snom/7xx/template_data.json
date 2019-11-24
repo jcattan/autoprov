@@ -15,7 +15,7 @@
               },
               {
                 "variable":"$http_pass",
-                "default_value":"theo1997",
+                "default_value":"admin",
                 "description":"HTTP Password",
                 "type":"input"
               },
