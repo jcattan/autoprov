@@ -89,7 +89,7 @@
               },
               {
                 "variable":"$admin_mode_password",
-                "default_value":"041161",
+                "default_value":"admin",
                 "description":"Admin Mode Password",
                 "type":"input"
               },
