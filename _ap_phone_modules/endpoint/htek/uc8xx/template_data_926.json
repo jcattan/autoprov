@@ -254,7 +254,7 @@
               },
               {
                 "variable":"$voice_mail_UserID_01",
-                "default_value":"",
+                "default_value":"*97",
                 "description":"Account 1 Voice Mail UserID",
                 "type":"input"
               },
@@ -1011,7 +1011,7 @@
               },
               {
                 "variable":"$auto_up",
-                "default_value":"",
+                "default_value":"1",
                 "description":"Automatic Upgrade",
                 "type":"radio",
                 "data":

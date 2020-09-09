@@ -1,12 +1,24 @@
 <?PHP
 
 /**
- * Endpoint Manager Installer
+ * Autoprov Manager Installer
  *
- * @author Andrew Nagy
- * @license MPL / GPLv2 / LGPL
- * @package Endpoint Manager
+ * @author JCattan
+ * @license MPL / GPLv3/ LGPL
+ * @package Autoprov Manager
  */
+ 
+/**	pour signer le module si modif
+
+mv /var/www/html/admin/modules/autoprov/_ap_phone_modules /tmp/
+mv /var/www/html/admin/modules/autoprov/provisioning /tmp/
+rm -f /var/www/html/admin/modules/autoprov/templates/freepbx/compiled/*
+/usr/local/src/devtools/sign.php /var/www/html/admin/modules/autoprov 4FB0BF70
+mv /tmp/_ap_phone_modules /var/www/html/admin/modules/autoprov/
+mv /tmp/provisioning /var/www/html/admin/modules/autoprov/
+
+*/
+
 function epm_rmrf($dir) {
     if (file_exists($dir)) {
         $iterator = new RecursiveDirectoryIterator($dir);
@@ -75,832 +87,38 @@ $modinfo = module_getinfo('autoprov');
 $epmxmlversion = $modinfo['autoprov']['version'];
 $epmdbversion = !empty($modinfo['autoprov']['dbversion']) ? $modinfo['autoprov']['dbversion'] : null;
 
+// si deja install
 if (!empty($epmdbversion)) {
 
-    if (version_compare_freepbx($epmdbversion,'1.9','<')) {
-        out("Please Wait While we upgrade your old setup");
-        //Expand the value option
-        $sql = 'ALTER TABLE `autoprov_global_vars` CHANGE `value` `value` VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT \'Data\'';
-        $db->query($sql);
-
-        out("Locating NMAP + ARP + ASTERISK Executables");
-
-        $nmap = find_exec("nmap");
-        $arp = find_exec("arp");
-        $asterisk = find_exec("asterisk");
-
-        out("Updating Global Variables table");
-        //Add new Vars into database
-        $sql_update_vars = "INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES
-		(5, 'config_location', '/tftpboot/'),
-		(6, 'update_server', 'http://127.0.0.1/provisioner/'),
-		(7, 'version', '15.0.0'),
-		(8, 'enable_ari', '1'),
-		(9, 'debug', '0'),
-		(10, 'arp_location', '" . $arp . "'),
-		(11, 'nmap_location', '" . $nmap . "'),
-		(12, 'asterisk_location', '" . $asterisk . "'),
-                (13, 'language', ''),
-                (14, 'check_updates', '0'),
-                (15, 'disable_htaccess', ''),
-                (16, 'endpoint_vers', '0'),
-                (17, 'disable_help', '0')";
-        $db->query($sql_update_vars);
-
-        out("Updating Mac List table");
-        $sql = 'ALTER TABLE `autoprov_mac_list` DROP `map`';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_mac_list` ADD `custom_cfg_template` INT(11) NOT NULL AFTER `description`';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_mac_list` ADD `custom_cfg_data` TEXT NOT NULL AFTER `custom_cfg_template`';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_mac_list` ADD `user_cfg_data` TEXT NOT NULL AFTER `custom_cfg_data`';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_mac_list` ADD `config_files_override` TEXT NOT NULL AFTER `user_cfg_data`';
-        $db->query($sql);
-
-        out("Updating Brands table");
-        $sql = 'DROP TABLE autoprov_brand_list';
-        $db->query($sql);
-
-        $sql = "CREATE TABLE IF NOT EXISTS `autoprov_brand_list` (
-		  `id` int(11) NOT NULL auto_increment,
-		  `name` varchar(255) NOT NULL,
-		  `directory` varchar(255) NOT NULL,
-		  `cfg_ver` varchar(255) NOT NULL,
-		  `installed` int(1) NOT NULL default '0',
-		  `hidden` int(1) NOT NULL default '0',
-		  PRIMARY KEY  (`id`)
-		) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22";
-        $db->query($sql);
-
-        out("Updating Models table");
-        $sql = 'DROP TABLE autoprov_model_list';
-        $db->query($sql);
-
-        $sql = "CREATE TABLE IF NOT EXISTS `autoprov_model_list` (
-		  `id` int(11) NOT NULL auto_increment COMMENT 'Key ',
-		  `brand` int(11) NOT NULL COMMENT 'Brand',
-		  `model` varchar(25) NOT NULL COMMENT 'Model',
-		  `product_id` int(11) NOT NULL,
-		  `enabled` int(1) NOT NULL default '0',
-		  `hidden` int(1) NOT NULL default '0',
-		  PRIMARY KEY  (`id`)
-		) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=48";
-        $db->query($sql);
-
-        out("Updating OUI table");
-
-        $sql = 'DROP TABLE autoprov_oui_list';
-        $db->query($sql);
-
-        $sql = "CREATE TABLE IF NOT EXISTS `autoprov_oui_list` (
-		  `id` int(30) NOT NULL auto_increment,
-		  `oui` varchar(30) default NULL,
-		  `brand` int(11) default NULL,
-		  PRIMARY KEY  (`id`)
-		) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=57";
-        $db->query($sql);
-
-        out("Updating Products table");
-
-        $sql = 'DROP TABLE IF EXISTS autoprov_product_list';
-        $db->query($sql);
-
-        $sql = "CREATE TABLE IF NOT EXISTS `autoprov_product_list` (
-		  `id` int(11) NOT NULL auto_increment,
-		  `brand` int(11) NOT NULL,
-		  `long_name` varchar(255) NOT NULL,
-		  `cfg_dir` varchar(255) NOT NULL,
-		  `cfg_ver` varchar(255) NOT NULL,
-		  `xml_data` varchar(255) NOT NULL,
-		  `cfg_data` text NOT NULL,
-		  `installed` int(1) NOT NULL default '0',
-		  `hidden` int(1) NOT NULL default '0',
-		  `firmware_vers` varchar(255) NOT NULL,
-		  `firmware_files` text NOT NULL,
-		  `config_files` text,
-		  PRIMARY KEY  (`id`)
-		) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8";
-        $db->query($sql);
-
-        out("Updating templates table");
-
-        $sql = 'DROP TABLE IF EXISTS autoprov_template_list';
-        $db->query($sql);
-
-        $sql = "CREATE TABLE IF NOT EXISTS `autoprov_template_list` (
-		  `id` int(11) NOT NULL auto_increment,
-		  `product_id` int(11) NOT NULL,
-		  `name` varchar(255) NOT NULL,
-		  `custom_cfg_data` text,
-		  `config_files_override` text,
-		  PRIMARY KEY  (`id`)
-		) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8";
-        $db->query($sql);
-
-        $sql = "CREATE TABLE IF NOT EXISTS `autoprov_custom_configs` (
-		  `id` int(11) NOT NULL auto_increment,
-		  `name` varchar(255) NOT NULL,
-		  `original_name` varchar(255) NOT NULL,
-		  `product_id` int(11) NOT NULL,
-		  `data` longtext NOT NULL,
-		  PRIMARY KEY  (`id`)
-		) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11";
-        $db->query($sql);
-
-        $old_models = array(
-            "57iCT" => array("brand" => 1, "model" => 2, "product" => 7),
-            "57i" => array("brand" => 1, "model" => 3, "product" => 7),
-            "330" => array("brand" => 4, "model" => 6, "product" => 4),
-            "560" => array("brand" => 4, "model" => 7, "product" => 4),
-            "300" => array("brand" => 6, "model" => 8, "product" => 8),
-            "320" => array("brand" => 6, "model" => 9, "product" => 8),
-            "360" => array("brand" => 6, "model" => 10, "product" => 8),
-            "370" => array("brand" => 6, "model" => 11, "product" => 8),
-            "820" => array("brand" => 6, "model" => 12, "product" => 8),
-            "M3" => array("brand" => 6, "model" => 13, "product" => 8),
-            "GXP-2000" => array("brand" => 2, "model" => 15, "product" => 1),
-            "BT200_201" => array("brand" => 2, "model" => 27, "product" => 2),
-            "spa941" => array("brand" => 0, "model" => 0, "product" => 0),
-            "spa942" => array("brand" => 0, "model" => 0, "product" => 0),
-            "spa962" => array("brand" => 0, "model" => 0, "product" => 0),
-            "55i" => array("brand" => 1, "model" => 4, "product" => 7)
-        );
-
-        out("Migrating Old Devices");
-        $sql = "SELECT * FROM autoprov_mac_list";
-        $result = $db->query($sql);
-        while ($row = & $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-            $id = $row['model'];
-            $new_model = $old_models[$id]['model'];
-            $sql = "UPDATE autoprov_mac_list SET model = " . $new_model . " WHERE id =" . $row['id'];
-            $db->query($sql);
-        }
-        out("Old Devices Migrated, You must install the phone modules from within autoprovmanager to see your old devices!");
-
-        $sql = 'ALTER TABLE autoprov_mac_list CHANGE model model INT NOT NULL';
-        $db->query($sql);
-
-        $sql = "ALTER TABLE autoprov_mac_list CHANGE custom_cfg_data custom_cfg_data TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL";
-        $db->query($sql);
-
-        out("DONE! You can now use endpoint manager!");
-    }
-
-    if (version_compare_freepbx($epmdbversion,'1.9','<=')) {
-        out("Locating NMAP + ARP + ASTERISK Executables");
-
-        $nmap = find_exec("nmap");
-        $arp = find_exec("arp");
-        $asterisk = find_exec("asterisk");
-
-        out("Updating Global Variables table");
-        //Add new Vars into database
-
-        $sql_update_vars = "INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (8, 'enable_ari', '0')";
-        $db->query($sql_update_vars);
-
-        $sql_update_vars = "INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (9, 'debug', '0')";
-        $db->query($sql_update_vars);
-
-        $sql_update_vars = "INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (10, 'arp_location', '" . $arp . "')";
-        $db->query($sql_update_vars);
-
-        $sql_update_vars = "INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (11, 'nmap_location', '" . $nmap . "')";
-        $db->query($sql_update_vars);
-
-        $sql_update_vars = "INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (12, 'asterisk_location', '" . $asterisk . "')";
-        $db->query($sql_update_vars);
-
-        out("Updating Mac List Table");
-        $sql = 'ALTER TABLE `autoprov_mac_list` ADD `user_cfg_data` TEXT NOT NULL AFTER `custom_cfg_data`';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_mac_list` ADD `config_files_override` TEXT NOT NULL AFTER `user_cfg_data`';
-        $db->query($sql);
-
-        out("Updating OUI Table");
-        $sql = 'ALTER TABLE `autoprov_oui_list` DROP model';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_oui_list` CHANGE `brand` `brand` INT( 11 ) NULL DEFAULT NULL';
-        $db->query($sql);
-
-        out("Updating Product List");
-        $sql = 'ALTER TABLE `autoprov_product_list` ADD `firmware_vers` TEXT NULL AFTER `hidden`';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_product_list` ADD `firmware_files` VARCHAR( 255 ) NOT NULL AFTER `firmware_vers`';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_product_list` ADD `config_files_override` TEXT NULL AFTER `firmware_files`';
-        $db->query($sql);
-
-        out("Updating Template List");
-        $sql = 'ALTER TABLE `autoprov_template_list` ADD `config_files_override` TEXT NULL AFTER `custom_cfg_data`';
-
-        out("Updating Version Number");
-        $sql = "UPDATE  autoprov_global_vars SET  value =  '2.0.0' WHERE  var_name = 'version'";
-
-        out("Creating Custom Configs Table");
-        $sql = "CREATE TABLE IF NOT EXISTS `autoprov_custom_configs` (
-		  `id` int(11) NOT NULL auto_increment,
-		  `name` varchar(255) NOT NULL,
-		  `original_name` varchar(255) NOT NULL,
-		  `product_id` int(11) NOT NULL,
-		  `data` longtext NOT NULL,
-		  PRIMARY KEY  (`id`)
-		) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11";
-        $db->query($sql);
-
-        out('Alter custom_cfg_data');
-        $sql = "ALTER TABLE autoprov_mac_list CHANGE custom_cfg_data custom_cfg_data TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL";
-        $db->query($sql);
-    }
-    if (version_compare_freepbx($epmdbversion,'1.9.1','<=')) {
-        out("Create Custom Configs Table");
-        $sql = "CREATE TABLE IF NOT EXISTS `autoprov_custom_configs` (
-	  `id` int(11) NOT NULL auto_increment,
-	  `name` varchar(255) NOT NULL,
-	  `original_name` varchar(255) NOT NULL,
-	  `product_id` int(11) NOT NULL,
-	  `data` longtext NOT NULL,
-	  PRIMARY KEY  (`id`)
-	) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11";
-        $db->query($sql);
-
-        out("Locating NMAP + ARP + ASTERISK Executables");
-
-        $nmap = find_exec("nmap");
-        $arp = find_exec("arp");
-        $asterisk = find_exec("asterisk");
-
-        out('Updating Global Variables');
-
-        $sql_update_vars = "INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (8, 'enable_ari', '0')";
-        $db->query($sql_update_vars);
-
-        $sql_update_vars = "INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (9, 'debug', '0')";
-        $db->query($sql_update_vars);
-
-        $sql_update_vars = "INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (10, 'arp_location', '" . $arp . "')";
-        $db->query($sql_update_vars);
-
-        $sql_update_vars = "INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (11, 'nmap_location', '" . $nmap . "')";
-        $db->query($sql_update_vars);
-
-        $sql_update_vars = "INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (12, 'asterisk_location', '" . $asterisk . "')";
-        $db->query($sql_update_vars);
-
-        out("Update Mac List Table");
-        $sql = 'ALTER TABLE `autoprov_mac_list` ADD `config_files_override` TEXT NOT NULL AFTER `user_cfg_data`';
-        $db->query($sql);
-
-        out("Update Product List Table");
-        $sql = 'ALTER TABLE `autoprov_product_list` ADD `config_files` TEXT NOT NULL AFTER `firmware_files`';
-        $db->query($sql);
-
-        out("Update Template List Table");
-        $sql = 'ALTER TABLE `autoprov_template_list` ADD `config_files_override` TEXT NOT NULL AFTER `custom_cfg_data`';
-        $db->query($sql);
-
-        out("Update Version Number");
-        $sql = 'UPDATE autoprov_global_vars SET value = \'2.0.0\' WHERE var_name = "version"';
-        $db->query($sql);
-
-        out('Alter custom_cfg_data');
-        $sql = "ALTER TABLE autoprov_mac_list CHANGE custom_cfg_data custom_cfg_data TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL";
-        $db->query($sql);
-    }
-    if (version_compare_freepbx($epmdbversion,'1.9.2','<=')) {
-        out('Updating Global Variables');
-    }
-
-    if (version_compare_freepbx($epmdbversion,'1.9.9','<=')) {
-        out("Adding Custom Field to OUI List");
-        $sql = 'ALTER TABLE `autoprov_oui_list` ADD `custom` INT(1) NOT NULL DEFAULT \'0\'';
-        $db->query($sql);
-
-        out("Increase value Size in global Variables Table");
-        $sql = 'ALTER TABLE `autoprov_global_vars` CHANGE `value` `value` TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT \'Data\'';
-        $db->query($sql);
-
-        out("Update global variables to include future language support");
-        $sql = 'INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (\'13\', \'temp_amp\', \'\');';
-        $db->query($sql);
-
-        $sql = "UPDATE autoprov_global_vars SET var_name = 'language' WHERE var_name = 'temp_amp'";
-        $db->query($sql);
-
-        out("Changing all 'LONG TEXT' or 'TEXT' to 'BLOB'");
-        $sql = 'ALTER TABLE `autoprov_product_list` CHANGE `cfg_data` `cfg_data` BLOB NOT NULL';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_template_list` CHANGE `custom_cfg_data` `custom_cfg_data` BLOB NULL DEFAULT NULL';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_mac_list` CHANGE `custom_cfg_data` `custom_cfg_data` BLOB NOT NULL, CHANGE `user_cfg_data` `user_cfg_data` BLOB NOT NULL';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_custom_configs` CHANGE `data` `data` LONGBLOB NOT NULL';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_product_list` ADD `special_cfgs` BLOB NOT NULL;';
-        $db->query($sql);
-
-        out("Inserting Check for Updates Command");
-        $sql = 'INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (\'14\', \'check_updates\', \'1\');';
-        $db->query($sql);
-
-        out("Inserting Disable .htaccess command");
-        $sql = 'INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (\'15\', \'disable_htaccess\', \'0\');';
-        $db->query($sql);
-
-        out("Add Automatic Update Check [Can be Disabled]");
-        $sql = "INSERT INTO cronmanager (module, id, time, freq, lasttime, command) VALUES ('autoprov', 'UPDATES', '23', '24', '0', 'php " . LOCAL_PATH . "includes/update_check.php')";
-        $db->query($sql);
-    }
-    if (version_compare_freepbx($epmdbversion,'2.0','<=')) {
-        out("Locating NMAP + ARP + ASTERISK Executables");
-        $nmap = find_exec("nmap");
-        $arp = find_exec("arp");
-        $asterisk = find_exec("asterisk");
-
-        $sql_update_vars = "INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (11, 'nmap_location', '" . $asterisk . "')";
-        $db->query($sql_update_vars);
-
-        $sql_update_vars = "INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (11, 'nmap_location', '" . $nmap . "')";
-        $db->query($sql_update_vars);
-
-        $sql_update_vars = "INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (12, 'asterisk_location', '" . $asterisk . "')";
-        $db->query($sql_update_vars);
-
-        out("Add Unique to Global Variables Table");
-        $sql = 'ALTER TABLE `autoprov_global_vars` ADD UNIQUE(`var_name`)';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_custom_configs` CHANGE `product_id` `product_id` VARCHAR(11) NOT NULL';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_mac_list` CHANGE `model` `model` VARCHAR(11) NOT NULL';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_model_list` ADD `template_list` TEXT NOT NULL AFTER `model`, ADD `template_data` BLOB NOT NULL AFTER `template_list`';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_model_list` CHANGE `product_id` `product_id` VARCHAR(11) NOT NULL';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_model_list` CHANGE `id` `id` VARCHAR(11) NOT NULL COMMENT \'Key \'';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_product_list` CHANGE `id` `id` VARCHAR(11) NOT NULL';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_product_list` ADD `short_name` VARCHAR(255) NOT NULL AFTER `long_name`';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_product_list` DROP `installed`';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_product_list` DROP `xml_data`';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_template_list` ADD `model_id` VARCHAR(10) NOT NULL AFTER `product_id`';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_template_list` CHANGE `product_id` `product_id` VARCHAR(11) NOT NULL';
-        $db->query($sql);
-
-        $sql = "UPDATE autoprov_brand_list SET cfg_ver = '0', installed = '0' WHERE installed = '1'";
-        $db->query($sql);
-
-        $sql = "TRUNCATE TABLE `autoprov_product_list`";
-        $db->query($sql);
-
-        $sql = "TRUNCATE TABLE `autoprov_oui_list`";
-        $db->query($sql);
-
-        $sql = "TRUNCATE TABLE `autoprov_brand_list`";
-        $db->query($sql);
-
-        $sql = "TRUNCATE TABLE `autoprov_model_list`";
-        $db->query($sql);
-
-        $data = & $db->getAll("SELECT * FROM `autoprov_mac_list", array(), DB_FETCHMODE_ASSOC);
-
-        $new_model_list = array(
-            "2" => "1-2-11",
-            "3" => "1-2-10",
-            "4" => "1-2-9",
-            "6" => "4-2-3",
-            "7" => "4-3-7",
-            "8" => "6-1-1",
-            "9" => "6-1-2",
-            "10" => "6-1-3",
-            "11" => "6-1-4",
-            "12" => "6-1-5",
-            "13" => "6-1-6",
-            "15" => "2-1-3",
-            "22" => "4-2-4",
-            "23" => "2-1-2",
-            "24" => "2-1-1",
-            "25" => "2-1-4",
-            "26" => "2-1-5",
-            "27" => "2-2-1",
-            "28" => "2-2-2",
-            "29" => "4-2-1",
-            "30" => "4-2-5",
-            "31" => "4-2-6",
-            "32" => "4-2-7",
-            "33" => "4-2-2",
-            "34" => "4-3-1",
-            "35" => "4-3-2",
-            "36" => "4-3-3",
-            "37" => "4-3-4",
-            "38" => "4-3-5",
-            "39" => "4-3-6",
-            "40" => "4-3-8",
-            "41" => "4-3-9",
-            "42" => "4-3-10",
-            "43" => "4-3-11",
-            "44" => "4-3-12",
-            "45" => "4-1-1",
-            "46" => "4-1-2",
-            "47" => "1-2-1",
-            "48" => "1-2-2",
-            "49" => "1-1-1",
-            "50" => "1-1-2",
-            "51" => "1-2-3",
-            "52" => "1-2-4",
-            "53" => "1-2-5",
-            "54" => "1-2-6",
-            "55" => "1-2-7",
-            "56" => "1-2-8",
-            "57" => "",
-            "58" => "",
-            "59" => "",
-            "60" => "7-1-1",
-            "61" => "7-1-2",
-            "62" => "8-1-1",
-            "63" => "8-1-2",
-            "64" => "8-1-3",
-            "65" => "8-1-4",
-            "67" => "7-2-1",
-            "68" => "7-2-2",
-            "69" => "7-2-3",
-            "70" => "7-2-4",
-            "71" => "7-2-5",
-            "72" => "7-2-6"
-        );
-
-        foreach ($data as $list) {
-            $sql = "UPDATE autoprov_mac_list SET model = '" . $new_model_list[$list['model']] . "' WHERE id = " . $list['id'];
-            $db->query($sql);
-        }
-
-
-
-        $new_product_list = array(
-            "6" => array("product_id" => "1-1", "model_id" => "1-1-1"),
-            "7" => array("product_id" => "1-2", "model_id" => "1-2-1"),
-            "1" => array("product_id" => "2-1", "model_id" => "2-1-1"),
-            "2" => array("product_id" => "2-2", "model_id" => "2-2-1"),
-            "3" => array("product_id" => "4-2", "model_id" => "4-2-1"),
-            "5" => array("product_id" => "4-1", "model_id" => "4-1-1"),
-            "4" => array("product_id" => "4-3", "model_id" => "4-3-1"),
-            "8" => array("product_id" => "6-1", "model_id" => "6-1-1"),
-            "9" => array("product_id" => "7-1", "model_id" => "7-1-1"),
-            "11" => array("product_id" => "7-2", "model_id" => "7-2-1"),
-            "10" => array("product_id" => "8-1", "model_id" => "8-1-1")
-        );
-
-        $data = array();
-        $data = & $db->getAll("SELECT * FROM autoprov_custom_configs", array(), DB_FETCHMODE_ASSOC);
-        foreach ($data as $list) {
-            $sql = "UPDATE autoprov_custom_configs SET product_id = '" . $new_product_list[$list['product_id']]['product_id'] . "' WHERE id = " . $list['id'];
-            $db->query($sql);
-        }
-
-        $data = array();
-        $data = & $db->getAll("SELECT * FROM autoprov_template_list", array(), DB_FETCHMODE_ASSOC);
-        foreach ($data as $list) {
-            $sql = "UPDATE autoprov_template_list SET model_id = '" . $new_product_list[$list['product_id']]['model_id'] . "', product_id = '" . $new_product_list[$list['product_id']]['product_id'] . "' WHERE id = " . $list['id'];
-            $db->query($sql);
-        }
-
-        out('WARNING: Config Files have changed MUCH. We have to remove all of your old custom config files. Sorry :-(');
-        $db->query('TRUNCATE TABLE `autoprov_custom_configs`');
-
-
-        exec("rm -Rf " . PHONE_MODULES_PATH);
-
-        if (!file_exists(PHONE_MODULES_PATH)) {
-            mkdir(PHONE_MODULES_PATH, 0764);
-            out("Creating Phone Modules Directory");
-        }
-
-        if (!file_exists(PHONE_MODULES_PATH . "setup.php")) {
-            copy(LOCAL_PATH . "install/setup.php", PHONE_MODULES_PATH . "setup.php");
-            out("Moving Auto Provisioner Class");
-        }
+// version 15.0.0.1 installe
+	if (version_compare_freepbx($epmdbversion,'15.0.0.1','<=')) {
+out("MAJ 15.0.0.1 to 15.0.0.2");
+    out("Copie des fichiers de provisioning");
+system("/bin/cp -R /var/www/html/admin/modules/autoprov/_ap_phone_modules/endpoint/yealinkv80/t5x /var/www/html/admin/modules/_ap_phone_modules/endpoint/yealinkv80/");
+system("/bin/cp -Rf /var/www/html/admin/modules/autoprov/_ap_phone_modules/endpoint/yealinkv80/brand_data.json /var/www/html/admin/modules/_ap_phone_modules/endpoint/yealinkv80/");    
+	out("MAJ base de donnees");		
+$sql = "INSERT INTO `autoprov_product_list` (`id`, `brand`, `long_name`, `short_name`, `cfg_dir`, `cfg_ver`, `hidden`, `firmware_vers`, `firmware_files`, `config_files`, `special_cfgs`) VALUES
+('215', 21, 'Yealink V80 T5X Models: [T53W, T54W, T57W]', 'Yealink V80 T5X Models: ', 't5x', '', 0, '', '', 'y0000000000\$suffix.cfg,\$mac.cfg', '')";
+$db->query($sql);
 		
-		if (!file_exists(PHONE_MODULES_PATH . "autoload.php")) {
-            copy(LOCAL_PATH . "_ap_phone_modules/autoload.php", PHONE_MODULES_PATH . "autoload.php");
-            out("Moving AutoLoad File");
-        }
-
-        if (!file_exists(PHONE_MODULES_PATH . "temp/")) {
-            mkdir(PHONE_MODULES_PATH . "temp/", 0764);
-            out("Creating temp folder");
-        }
-    }
-
-    if (version_compare_freepbx($epmdbversion,'2.2.2','<=')) {
-
-        out("Remove all Dashes in IDs");
-        $data = array();
-        $data = & $db->getAll("SELECT * FROM `autoprov_model_list", array(), DB_FETCHMODE_ASSOC);
-        foreach ($data as $list) {
-            $new_model_id = str_replace("-", "", $list['id']);
-            $sql = "UPDATE autoprov_model_list SET id = '" . $new_model_id . "' WHERE id = " . $list['id'];
-            $db->query($sql);
-        }
-
-        $data = array();
-        $data = & $db->getAll("SELECT * FROM `autoprov_product_list", array(), DB_FETCHMODE_ASSOC);
-        foreach ($data as $list) {
-            $new_product_id = str_replace("-", "", $list['id']);
-            $sql = "UPDATE autoprov_product_list SET id = '" . $new_product_id . "' WHERE id = " . $list['id'];
-            $db->query($sql);
-        }
-
-        $data = array();
-        $data = & $db->getAll("SELECT * FROM `autoprov_mac_list", array(), DB_FETCHMODE_ASSOC);
-        foreach ($data as $list) {
-            $new_model_id = str_replace("-", "", $list['model']);
-            $sql = "UPDATE autoprov_mac_list SET model = '" . $new_model_id . "' WHERE id = " . $list['id'];
-            $db->query($sql);
-        }
-
-        $data = array();
-        $data = & $db->getAll("SELECT * FROM autoprov_template_list", array(), DB_FETCHMODE_ASSOC);
-        foreach ($data as $list) {
-            $new_model_id = str_replace("-", "", $list['model_id']);
-            $new_product_id = str_replace("-", "", $list['product_id']);
-            $sql = "UPDATE autoprov_template_list SET model_id = '" . $new_model_id . "', product_id = '" . $new_product_id . "' WHERE id = " . $list['id'];
-            $db->query($sql);
-        }
-
-        $data = array();
-        $data = & $db->getAll("SELECT * FROM autoprov_custom_configs", array(), DB_FETCHMODE_ASSOC);
-        foreach ($data as $list) {
-            $new_product_id = str_replace("-", "", $list['product_id']);
-            $sql = "UPDATE autoprov_custom_configs SET product_id = '" . $new_product_id . "' WHERE id = " . $list['id'];
-            $db->query($sql);
-        }
-    }
-    if (version_compare_freepbx($epmdbversion,'2.2.3','<=')) {
-        $sql = "UPDATE autoprov_global_vars SET value = 'http://www.provisioner.net/release/' WHERE var_name = 'update_server'";
-        $db->query($sql);
-    }
-
-    if (version_compare_freepbx($epmdbversion,'2.2.4','<=')) {
+$sql = "INSERT INTO `autoprov_model_list` (`id`, `brand`, `model`, `max_lines`, `template_list`, `template_data`, `product_id`, `enabled`, `hidden`) VALUES
+('2153', 21, 'T53W', 2, 'template_data.json,line_keys_5x.json,soft_keys.json,hard_keys.json', '', '215', 1, 0),
+('2154', 21, 'T54W', 2, 'template_data.json,line_keys_5x.json,soft_keys.json,hard_keys.json', '', '215', 1, 0),
+('2157', 21, 'T57W', 2, 'template_data.json,line_keys_5x.json,soft_keys.json,hard_keys.json', '', '215', 1, 0)";
+$db->query($sql);
 
     }
-
-    if (version_compare_freepbx($epmdbversion,'2.2.5','<=')) {
-        out("Fixing Permissions of Phone Modules Directory");
-        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(PHONE_MODULES_PATH), RecursiveIteratorIterator::SELF_FIRST);
-        foreach ($iterator as $item) {
-            chmod($item, 0764);
-        }
-
-        out("Creating Endpoint Version Row");
-        $sql = 'INSERT INTO `asterisk`.`autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (NULL, \'endpoint_vers\', \'\');';
-        $db->query($sql);
-    }
-
-    if (version_compare_freepbx($epmdbversion,'2.2.6','<=')) {
-        $sql = "CREATE TABLE IF NOT EXISTS `autoprov_line_list` (
-              `luid` int(11) NOT NULL AUTO_INCREMENT,
-              `mac_id` int(11) NOT NULL,
-              `line` smallint(2) NOT NULL,
-              `ext` varchar(15) NOT NULL,
-              `description` varchar(150) NOT NULL,
-              `custom_cfg_data` longblob NOT NULL,
-              `user_cfg_data` longblob NOT NULL,
-              PRIMARY KEY (`luid`)
-            ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;";
-        $db->query($sql);
-
-        $data = array();
-        $data = & $db->getAll("SELECT * FROM autoprov_mac_list", array(), DB_FETCHMODE_ASSOC);
-        foreach ($data as $list) {
-            $sql = "INSERT INTO autoprov_line_list (mac_id, line, ext, description) VALUES ('" . $list['id'] . "', '1', '" . $list['ext'] . "', '" . $list['description'] . "')";
-            $db->query($sql);
-        }
-
-        $sql = 'ALTER TABLE `autoprov_custom_configs` CHANGE `data` `data` LONGBLOB NOT NULL';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_mac_list` DROP `description`';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_mac_list` DROP `ext`';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_mac_list` CHANGE `custom_cfg_template` `template_id` INT(11) NOT NULL';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_mac_list` CHANGE `cfg_template_data` `global_template_id` LONGBLOB NOT NULL';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_mac_list` CHANGE `user_cfg_data` `global_user_cfg_data` LONGBLOB NOT NULL';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_model_list` ADD `max_lines` SMALLINT(2) NOT NULL AFTER `model`;';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_model_list` CHANGE `template_data` `template_data` LONGBLOB NOT NULL';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_template_list` CHANGE `custom_cfg_data` `global_custom_cfg_data` LONGBLOB NULL DEFAULT NULL';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_mac_list` CHANGE `custom_cfg_data` `global_custom_cfg_data` LONGBLOB NOT NULL';
-        $db->query($sql);
-    }
-
-    if (version_compare_freepbx($epmdbversion,'2.2.8','<=')) {
-        out("Fix Debug Left on Error, this turns off debug.");
-        $sql = "UPDATE autoprov_global_vars SET value = '0' WHERE var_name = 'debug'";
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE  autoprov_mac_list CHANGE global_user_cfg_data  global_user_cfg_data LONGBLOB NOT NULL';
-        $db->query($sql);
-    }
-
-    if (version_compare_freepbx($epmdbversion,'2.4.0','<=')) {
-        out("Uninstalling All Installed Brands (You'll just simply have to update again, no loss of data)");
-        $db->query("UPDATE autoprov_brand_list SET  installed =  '0'");
-        $sql = "UPDATE  autoprov_model_list SET  enabled =  '0', template_data = '" . serialize(array()) . "'";
-        $db->query($sql);
-
-        exec("rm -Rf " . PHONE_MODULES_PATH);
-
-        if (!file_exists(PHONE_MODULES_PATH)) {
-            mkdir(PHONE_MODULES_PATH, 0764);
-            out("Creating Phone Modules Directory");
-        }
-
-        if (!file_exists(PHONE_MODULES_PATH . "setup.php")) {
-            copy(LOCAL_PATH . "install/setup.php", PHONE_MODULES_PATH . "setup.php");
-            out("Moving Auto Provisioner Class");
-        }
-		
-		if (!file_exists(PHONE_MODULES_PATH . "autoload.php")) {
-            copy(LOCAL_PATH . "_ap_phone_modules/autoload.php", PHONE_MODULES_PATH . "autoload.php");
-            out("Moving AutoLoad File");
-        }
-
-        if (!file_exists(PHONE_MODULES_PATH . "temp/")) {
-            mkdir(PHONE_MODULES_PATH . "temp/", 0764);
-            out("Creating temp folder");
-        }
-    }
-
-    if (version_compare_freepbx($epmdbversion,'2.9.0.2','<=')) {
-        $sql = 'INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (NULL, \'disable_help\', \'0\');';
-        $db->query($sql);
-    }
-
-    if (version_compare_freepbx($epmdbversion,'2.9.0.3','<=')) {
-        $sql = 'ALTER TABLE  `autoprov_custom_configs` CHANGE  `data`  `data` LONGBLOB NOT NULL';
-        $db->query($sql);
-    }
-
-    if (version_compare_freepbx($epmdbversion,'2.9.0.4','<=')) {
-        out("Adding 'local' column to brand_list");
-        $sql = 'ALTER TABLE  `autoprov_brand_list` ADD  `local` INT( 1 ) NOT NULL DEFAULT  \'0\' AFTER  `cfg_ver`';
-        $db->query($sql);
-    }
-
-    if (version_compare_freepbx($epmdbversion,'2.9.0.7','<=')) {
-        out("Adding UNIQUE key to table global_vars for var_name");
-        $sql = "ALTER TABLE `autoprov_global_vars` ADD UNIQUE `unique` (`var_name`)";
-        $db->query($sql);
-
-        out("Adding show_all_registrations to global_vars table");
-        $sql = 'INSERT INTO autoprov_global_vars (idnum, var_name, value) VALUES (NULL, "show_all_registrations", "0")';
-        $db->query($sql);
-    }
-
-    if (version_compare_freepbx($epmdbversion,'2.9.1','<=')) {
-        out("Fix again to the 'Allow Duplicate Extensions' Error");
-        $sql = 'ALTER TABLE `autoprov_global_vars` ADD UNIQUE `var_name` (`var_name`)';
-        $db->query($sql);
-        $sql = 'INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (NULL, \'show_all_registrations\', \'0\');';
-        $db->query($sql);
-    }
-
-    if (version_compare_freepbx($epmdbversion,'2.9.2.0','<=')) {
-        out("Adding new Network Time Protocol Setting");
-        $sql = "INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (NULL, 'ntp', '" . $_SERVER["SERVER_ADDR"] . "')";
-        $db->query($sql);
-        out("Upgrading all timezone data to new improved simplified system");
-
-        $sql = 'ALTER TABLE `autoprov_mac_list` ADD `global_settings_override` LONGBLOB NULL;';
-        $db->query($sql);
-        $sql = 'ALTER TABLE `autoprov_template_list` ADD `global_settings_override` LONGBLOB NULL;';
-        $db->query($sql);
-
-        $sql = 'INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (NULL, \'server_type\', \'file\');';
-        $db->query($sql);
-
-        out('Creating symlink to web provisioner');
-        if (!symlink(LOCAL_PATH . "provisioning", $amp_conf['AMPWEBROOT'] . "/provisioning")) {
-            out("<strong>Your permissions are wrong on " . $amp_conf['AMPWEBROOT'] . ", web provisioning link not created!</strong>");
-        }
-
-        $sql = 'SELECT `value` FROM `autoprov_global_vars` WHERE `var_name` = CONVERT(_utf8 \'gmthr\' USING latin1) COLLATE latin1_swedish_ci';
-        $old_tz_gmt = $db->getOne($sql);
-
-        $sql = "SELECT id FROM `autoprov_time_zones_new` WHERE `gmt` LIKE '" . $old_tz_gmt . "'";
-        $new_tz_id = $db->getOne($sql);
-
-        $sql = "UPDATE autoprov_global_vars SET value = '" . $new_tz_id . ".0' WHERE var_name = 'tz'";
-        $db->query($sql);
-
-        $sql = 'INSERT INTO `autoprov_global_vars` (`var_name`, `value`) VALUES (\'allow_hdfiles\', \'0\');';
-        $db->query($sql);
-
-        $sql = 'ALTER TABLE `autoprov_mac_list` ADD `specific_settings` LONGBLOB NULL;';
-        $db->query($sql);
-    }
-
-    if (version_compare_freepbx($epmdbversion,'2.10.2.1','<=')) {
-        out('Updating Mirror Location...again');
-        $sql = "UPDATE autoprov_global_vars SET value = 'http://mirror.freepbx.org/provisioner/v3/' WHERE var_name ='update_server'";
-        $db->query($sql);
-
-        out("Uninstalling All Installed Brands (You'll just simply have to update again, no loss of data)");
-        $db->query("UPDATE autoprov_brand_list SET installed =  '0'");
-        $db->query("TRUNCATE TABLE autoprov_brand_list");
-
-        $sql = "UPDATE  autoprov_model_list SET  enabled =  '0', template_data = '" . serialize(array()) . "'";
-        $db->query($sql);
-
-        out("Moving old brand data for backups, its now in " . $amp_conf['AMPWEBROOT'] . "/admin/modules/_ap_phone_modules_old");
-        exec("mv " . $amp_conf['AMPWEBROOT'] . "/admin/modules/_ap_phone_modules" . " " . $amp_conf['AMPWEBROOT'] . "/admin/modules/_ap_phone_modules_old");
-
-        if (!file_exists(PHONE_MODULES_PATH)) {
-            mkdir(PHONE_MODULES_PATH, 0764);
-            out("Creating Phone Modules Directory");
-        }
-
-        if (!file_exists(PHONE_MODULES_PATH . "setup.php")) {
-            copy(LOCAL_PATH . "install/setup.php", PHONE_MODULES_PATH . "setup.php");
-            out("Moving Auto Provisioner Class");
-        }
-		
-		if (!file_exists(PHONE_MODULES_PATH . "autoload.php")) {
-            copy(LOCAL_PATH . "_ap_phone_modules/autoload.php", PHONE_MODULES_PATH . "autoload.php");
-            out("Moving AutoLoad File");
-        }
-
-        if (!file_exists(PHONE_MODULES_PATH . "temp/")) {
-            mkdir(PHONE_MODULES_PATH . "temp/", 0764);
-            out("Creating temp folder");
-        }
-    }
-
-    if (version_compare_freepbx($epmdbversion,'2.10.3.1','<=')) {
-        out("Adding tftp server check and nmap search save values");
-        $sql = 'INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (NULL, \'tftp_check\', \'0\');';
-        $db->query($sql);
-        $sql = 'INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (NULL, \'nmap_search\', \'\');';
-        $db->query($sql);
-    }
-
-    if (version_compare_freepbx($epmdbversion,'2.10.3.7','<=')) {
-        out("Adding Config File Backups");
-        $sql = 'INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (NULL, \'backup_check\', \'1\');';
-        $db->query($sql);
-    }
-
-    if (version_compare_freepbx($epmdbversion,'2.10.3.8','<=')) {
-        out("Adding Use Repo Option");
-        $sql = 'INSERT INTO `autoprov_global_vars` (`idnum`, `var_name`, `value`) VALUES (NULL, \'use_repo\', \'0\');';
-        $db->query($sql);
-    }
+	
+// a suivre 
+// version 15.0.0.2 installe
+//	if (version_compare_freepbx($epmdbversion,'15.0.0.2','<=')) {
+//out("MAJ 15.0.0.2 to 15.0.0.3");
+// }
+	
 }
 
+
+// si nouvelle install
 if (empty($epmdbversion)) {
 
     out("Creating Brand List Table");
@@ -1063,15 +281,8 @@ if (empty($epmdbversion)) {
 			//out("<strong>Your permissions are wrong on ".$amp_conf['AMPWEBROOT'].", web provisioning link not created!</strong>");
 		}
 	}
-}
-
-if (!file_exists(PHONE_MODULES_PATH . "endpoint")) {
-    // copy(LOCAL_PATH . "_ap_phone_modules/endpoint", PHONE_MODULES_PATH . "endpoint");
-	system("/bin/cp -R /var/www/html/admin/modules/autoprov/_ap_phone_modules/endpoint /var/www/html/admin/modules/_ap_phone_modules/");
-	// system("/bin/cp -R " . LOCAL_PATH . "_ap_phone_modules/endpoint " . PHONE_MODULES_PATH .);
-    out("Copie des fichiers de provisioning");
-}
-
+	
+	
 out("Mise ajour des tables de provisionning");
 out("autoprov_brand_list");
 $sql = "TRUNCATE TABLE `autoprov_brand_list`";
@@ -1104,6 +315,7 @@ $sql = "INSERT INTO `autoprov_product_list` (`id`, `brand`, `long_name`, `short_
 ('202', 20, '[Patton FXS ]SN43XX', 'SN43XX', 'SN43XX', '', 0, '', '', '\$mac.cfg', ''),
 ('211', 21, 'Yealink V80 T2X Models: [T19, T20, T21, T22, T26, T28]', 'Yealink V80 T2X Models: ', 't2x', '', 0, '', '', 'y0000000000\$suffix.cfg,\$mac.cfg', ''),
 ('214', 21, 'Yealink V80 T4X Models: [T41, T42, T46]', 'Yealink V80 T4X Models: ', 't4x', '', 0, '', '', 'y0000000000\$suffix.cfg,\$mac.cfg', ''),
+('215', 21, 'Yealink V80 T5X Models: [T53W, T54W, T57W]', 'Yealink V80 T5X Models: ', 't5x', '', 0, '', '', 'y0000000000\$suffix.cfg,\$mac.cfg', ''),
 ('216', 21, 'Yealink V80 DECT Models: [W52P]', 'Yealink V80 DECT Models: ', 'w52p', '', 0, '', '', 'y0000000000\$suffix.cfg,\$mac.cfg', ''),
 ('222', 22, 'UC9XX[ / HTEK]', 'UC9XX', 'UC9XX', '', 1, '', '', 'cfg\$mac', ''),
 ('221', 22, 'Htek Enterprise HD series [926,924,862,842,860,840,806,804,803,802]', 'Htek Enterprise HD series ', 'uc8xx', '', 0, '', '', 'cfg\$mac', '')";
@@ -1160,6 +372,9 @@ $sql = "INSERT INTO `autoprov_model_list` (`id`, `brand`, `model`, `max_lines`, 
 ('2146', 21, 'T42S', 2, 'template_data.json,line_keys_15.json,soft_keys.json,hard_keys.json', '', '214', 1, 0),
 ('2147', 21, 'T46S', 2, 'template_data.json,line_keys_46.json,soft_keys_46.json,hard_keys_46.json,exp.json', '', '214', 1, 0),
 ('2148', 21, 'T48S', 2, 'template_data.json,line_keys_46.json,soft_keys.json,hard_keys.json', '', '214', 1, 0),
+('2153', 21, 'T53W', 2, 'template_data.json,line_keys_5x.json,soft_keys.json,hard_keys.json', '', '215', 1, 0),
+('2154', 21, 'T54W', 2, 'template_data.json,line_keys_5x.json,soft_keys.json,hard_keys.json', '', '215', 1, 0),
+('2157', 21, 'T57W', 2, 'template_data.json,line_keys_5x.json,soft_keys.json,hard_keys.json', '', '215', 1, 0),
 ('2161', 21, 'W52P', 5, 'template_data.json', '', '216', 1, 0),
 ('2221', 22, 'UC912', 4, 'template_data.json,LAN.json,repertoire.json,VLAN.json', '', '222', 0, 1),
 ('2211', 22, 'UC862', 4, 'template_data_860.json,line_keys_860.json,hard_keys_860.json,soft_keys_860.json', '', '221', 1, 0),
@@ -1174,8 +389,19 @@ $sql = "INSERT INTO `autoprov_model_list` (`id`, `brand`, `model`, `max_lines`, 
 ('22110', 22, 'UC924', 4, 'template_data_926.json,line_keys_924.json,hard_keys_926.json,soft_keys_926.json', '', '221', 1, 0)";
 $db->query($sql);
 
+}
 
-out("Update Version Number to " . $epmxmlversion);
+// a executer a chaque install
+
+if (!file_exists(PHONE_MODULES_PATH . "endpoint")) {
+    // copy(LOCAL_PATH . "_ap_phone_modules/endpoint", PHONE_MODULES_PATH . "endpoint");
+	system("/bin/cp -R /var/www/html/admin/modules/autoprov/_ap_phone_modules/endpoint /var/www/html/admin/modules/_ap_phone_modules/");
+	// system("/bin/cp -R " . LOCAL_PATH . "_ap_phone_modules/endpoint " . PHONE_MODULES_PATH .);
+    out("Copie des fichiers de provisioning");
+}
+
+
+out("Mise a jour num version a " . $epmxmlversion);
 $sql = "UPDATE autoprov_global_vars SET value = '" . $epmxmlversion . "' WHERE var_name = 'version'";
 $db->query($sql);
 

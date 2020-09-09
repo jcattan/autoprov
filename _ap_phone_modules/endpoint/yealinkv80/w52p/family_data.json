@@ -19,7 +19,8 @@
         "lines": "5",
         "id": "1",
         "template_data": [
-          "template_data.json"
+          "template_data.json",
+          "remote_phonebook.json"
         ]
       }
     ]

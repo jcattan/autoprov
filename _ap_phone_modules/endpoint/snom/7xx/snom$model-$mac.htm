@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <settings>
 	<phone-settings>
-		<auto_reboot_on_setting_change perm="RW">on</auto_reboot_on_setting_change> 
-		<settings_refresh_timer perm="RW">36000</settings_refresh_timer>
+      <dfks idx="" perm="RW">off</dfks> 
+      <auto_reboot_on_setting_change perm="RW">on</auto_reboot_on_setting_change> 
+      <settings_refresh_timer perm="RW">36000</settings_refresh_timer>
 		<language perm="">{$language}</language>
 		<dnd_on_code perm="">*78</dnd_on_code>
 		<dnd_off_code perm="">*79</dnd_off_code>
@@ -27,6 +28,7 @@
 		<log_level perm="">5</log_level>
 
 		{line_loop}
+      	<dfks idx="{$line}" perm="">off</dfks> 
 		<user_active idx="{$line}" perm="">on</user_active>
 		<user_host idx="{$line}" perm="">{$user_host}</user_host>
 		<user_outbound idx="{$line}" perm="">{$user_outbound}</user_outbound>	
@@ -68,7 +70,7 @@
 		<admin_mode_password_confirm perm="">{$admin_mode_password}</admin_mode_password_confirm>
 		<admin_mode perm="">{$admin_mode}</admin_mode>
 		<firmware_status perm="R">http://{$server.ip.1}/provisioning/p.php/{$mac}_firmware.xml</firmware_status>
-		<update_policy perm="">auto_update</update_policy>
+		<update_policy perm="RW">auto_update</update_policy>
 		<dst perm="R">{$dstrule}</dst>
 		<tone_scheme perm="R">{$tone_scheme}</tone_scheme>
 				<perform_initial_query_in_ldap_state perm="RW">on</perform_initial_query_in_ldap_state>
@@ -162,10 +164,8 @@
 	    <template match="*.." timeout="2" scheme="sip" user="phone" rewrite="" />
 	    <template match="*..." timeout="2" scheme="sip" user="phone" rewrite="" />
 	    <template match="*...." timeout="2" scheme="sip" user="phone" rewrite="" />
-	    <template match="1[578]" timeout="0" scheme="sip" user="phone" rewrite="" />
-	    <template match="0" timeout="2" scheme="sip" user="phone" rewrite="" />
 	    <template match="11.*" timeout="4" scheme="sip" user="phone" rewrite="" />
-	    <template match="0[1-9]........" timeout="1" scheme="sip" user="phone" rewrite="" />
+	    <template match="0[1-9]........" timeout="2" scheme="sip" user="phone" rewrite="" />
 	    <template match="[13]..." timeout="3" scheme="sip" user="phone" rewrite="" />
 
 	</dialplan>

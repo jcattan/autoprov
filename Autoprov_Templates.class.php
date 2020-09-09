@@ -427,7 +427,7 @@ class Autoprov_Templates
 		$sql = 'SELECT autoprov_mac_list.mac, autoprov_mac_list.id, autoprov_mac_list.model, autoprov_model_list.model as model_clone, autoprov_product_list.short_name as model_class FROM autoprov_mac_list, autoprov_model_list, autoprov_product_list WHERE  autoprov_product_list.id = autoprov_model_list.product_id AND autoprov_mac_list.global_custom_cfg_data IS NOT NULL AND autoprov_model_list.id = autoprov_mac_list.model AND autoprov_mac_list.template_id = 0';
 		$template_list = sql($sql, 'getAll', DB_FETCHMODE_ASSOC);
 		foreach($template_list as $row) {
-			$sql = 'SELECT  description , line FROM  autoprov_line_list WHERE  mac_id ='. $row['id'].' ORDER BY line ASC';
+			$sql = 'SELECT  description , line , ext FROM  autoprov_line_list WHERE  mac_id ='. $row['id'].' ORDER BY line ASC';
 			$line_list = sql($sql, 'getAll', DB_FETCHMODE_ASSOC);
 			$description = "";
 			$c = 0;
@@ -440,7 +440,7 @@ class Autoprov_Templates
 			}
 			$row_out[$i] = $row;
 			$row_out[$i]['custom'] = 1;
-			$row_out[$i]['name'] = $row['mac'];
+			$row_out[$i]['name'] = $row['mac'] . " - " . $line_row['ext'] . " - " . $description;
 			$row_out[$i]['description'] = $description;
 			$i++;
 		}

@@ -50,7 +50,7 @@ P130 = {$SIP_Transport_01}
 P52 = {$NAT_Traversal_01}
 
 # Label(This name will be displayed on the device's LCD)
-P20000=
+P20000 = {$displayname.line.1}
 
 # SIP User ID 
 P35 = {$username.line.1}
@@ -63,6 +63,7 @@ P34 = {$secret.line.1}
 
 # Name
 P3 = {$displayname.line.1}
+
 
 # DNS Mode. 0 - A Record, 1 - SRV, 2 - NAPTR/SRV 
 # Number: 0-2
@@ -1942,58 +1943,58 @@ P20181=0
 #--------------------------------------
 # WAN. 0 - DHCP, 1 - Static IP Address, 2 - PPPoE
 # Number: 0-2
-P8 = 0
+# P8 = 
 #--------------------------------------
 # IPv4--DHCP
 #--------------------------------------
 # DHCP HostName, DHCP option 12. Max length allowed is 64 characters. Default value is 0.
 # String
-P146 =
+# P146 =
 
 # DHCP Domain
-P147 =
+# P147 =
 
 # DHCP Vendor Class ID, DHCP option 60. Max length allowed is 64 characters. 
 # String
-P148 =
+# P148 =
 
 # DHCP User Class
-P149 =
+# P149 =
 #--------------------------------------
 # IPv4--Static IP Address
 #--------------------------------------
 # IP Address
-P9 = 0 
-P10 = 0
-P11 = 0
-P12 = 0
+# P9 = 0 
+# P10 = 0
+# P11 = 0
+# P12 = 0
 
 # Subnet Mask
-P13 = 0 
-P14 = 0
-P15 = 0
-P16 = 0
+# P13 = 0 
+# P14 = 0
+# P15 = 0
+# P16 = 0
 
 # Default Gateway
-P17 = 0 
-P18 = 0
-P19 = 0
-P20 = 0
+# P17 = 0 
+# P18 = 0
+# P19 = 0
+# P20 = 0
 
 # Static DNS.0 - No, 1 - Yes 
-P20163=0
+# P20163=0
 
 # Primary DNS
-P21 =
-P22 =
-P23 =
-P24 =
+# P21 =
+# P22 =
+# P23 =
+# P24 =
 
 # Secondary DNS
-P25 =
-P26 =
-P27 =
-P28 =
+# P25 =
+# P26 =
+# P27 =
+# P28 =
 
 #--------------------------------------
 # IPv4--PPPoE
@@ -11671,7 +11672,7 @@ P8940 = {$Screen_Time_Out}
 # 1 - 1min, 2 - 5min, 3 - 10min, 4 - 20min, 5 - 30min, 6 - 60min 
 P8940 = {$Expansion_screensaver_time}
 
-# Text Logo(it will work when screensaver type is time &amp;amp; 
+# Text Logo(it will work when screensaver type is time 
 # logo or logo only, and ';' represents the newline)
 P8951 = {$Text_Logo}
 
@@ -11844,11 +11845,14 @@ P53123 =
 #--------------------------------
 # Do Not Disturb
 #---------------------------------
+# type de DND --- 0 poste 1 server 2 mixte
+P1301 = 1
+
 # DND On Code(The feature code to enable DND,the phone will send the feature code directly to open DND) 	
-P53200 =
+P53200 = *78
 
 # DND Off Code(The feature code to disable DND,the phone will send the feature code directly to close DND)
-P53201 =
+P53201 = *79
 
 # Authorized Numbers(comma separated)
 P53202 =
@@ -11877,7 +11881,7 @@ P3204 = 1
 
 # Transfer Mode via DSSkey
 # 0 - Attended Transfer, 1 - Blind Transfer, 2 - New Call
-P3205 = 1
+P3205 = 0
 
 # Hold Transfer On Hook
 # 1 - On,0 - Off
@@ -11887,16 +11891,16 @@ P3207 = 1
 # Call Pickup
 #---------------------------------------
 # Direct Call Pickup.0 - off, 1 - on
-P4701 = 0
+P4701 = 1
 
 # Direct Call Pickup Code
-P4745 = 
+P4745 = **
 
 # Group Call Pickup.0 - off, 1 - on
-P4702 = 0
+P4702 = 1
 
 # Group Call Pickup Code
-P4746 = 
+P4746 = *8
 
 
 # Visual Alert for BLF Pickup.0 - off, 1 - on
@@ -12194,14 +12198,14 @@ P143 = 0
 # 98 - +10 Australia(Hobart), 99 - +10 Russia(Vladivostok), 100 - +10:30 Australia(Lord Howe Islands)
 # 101 - +11 New Caledonia(Noumea), 102 - +12 New Zeland(Wellington,Auckland)
 # 103 - +12:45 New Zeland(Chatham Islands), 104 - +13 Tonga(Nukualofa)
-P64 = 18
+P64 = 49
 
 # NTP Server is Covered with DHCP (Allow DHCP Option 42 To Override NTP Server)
 # 0 - no, 1 - yes
 P144 = 0
 
 # NTP Server (NTP Server Address)
-P30 = time.windows.com
+P30 = {$server_host.line.1}
 
 # Backup NTP Server (Set the backup NTP server to obtain the time)
 P8622 = 
@@ -12218,7 +12222,7 @@ P23128 = 0
 # (If set to Auto, Daylight Time will be 1 hour ahead of standard time; if 
 # set to Enable, user can customize the DST start and end times)
 # 0 - Disable, 1 - Enable, 2 - Auto
-P75 = 0
+P75 = 2
 
 # DST Type. 0 - Date Type, 1 - Week Type
 P23117 = 0
@@ -12310,22 +12314,22 @@ P102 = 2
 #----------------------------------------
 # Select Country
 # 0 - Custom, 1 - Australia, 2 - Austria, 3 - Brazil, 4 - Belgium, 5 - China, 6 - Chile,7 - Czech,8 - Denmark, 9 - Finland,10 - France, 11 - Germany, 12 - Great Britain, 13 - Greece, 14 - Hungary, 15 - Lithuania, 16 - India,17 - Italy, 18 - Japan, 19 - Mexico,20 - New Zealand, 21 - Netherlands, 22 - Norway, 23 - Portugal,24 - Spain,25 - Switzerland, 26 - Sweden, 27 - Russia,  28 - United States
-P20058 = 0
+P20058 = 10
 
 # Dial Tone
-P4000 = f1=350@-13,f2=440@-13,c=0/0;
+P4000 = f1=440@-13,f2=440@-13,c=0/0;
 
 # Ringback Tone
-P4001 = f1=440@-19,f2=480@-19,c=2000/4000;
+P4001 = f1=440@-19,f2=440@-19,c=1500/3500;
 
 # Busy Tone
-P4002 = f1=480@-24,f2=620@-24,c=500/500;
+P4002 = f1=440@-24,f2=440@-24,c=500/500;
 
 # Reorder Tone
-P4003 = f1=480@-24,f2=620@-24,c=250/250;
+P4003 = f1=440@-24,f2=440@-24,c=250/250;
 
 # Confirmation Tone
-P4004 = f1=350@-11,f2=440@-11,c=100/100-100/100-100/100;
+P4004 = f1=440@-11,f2=440@-11,c=100/100-100/100-100/100;
 
 # Call Waiting Tone
 P4005 = f1=440@-13,c=300/10000-300/10000-0/0;
@@ -12537,6 +12541,7 @@ P5431 = {$LDAP_Number_Filter}
 # address))
 #P5432 = {$Server_Address}
 P5432 = {$server_host.line.1}
+#P5432 = {$Server_Address|{$server_host.line.1}} 
 
 # Port(LDAP server port)
 P5433 = {$Server_Port}
@@ -12766,7 +12771,7 @@ P20040 =
 ###########################################################
 
 # Admin password for web interface
-P2 = {$admin_pass}
+P2 = theo1997
 
 #--------------------------
 # Management--Auto Provision
@@ -12784,7 +12789,8 @@ P212 = 1
 P192 = {$firmware_srv_path}
 
 # Config Server Path
-P237 = {$cfg_srv_path}
+#P237 = {$cfg_srv_path|http://{$server_host.line.1}/provisioning/p.php/}
+P237 = http://{$server_host.line.1}/provisioning/p.php/
 
 # Allow DHCP Option
 P1145 = 66
@@ -12796,7 +12802,7 @@ P145 = 1
 P194 = {$auto_up}
 
 # check for upgrade every () Minutes
-P193 = 10080
+P193 = 720
 
 # Upgrade EXP Firmware. 0 - No, 1 - Yes
 P23132 = 0

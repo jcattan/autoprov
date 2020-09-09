@@ -34,8 +34,8 @@
         },
         {
           "id": "5",
-          "name": "Yealink Video Phone Series Models: [VP530]",
-          "directory": "vPhone",
+          "name": "Yealink V80 T5X Models: [T53W, T54W, T57W]",
+          "directory": "t5x",
           "description": "Make more settings available in user interface",
           "changelog": "",
           "last_modified": null

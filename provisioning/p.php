@@ -82,7 +82,7 @@ if(getMethod() == "GET") {
 	
     $filename = str_replace('p.php/','', $filename);
     $strip = str_replace('spa', '', $filename);
-    if(preg_match('/[0-9A-Fa-f]{12}/i', $strip, $matches) && !(preg_match('/[0]{10}[0-9]{2}/i',$strip))) {
+   // if(preg_match('/[0-9A-Fa-f]{12}/i', $strip, $matches) && !(preg_match('/[0]{10}[0-9]{2}/i',$strip))) {
         
         #Just moved this Block of code up to fix the provisioning for Snom Phones
         require_once (PROVISIONER_BASE.'endpoint/base.php');
@@ -121,7 +121,7 @@ if(getMethod() == "GET") {
             die();
         }
 
-    } 
+   // } 
 } 
 else {
     header('HTTP/1.1 403 Forbidden', true, 403);
