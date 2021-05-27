@@ -497,6 +497,46 @@
 				]
 			}
 			]
+		},
+		{
+			"name":"action url",
+			"subcategory":[
+			{
+				"name":"action url",
+				"item":[		
+				{
+					"variable": "$incoming_call",
+					"default_value": "",
+					"description": "Incoming Call URL",
+					"type": "input"
+				},
+				{
+					"variable": "$outgoing_call",
+					"default_value": "",
+					"description": "Outgoing Call URL",
+					"type": "input"
+				},
+				{
+					"variable": "$established",
+					"default_value": "",
+					"description": "Established URL",
+					"type": "input"
+				},
+				{
+					"variable": "$terminated",
+					"default_value": "",
+					"description": "Terminated URL",
+					"type": "input"
+				},
+				{
+					"variable": "$missed_call",
+					"default_value": "",
+					"description": "Missed Call URL",
+					"type": "input"
+				}
+				]
+			}
+			]
 		}
         ]
     }

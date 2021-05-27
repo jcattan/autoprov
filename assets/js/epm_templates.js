@@ -14,6 +14,9 @@ function epm_templates_document_ready () {
 	$('#AddDlgModal').on('show.bs.modal', function (event) { $(this).find('input, select').val(""); });
 	$('#AddDlgModal_bt_new').on("click", function() { epm_tamplates_grid_add(); });
 	$('#NewProductSelect').on('change', function() { epm_templates_add_NewProductSelect_Change (this); });
+    $('#CloneDlgModal').on('show.bs.modal', function (event) { $(this).find('input, select').val(""); });
+    $('#CloneDlgModal_bt_new').on("click", function() { epm_templates_grid_clone(); });
+    $('#CloneProductSelect').on('change', function() { epm_templates_add_NewProductSelect_Change (this); });
 
 	//http://kevinbatdorf.github.io/liquidslider/examples/page1.html#right
 	$('#main-slider').liquidSlider({
@@ -492,6 +495,44 @@ function epm_template_edit_select_area_list (obj)
 	
 }
 
+function epm_templates_grid_clone()
+{
+        var CloneTemplateName = $('#CloneTemplateName').val();
+        var CloneProductSelect = $('#CloneProductSelect').val();
+
+        if ((CloneTemplateName == "") || (CloneProductSelect == ""))
+        {
+                fpbxToast("Donnees manquantes!", "Error!", 'error');
+        }
+        else {
+                $.ajax({
+                        type: 'POST',
+                        url: "ajax.php",
+                        data: {
+                                module: "autoprov",
+                                module_sec: "epm_templates",
+                                module_tab: "manager",
+                                command: "clone_template",
+                                newnametemplate : CloneTemplateName,
+                                newclonetemplate : CloneProductSelect,
+                        },
+                        dataType: 'json',
+                        timeout: 60000,
+                        error: function(xhr, ajaxOptions, thrownError) {
+                                fpbxToast('ERROR AJAX:' + thrownError,'ERROR (' + xhr.status + ')!','error');
+                                return false;
+                        },
+                        success: function(data) {
+                                if (data.status == true)
+                                {
+                                        fpbxToast(data.message, '', 'success');
+                                        setTimeout (function () { window.location.href = "config.php?display=epm_templates&subpage=editor&custom=0&idsel="+data.newid; }, 500);
+                                }
+                                else { fpbxToast(data.message, "Error!", 'error'); }
+                        }
+                });
+        }
+}
 
 
 

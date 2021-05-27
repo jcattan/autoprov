@@ -3,6 +3,7 @@
 		<div class="col-sm-12">
 			<div id="toolbar-all">
 				<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#AddDlgModal"><i class='fa fa-plus'></i> <?php echo _('Add New Template')?></button>
+				<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#CloneDlgModal"><i class='fa fa-clone'></i> <?php echo _('Clone Template')?></button>
 				<a class='btn btn-default' href="javascript:epm_global_refresh_table('#mygrid', true);" ><i class='fa fa-refresh fa-spin'></i> <?php echo _('Refresh Table')?></a>
 			</div>
 			

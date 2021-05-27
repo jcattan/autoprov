@@ -19,7 +19,8 @@
 		Les sources de ce module sont dispo ici: https://github.com/jcattan/autoprov
 	</description>
 	<changelog>
-		*15.0.0.3* ajout numero et nom dans template
+		*15.0.0.4* ajout clonage template
+		*15.0.0.3* ajout numero et nom dans template + prise en compte mail userman + ajout W60P
 		*15.0.0.2* ajout postes T53W T54W et T57W et signature module
 		*15.0.0.1* Version freepbx 15
 	</changelog>

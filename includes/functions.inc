@@ -672,12 +672,13 @@ class autoprovmanager {
                 $phone_info['template_data_info'] = $this->eda->sql($sql, 'getRow', DB_FETCHMODE_ASSOC);
             }
 
-            $sql = "SELECT autoprov_line_list.*, sip.data as secret, devices.*, autoprov_line_list.description AS epm_description FROM autoprov_line_list, sip, devices WHERE autoprov_line_list.ext = devices.id AND autoprov_line_list.ext = sip.id AND sip.keyword = 'secret' AND mac_id = " . $mac_id . " ORDER BY autoprov_line_list.line ASC";
-            $lines_info = $this->eda->sql($sql, 'getAll', DB_FETCHMODE_ASSOC);
+    		$sql = "SELECT autoprov_line_list.*, sip.data as secret, devices.*, autoprov_line_list.description AS epm_description, userman_users.email FROM autoprov_line_list, sip, devices LEFT JOIN userman_users ON userman_users.username = devices.id WHERE autoprov_line_list.ext = devices.id AND autoprov_line_list.ext = sip.id AND sip.keyword = 'secret' AND mac_id = " . $mac_id . " ORDER BY autoprov_line_list.line ASC";
+	$lines_info = $this->eda->sql($sql, 'getAll', DB_FETCHMODE_ASSOC);
             foreach ($lines_info as $line) {
                 $phone_info['line'][$line['line']] = $line;
                 $phone_info['line'][$line['line']]['description'] = $line['epm_description'];
                 $phone_info['line'][$line['line']]['user_extension'] = $line['user'];
+		$phone_info['line'][$line['line']]['email'] = $line['email'];
             }
         } else {
             $sql = "SELECT id, mac FROM autoprov_mac_list WHERE id =" . $mac_id;
@@ -698,8 +699,8 @@ class autoprovmanager {
             $phone_info['product_id'] = 0;
             $phone_info['custom_cfg_template'] = 0;
             $phone_info['mac'] = $row['mac'];
-            $sql = "SELECT autoprov_line_list.*, sip.data as secret, devices.* FROM autoprov_line_list, sip, devices WHERE autoprov_line_list.ext = devices.id AND autoprov_line_list.ext = sip.id AND sip.keyword = 'secret' AND mac_id = " . $mac_id;
-            $lines_info = $this->eda->sql($sql, 'getAll', DB_FETCHMODE_ASSOC);
+    		$sql = "SELECT autoprov_line_list.*, sip.data as secret, devices.*, userman_users.email FROM autoprov_line_list, sip, devices LEFT JOIN userman_users ON userman_users.username = devices.id WHERE autoprov_line_list.ext = devices.id AND autoprov_line_list.ext = sip.id AND sip.keyword = 'secret' AND mac_id = " . $mac_id;
+	    $lines_info = $this->eda->sql($sql, 'getAll', DB_FETCHMODE_ASSOC);
             foreach ($lines_info as $line) {
                 $phone_info['line'][$line['line']] = $line;
             }
@@ -1541,8 +1542,7 @@ class autoprovmanager {
                 $li = 0;
                 foreach ($phone_info['line'] as $line) {
                     $line_options = is_array($line_ops[$line['line']]) ? $line_ops[$line['line']] : array();
-                    $line_statics = array('line' => $line['line'], 'username' => $line['ext'], 'authname' => $line['ext'], 'secret' => $line['secret'], 'displayname' => $line['description'], 'server_host' => $this->global_cfg['srvip'], 'server_port' => '5060', 'user_extension' => $line['user_extension'], 'tech' => $line['tech']);
-
+ $line_statics = array('line' => $line['line'], 'username' => $line['ext'], 'authname' => $line['ext'], 'secret' => $line['secret'], 'displayname' => $line['description'], 'server_host' => $this->global_cfg['srvip'], 'server_port' => '5060', 'user_extension' => $line['user_extension'], 'tech' => $line['tech'], 'email' => $line['email']);
                     $provisioner_lib->settings['line'][$li] = array_merge($line_options, $line_statics);
                     $li++;
                 }

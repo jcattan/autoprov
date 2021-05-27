@@ -33,7 +33,7 @@ class endpoint_yealinkv80_w52p_phone extends endpoint_yealinkv80_base {
 
 	function prepare_for_generateconfig() {
 		# This contains the last 2 digits of y0000000000xx.cfg, for each model.
-		$model_suffixes=array('W52P'=>'25');
+		$model_suffixes=array('W52P'=> '25', 'W60P'=> '77');
 		//Yealink likes lower case letters in its mac address
          $this->mac = strtolower($this->mac);
         $this->config_file_replacements['$suffix'] = $model_suffixes[$this->model];

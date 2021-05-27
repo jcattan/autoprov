@@ -31,6 +31,7 @@
 	
 	echo load_view(__DIR__.'/epm_templates/manager.views.grid.php', array('request' => $_REQUEST));
 	echo load_view(__DIR__.'/epm_templates/manager.views.new.modal.php', array('request' => $_REQUEST));
+	echo load_view(__DIR__.'/epm_templates/manager.views.clone.modal.php', array('request' => $_REQUEST));
 	
  
 /*

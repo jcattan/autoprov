@@ -70,6 +70,10 @@ class Autoprov_Templates
 				case "del_template":
 					$retarr = $this->epm_templates_del_template();
 					break;
+
+                case "clone_template":
+                    $retarr = $this->epm_templates_clone_template();
+                    break;
 					
 				default:
 					$retarr = array("status" => false, "message" => _("Command not found!") . " [" .$command. "]");
@@ -456,7 +460,44 @@ class Autoprov_Templates
 		*/
 		return $row_out;
 	}
-	
+
+        public function epm_templates_clone_template ()
+        {
+                $arrVal['VAR_REQUEST'] = array("newnametemplate");
+                foreach ($arrVal['VAR_REQUEST'] as $valor) {
+                        if (! array_key_exists($valor, $_REQUEST)) {
+                                return array("status" => false, "message" => _("No send value!")." [".$valor."]");
+                        }
+                }
+
+                $arrVal['VAR_IS_NUM'] = array("newclonetemplate");
+                foreach ($arrVal['VAR_IS_NUM'] as $valor) {
+                        if (! is_numeric($_REQUEST[$valor])) {
+                                return array("status" => false, "message" => _("Value send is not number!")." [".$valor."]");
+                        }
+                }
+
+                if (empty($_REQUEST['newnametemplate'])) {
+                        $retarr = array("status" => false, "message" => _("Name is null!"));
+                }
+                elseif ($_REQUEST['newclonetemplate'] <= 0) {
+                        $retarr = array("status" => false, "message" => _("Clone Model send is negative!"));
+                }
+                else {
+                        $dget['newnametemplate'] = $_REQUEST['newnametemplate'];
+                        $dget['newclonetemplate'] = $_REQUEST['newclonetemplate'];
+
+                        $db = $this->db;
+                        $sql = "INSERT INTO autoprov_template_list (product_id, model_id, global_custom_cfg_data, name) SELECT product_id, model_id, global_custom_cfg_data, '". $dget['newnametemplate']."' FROM autoprov_template_list WHERE id = '" .$dget['newclonetemplate']."'";
+                        $q = $db->prepare($sql);
+                        $ob = $q->execute(array(addslashes($dget['newnametemplate']), $dget['newclonetemplate']));
+                        $newid = $db->lastInsertId();
+
+                        $retarr = array("status" => true, "message" => _("Clone New Template OK!"), "newid" => $newid);
+                        unset($dget);
+                }
+                return $retarr;
+        }	
 	
 	
 	

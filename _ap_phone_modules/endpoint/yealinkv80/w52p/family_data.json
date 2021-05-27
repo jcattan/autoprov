@@ -19,8 +19,15 @@
         "lines": "5",
         "id": "1",
         "template_data": [
-          "template_data.json",
-          "remote_phonebook.json"
+          "template_data.json"
+        ]
+      },
+	  {
+        "model": "W60P",
+        "lines": "8",
+        "id": "1",
+        "template_data": [
+          "template_data.json"
         ]
       }
     ]
