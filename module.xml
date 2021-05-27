@@ -2,7 +2,7 @@
 	<rawname>autoprov</rawname>
 	<repo>unsupported</repo>
 	<name>AutoProv End Point Manager</name>
-	<version>15.0.0.3</version>
+	<version>15.0.0.4</version>
     <publisher>JCattan</publisher>
 	<category>Connectivity</category>
 	<license>GPLv3+</license>
