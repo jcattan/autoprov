@@ -63,6 +63,10 @@ class Autoprov_Templates
 					$retarr = $this->epm_templates_model_clone();
 					break;
 					
+				case "poste_clone":
+					$retarr = $this->epm_templates_poste_clone();
+					break;
+					
 				case "add_template":
 					$retarr = $this->epm_templates_add_template();
 					break;
@@ -73,6 +77,10 @@ class Autoprov_Templates
 
                 case "clone_template":
                     $retarr = $this->epm_templates_clone_template();
+                    break;
+				
+				case "clone_poste":
+                    $retarr = $this->epm_templates_clone_poste();
                     break;
 					
 				default:
@@ -412,6 +420,37 @@ class Autoprov_Templates
 		return $retarr;
 	}
 	
+	public function epm_templates_poste_clone () 
+	{
+		if (! isset($_REQUEST['id'])) {
+			$retarr = array("status" => false, "message" => _("No send ID!"));
+		}
+		elseif (! is_numeric($_REQUEST['id'])) {
+			$retarr = array("status" => false, "message" => _("ID send is not number!"));
+		}
+		elseif ($_REQUEST['id'] <= 0) {
+			$retarr = array("status" => false, "message" => _("ID send is number not valid!"));
+		}
+		else
+		{
+			$dget['id'] = $_REQUEST['id'];
+			
+			$i=0;
+			$out = array();
+			$sql = "SELECT autoprov_mac_list.id, autoprov_mac_list.mac, autoprov_mac_list.model, autoprov_line_list.ext, autoprov_line_list.description FROM autoprov_mac_list, autoprov_line_list WHERE autoprov_mac_list.id = autoprov_line_list.mac_id AND autoprov_mac_list.template_id = '0' AND autoprov_mac_list.model = (SELECT model FROM autoprov_mac_list WHERE id = '".$dget['id']."') AND autoprov_mac_list.id != '".$dget['id']."'";
+			$result = sql($sql,'getAll', DB_FETCHMODE_ASSOC);
+			foreach($result as $row) {
+				$out[$i]['optionValue'] = $row['id'];
+				$out[$i]['optionDisplay'] = $row['mac'].' - '.$row['ext'].' - '.$row['description'];
+				$i++;
+			}
+			$retarr = array("status" => true, "message" => _("Generate list Ok!"), "listopt" => $out);
+			
+			unset($dget);
+		}
+		return $retarr;
+	}
+	
 	public function epm_templates_list_current_templates ()
 	{
 	
@@ -499,7 +538,43 @@ class Autoprov_Templates
                 return $retarr;
         }	
 	
-	
+        public function epm_templates_clone_poste ()
+        {
+                $arrVal['VAR_REQUEST'] = array("postesource");
+                foreach ($arrVal['VAR_REQUEST'] as $valor) {
+                        if (! array_key_exists($valor, $_REQUEST)) {
+                                return array("status" => false, "message" => _("No send value!")." [".$valor."]");
+                        }
+                }
+
+                $arrVal['VAR_IS_NUM'] = array("postecible");
+                foreach ($arrVal['VAR_IS_NUM'] as $valor) {
+                        if (! is_numeric($_REQUEST[$valor])) {
+                                return array("status" => false, "message" => _("Value send is not number!")." [".$valor."]");
+                        }
+                }
+
+                if (empty($_REQUEST['postesource'])) {
+                        $retarr = array("status" => false, "message" => _("Name is null!"));
+                }
+                elseif ($_REQUEST['postecible'] <= 0) {
+                        $retarr = array("status" => false, "message" => _("Clone Poste send is negative!"));
+                }
+                else {
+                        $dget['postesource'] = $_REQUEST['postesource'];
+                        $dget['postecible'] = $_REQUEST['postecible'];
+
+                        $db = $this->db;
+						$sql="UPDATE autoprov_mac_list SET global_custom_cfg_data = ( SELECT * FROM (SELECT DISTINCT global_custom_cfg_data FROM autoprov_mac_list WHERE id = '".$dget['postesource']."' ) as conf) WHERE id = '".$dget['postecible']."'";
+                        $q = $db->prepare($sql);
+                        $ob = $q->execute(array(addslashes($dget['postesource']), $dget['postecible']));
+                        $newid = $dget['postecible'];
+
+                        $retarr = array("status" => true, "message" => _("Clone Poste OK!"), "newid" => $newid);
+                        unset($dget);
+                }
+                return $retarr;
+        }	
 	
 	
 	

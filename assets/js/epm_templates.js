@@ -17,6 +17,9 @@ function epm_templates_document_ready () {
     $('#CloneDlgModal').on('show.bs.modal', function (event) { $(this).find('input, select').val(""); });
     $('#CloneDlgModal_bt_new').on("click", function() { epm_templates_grid_clone(); });
     $('#CloneProductSelect').on('change', function() { epm_templates_add_NewProductSelect_Change (this); });
+	$('#CloneDlgPoste').on('show.bs.modal', function (event) { $(this).find('input, select').val(""); });
+    $('#CloneDlgPoste_bt_new').on("click", function() { epm_templates_grid_clone_poste(); });
+    $('#ClonePosteSource').on('change', function() { epm_templates_add_NewPosteSelect_Change (this); });
 
 	//http://kevinbatdorf.github.io/liquidslider/examples/page1.html#right
 	$('#main-slider').liquidSlider({
@@ -251,6 +254,52 @@ function epm_templates_add_NewProductSelect_Change (obj)
 	else { 
 		$("#NewCloneModel").html(''); 
 		$('#NewCloneModel').selectpicker('refresh');
+	}
+}
+
+function epm_templates_add_NewPosteSelect_Change (obj)
+{
+	if ($(obj).val() != "") {
+		$.ajax({
+			type: 'POST',
+			url: "ajax.php",
+			data: {
+				module: "autoprov",
+				module_sec: "epm_templates",
+				module_tab: "manager",
+				command: "poste_clone",
+				id : $(obj).val()
+			},
+			dataType: 'json',
+			timeout: 60000,
+			error: function(xhr, ajaxOptions, thrownError) {
+				fpbxToast('ERROR AJAX:' + thrownError,'ERROR (' + xhr.status + ')!','error');
+				return false;
+			},
+			success: function(data) 
+			{
+				var options = '';
+				if (data.status == true) 
+				{
+					$(data.listopt).each(function(index, itemData) 
+					{
+						options += '<option value="' + itemData.optionValue + '">' + itemData.optionDisplay + '</option>';	
+					});
+					$("#ClonePosteCible").html(options);
+				} 
+				else {
+					options = '<option value="">'+ data.message +'</option>';
+					fpbxToast(data.message, "Error!", 'error');
+				}
+				$("#ClonePosteCible").html(options);
+				$('#ClonePosteCible option:first').attr('selected', 'selected');
+				$('#ClonePosteCible').selectpicker('refresh');
+			}
+		});
+	}
+	else { 
+		$("#ClonePosteCible").html(''); 
+		$('#ClonePosteCible').selectpicker('refresh');
 	}
 }
 
@@ -534,24 +583,44 @@ function epm_templates_grid_clone()
         }
 }
 
+function epm_templates_grid_clone_poste()
+{
+        var ClonePosteSource = $('#ClonePosteSource').val();
+        var ClonePosteCible = $('#ClonePosteCible').val();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        if ((ClonePosteSource == "") || (ClonePosteCible == ""))
+        {
+                fpbxToast("Donnees manquantes!", "Error!", 'error');
+        }
+        else {
+                $.ajax({
+                        type: 'POST',
+                        url: "ajax.php",
+                        data: {
+                                module: "autoprov",
+                                module_sec: "epm_templates",
+                                module_tab: "manager",
+                                command: "clone_poste",
+                                postesource : ClonePosteSource,
+                                postecible : ClonePosteCible,
+                        },
+                        dataType: 'json',
+                        timeout: 60000,
+                        error: function(xhr, ajaxOptions, thrownError) {
+                                fpbxToast('ERROR AJAX:' + thrownError,'ERROR (' + xhr.status + ')!','error');
+                                return false;
+                        },
+                        success: function(data) {
+                                if (data.status == true)
+                                {
+                                        fpbxToast(data.message, '', 'success');
+                                        setTimeout (function () { window.location.href = "config.php?display=epm_templates&subpage=editor&custom=1&idsel="+data.newid; }, 500);
+                                }
+                                else { fpbxToast(data.message, "Error!", 'error'); }
+                        }
+                });
+        }
+}
 
 
 
