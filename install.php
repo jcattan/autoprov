@@ -129,7 +129,7 @@ $db->query($sql);
  
 // version 15.0.0.3 installee
 	if (version_compare_freepbx($epmdbversion,'15.0.0.2','<=')) {
-out("MAJ 15.0.0.2 to 15.0.0.3");
+out("MAJ 15.0.0.3 to 15.0.0.4");
 	}
 
 // a suivre 
