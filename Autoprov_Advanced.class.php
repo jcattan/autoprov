@@ -1276,7 +1276,7 @@ FreePBX::Autoprov()->add_device($mac, $model_id, $ext, 0, $line_id, $description
      * @return string fixed string
      */
     function display_htmlspecialchars($contents) {
-    	$contents = str_replace("&amp;", "&amp;amp;", $contents);
+   // 	$contents = str_replace("&amp;", "&amp;amp;", $contents);
     	$contents = str_replace("&lt;", "&amp;lt;", $contents);
     	$contents = str_replace("&gt;", "&amp;gt;", $contents);
     	$contents = str_replace("&quot;", "&amp;quot;", $contents);
