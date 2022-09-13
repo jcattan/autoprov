@@ -18,7 +18,7 @@
         },
         {
           "id": "2",
-          "name": "Yealink V80 T3X Models: [T32, T38]",
+          "name": "Yealink V80 T3X Models: [T30, T33 ,T38]",
           "directory": "t3x",
           "description": "Make more settings available in user interface",
           "changelog": "",

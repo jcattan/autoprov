@@ -8,41 +8,41 @@
                 "name":"general",
                 "item":[
 				{
-					"variable":"$timezone_name",
-					"default_value":"United States-Eastern Time",
-					"description":"Timezone Name",
-					"type":"list",
-					"data":[
-					{
-					  "text":"United States-Hawaii",
-					  "value":"United States-Hawaii-Aleutian"
-					},
-					{
-					  "text":"United States-Alaska Time",
-					  "value":"United States-Alaska Time"
-					},
-					{
-					  "text":"United States-Pacific Time",
-					  "value":"United States-Pacific Time"
-					},
-					{
-					  "text":"United States-Mountain Time",
-					  "value":"United States-Mountain Time"
-					},
-					{
-					  "text":"United States-Central Time",
-					  "value":"United States-Central Time"
-					},
-					{
-					  "text":"United States-Eastern Time",
-					  "value":"United States-Eastern Time"
-					}
-					]	
-					},
+                                        "variable":"$timezone_name",
+                                        "default_value":"France(Paris)",
+                                        "description":"Timezone Name",
+                                        "type":"list",
+                                        "data":[
+                                        {
+                                          "text":"France(Paris)",
+                                          "value":"France(Paris)"
+                                        },
+                                        {
+                                          "text":"United States-Alaska Time",
+                                          "value":"United States-Alaska Time"
+                                        },
+                                        {
+                                          "text":"United States-Pacific Time",
+                                          "value":"United States-Pacific Time"
+                                        },
+                                        {
+                                          "text":"United States-Mountain Time",
+                                          "value":"United States-Mountain Time"
+                                        },
+                                        {
+                                          "text":"United States-Central Time",
+                                          "value":"United States-Central Time"
+                                        },
+                                        {
+                                          "text":"United States-Eastern Time",
+                                          "value":"United States-Eastern Time"
+                                        }
+                                        ]
+                                        },
 				{
 					"category":"system",
 					"variable":"$timezone_offset",
-					"default_value":"-5",
+					"default_value":"+1",
 					"description":"Timezone GMT Offset",
 					"type":"list",
 					"data":[
@@ -412,7 +412,7 @@
                 },
                 {
                     "variable":"$adminpw",
-                    "default_value":"",
+                    "default_value":"admin",
                     "description":"Web administration password",
                     "type":"input"
                 },

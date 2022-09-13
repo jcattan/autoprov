@@ -53,8 +53,8 @@ class endpoint_yealinkv80_t3x_phone extends endpoint_yealinkv80_base {
 
     function prepare_for_generateconfig() {
 		$this->settings['call_pickup'] = isset($this->settings['call_pickup']) ? $this->settings['call_pickup'] : '*8';
-        # This contains the last 2 digits of y0000000000xx.cfg, for each model.
-        $model_suffixes = array('T38' => '38', 'T32' => '32');
+        # This contains the last 3 digits of y000000000xxx.cfg, for each model.
+        $model_suffixes = array('T38' => '038', 'T32' => '032', 'T33' => '124');
         //Yealink likes lower case letters in its mac address
         $this->mac = strtolower($this->mac);
         $this->config_file_replacements['$suffix'] = $model_suffixes[$this->model];
