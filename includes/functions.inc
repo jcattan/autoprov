@@ -309,7 +309,7 @@ class autoprovmanager {
         $brand = $this->eda->sql($oui_sql, 'getRow', DB_FETCHMODE_ASSOC);
 
         $res = $this->eda->sql($oui_sql);
-        $brand_count = count($res);
+        $brand_count = count(array($res));
 
         if (!$brand_count) {
             //oui doesn't have a matching mysql reference, probably a PC/router/wap/printer of some sort.
@@ -655,7 +655,7 @@ class autoprovmanager {
         $sql = "SELECT id FROM autoprov_mac_list WHERE model > 0 AND id =" . $mac_id;
 
         $res = $this->eda->sql($sql);
-        if (count($res)) {
+        if (count(array($res))) {
             //Returns Brand Name, Brand Directory, Model Name, Mac Address, Extension (FreePBX), Custom Configuration Template, Custom Configuration Data, Product Name, Product ID, Product Configuration Directory, Product Configuration Version, Product XML name,
             $sql = "SELECT autoprov_mac_list.specific_settings, autoprov_mac_list.config_files_override, autoprov_mac_list.global_user_cfg_data, autoprov_model_list.id as model_id, autoprov_brand_list.id as brand_id, autoprov_brand_list.name, autoprov_brand_list.directory, autoprov_model_list.model, autoprov_mac_list.mac, autoprov_mac_list.template_id, autoprov_mac_list.global_custom_cfg_data, autoprov_product_list.long_name, autoprov_product_list.id as product_id, autoprov_product_list.cfg_dir, autoprov_product_list.cfg_ver, autoprov_model_list.template_data, autoprov_model_list.enabled, autoprov_mac_list.global_settings_override FROM autoprov_line_list, autoprov_mac_list, autoprov_model_list, autoprov_brand_list, autoprov_product_list WHERE autoprov_mac_list.model = autoprov_model_list.id AND autoprov_brand_list.id = autoprov_model_list.brand AND autoprov_product_list.id = autoprov_model_list.product_id AND autoprov_mac_list.id = autoprov_line_list.mac_id AND autoprov_mac_list.id = " . $mac_id;
 
@@ -782,7 +782,7 @@ class autoprovmanager {
         foreach ($config_files_list as $files) {
             $sql = "SELECT * FROM  autoprov_custom_configs WHERE product_id = '" . $row['product_id'] . "' AND original_name = '" . $files . "'";
             $alt_configs_list_count = $this->eda->sql($sql);
-            if (count($alt_configs_list_count) > 0) {
+            if (count(array($alt_configs_list_count)) > 0) {
                 $alt_configs_list = $this->eda->sql($sql, 'getAll', DB_FETCHMODE_ASSOC);
                 $alt_configs[$i]['name'] = $files;
                 $files = str_replace(".", "_", $files);
@@ -1136,7 +1136,7 @@ class autoprovmanager {
         $row = $this->eda->sql($sql, 'getRow', DB_FETCHMODE_ASSOC);
 
         $cfg_data = unserialize($row['template_data']);
-        $count = count($cfg_data);
+        $count = count(array($cfg_data));
 
         $custom_cfg_data_ari = array();
 
@@ -1203,7 +1203,7 @@ class autoprovmanager {
         $config_files = explode(",", $row['config_files']);
 
         $i = 0;
-        while ($i < count($config_files)) {
+        while ($i < count(array($config_files))) {
             $config_files[$i] = str_replace(".", "_", $config_files[$i]);
             if (isset($_REQUEST[$config_files[$i]])) {
                 $_REQUEST[$config_files[$i]] = explode("_", $_REQUEST[$config_files[$i]], 2);
@@ -1442,7 +1442,7 @@ class autoprovmanager {
                         foreach ($temp as $list) {
                             $sql = "SELECT original_name,data FROM autoprov_custom_configs WHERE id = " . $list;
                             $res = $this->eda->sql($sql);
-                            if (count($res)) {
+                            if (count(array($res))) {
                                 $data = $this->eda->sql($sql, 'getRow', DB_FETCHMODE_ASSOC);
                                 $provisioner_lib->config_files_override[$data['original_name']] = $data['data'];
                             }
@@ -1456,7 +1456,7 @@ class autoprovmanager {
                         foreach ($temp as $list) {
                             $sql = "SELECT original_name,data FROM autoprov_custom_configs WHERE id = " . $list;
                             $res = $this->eda->sql($sql);
-                            if (count($res)) {
+                            if (count(array($res))) {
                                 $data = $this->eda->sql($sql, 'getRow', DB_FETCHMODE_ASSOC);
                                 $provisioner_lib->config_files_override[$data['original_name']] = $data['data'];
                             }
@@ -1481,7 +1481,7 @@ class autoprovmanager {
                         //TODO: clean up with reg-exp
                         $full_key = $key;
                         $key = explode('|', $key);
-                        $count = count($key);
+                        $count = count(array($key));
                         switch ($count) {
                             case 1:
                                 if (($this->global_cfg['enable_ari'] == 1) AND (isset($global_custom_cfg_ari[$full_key])) AND (isset($global_user_cfg_data[$full_key]))) {
@@ -1675,7 +1675,7 @@ class autoprovmanager {
         $sql = "SELECT * FROM  autoprov_product_list WHERE hidden = 0 AND id ='" . $id . "'";
         $res = $this->eda->sql($sql);
 
-        if (count($res)) {
+        if (count(array($res))) {
             $row = $this->eda->sql($sql, 'getRow', DB_FETCHMODE_ASSOC);
 
             $sql = "SELECT directory FROM  autoprov_brand_list WHERE hidden = 0 AND id =" . $row['brand'];
@@ -2281,7 +2281,7 @@ class autoprovmanager {
                                 foreach ($global_user_cfg_data as $key => $old_keys) {
                                     if (array_key_exists('value', $old_keys)) {
                                         $exploded = explode("_", $key);
-                                        $counted = count($exploded);
+                                        $counted = count(array($exploded));
                                         $counted = $counted - 1;
                                         if (is_numeric($exploded[$counted])) {
                                             $key = "loop|" . $key;
@@ -2646,7 +2646,7 @@ class autoprovmanager {
     */
     function is_process_running($PID) {
         exec("ps $PID", $ProcessState);
-        return(count($ProcessState) >= 2);
+        return(count(array($ProcessState)) >= 2);
     }
 
     /**
@@ -2945,7 +2945,7 @@ class autoprovmanager {
                 $brand = $this->eda->sql($oui_sql, 'getRow', DB_FETCHMODE_ASSOC);
 
                 $res = $this->eda->sql($oui_sql);
-                $brand_count = count($res);
+                $brand_count = count(array($res));
 
                 if (!$brand_count) {
                     //oui doesn't have a matching mysql reference, probably a PC/router/wap/printer of some sort.
@@ -2959,7 +2959,7 @@ class autoprovmanager {
 
                 $res = $this->eda->sql($epm_sql);
 
-                $epm = count($res) ? TRUE : FALSE;
+                $epm = count(array($res)) ? TRUE : FALSE;
 
                 //Add into a final array
                 $final[$z] = array("ip" => $ip, "mac" => $mac, "mac_strip" => $mac_strip, "oui" => $oui, "brand" => $brand['name'], "brand_id" => $brand['id'], "endpoint_managed" => $epm);

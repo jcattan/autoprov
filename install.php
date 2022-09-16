@@ -90,70 +90,16 @@ $epmdbversion = !empty($modinfo['autoprov']['dbversion']) ? $modinfo['autoprov']
 // si deja install
 if (!empty($epmdbversion)) {
 
-// version 15.0.0.1 installee
-	if (version_compare_freepbx($epmdbversion,'15.0.0.1','<=')) {
-out("MAJ 15.0.0.1 to 15.0.0.2");
-    out("Copie des fichiers de provisioning");
-system("/bin/cp -R /var/www/html/admin/modules/autoprov/_ap_phone_modules/endpoint/yealinkv80/t5x /var/www/html/admin/modules/_ap_phone_modules/endpoint/yealinkv80/");
-system("/bin/cp -Rf /var/www/html/admin/modules/autoprov/_ap_phone_modules/endpoint/yealinkv80/brand_data.json /var/www/html/admin/modules/_ap_phone_modules/endpoint/yealinkv80/");    
-	out("MAJ base de donnees");		
-$sql = "INSERT INTO `autoprov_product_list` (`id`, `brand`, `long_name`, `short_name`, `cfg_dir`, `cfg_ver`, `hidden`, `firmware_vers`, `firmware_files`, `config_files`, `special_cfgs`) VALUES
-('215', 21, 'Yealink V80 T5X Models: [T53W, T54W, T57W]', 'Yealink V80 T5X Models: ', 't5x', '', 0, '', '', 'y0000000000\$suffix.cfg,\$mac.cfg', '')";
-$db->query($sql);
-		
-$sql = "INSERT INTO `autoprov_model_list` (`id`, `brand`, `model`, `max_lines`, `template_list`, `template_data`, `product_id`, `enabled`, `hidden`) VALUES
-('2153', 21, 'T53W', 2, 'template_data.json,line_keys_5x.json,soft_keys.json,hard_keys.json', '', '215', 1, 0),
-('2154', 21, 'T54W', 2, 'template_data.json,line_keys_5x.json,soft_keys.json,hard_keys.json', '', '215', 1, 0),
-('2157', 21, 'T57W', 2, 'template_data.json,line_keys_5x.json,soft_keys.json,hard_keys.json', '', '215', 1, 0)";
-$db->query($sql);
-
-    }
-
-// version 15.0.0.2 installee
-	if (version_compare_freepbx($epmdbversion,'15.0.0.2','<=')) {
-out("MAJ 15.0.0.2 to 15.0.0.3");
-    out("Copie des fichiers de provisioning");
-system("/bin/cp -Rf /var/www/html/admin/modules/autoprov/_ap_phone_modules/endpoint/yealinkv80/base.php /var/www/html/admin/modules/_ap_phone_modules/endpoint/yealinkv80/");
-system("/bin/cp -Rf /var/www/html/admin/modules/autoprov/_ap_phone_modules/endpoint/yealinkv80/t4x/template_data.json /var/www/html/admin/modules/_ap_phone_modules/endpoint/yealinkv80/t4x/");
-system("/bin/cp -Rf /var/www/html/admin/modules/autoprov/_ap_phone_modules/endpoint/yealinkv80/t5x/template_data.json /var/www/html/admin/modules/_ap_phone_modules/endpoint/yealinkv80/t5x/");
-system("/bin/cp -Rf /var/www/html/admin/modules/autoprov/_ap_phone_modules/endpoint/yealinkv80/w52p/phone.php /var/www/html/admin/modules/_ap_phone_modules/endpoint/yealinkv80/w52p/");
-system("/bin/cp -Rf /var/www/html/admin/modules/autoprov/_ap_phone_modules/endpoint/yealinkv80/w52p/family_data.json /var/www/html/admin/modules/_ap_phone_modules/endpoint/yealinkv80/w52p/");
-system("/bin/cp -Rf /var/www/html/admin/modules/autoprov/_ap_phone_modules/endpoint/yealinkv80/brand_data.json /var/www/html/admin/modules/_ap_phone_modules/endpoint/yealinkv80/");
-	out("MAJ base de donnees");
-$sql = "UPDATE `asterisk`.`autoprov_product_list` SET `long_name` = 'Yealink V80 DECT Models: [W52P, W60P]' WHERE `autoprov_product_list`.`id` = '216'";
-$db->query($sql);
-$sql = "INSERT INTO `autoprov_model_list` (`id`, `brand`, `model`, `max_lines`, `template_list`, `template_data`, `product_id`, `enabled`, `hidden`) VALUES ('2162', '21', 'W60P', '8', 'template_data.json', '', '216', '1', '0')";
-$db->query($sql);
-
- }	
- 
-// version 15.0.0.3 installee
-	if (version_compare_freepbx($epmdbversion,'15.0.0.3','<=')) {
-out("MAJ 15.0.0.3 to 15.0.0.4");
-	}
-	
-// version 15.0.0.4 installee
-	if (version_compare_freepbx($epmdbversion,'15.0.0.4','<=')) {
-out("MAJ 15.0.0.4 to 15.0.0.5");
-    out("Copie des fichiers de provisioning");
-system("/bin/cp -Rf /var/www/html/admin/modules/autoprov/_ap_phone_modules/endpoint/yealinkv80/base.php /var/www/html/admin/modules/_ap_phone_modules/endpoint/yealinkv80/");
-system("/bin/cp -Rf /var/www/html/admin/modules/autoprov/_ap_phone_modules/endpoint/yealinkv80/t3x /var/www/html/admin/modules/_ap_phone_modules/endpoint/yealinkv80/");
-system("/bin/cp -Rf /var/www/html/admin/modules/autoprov/_ap_phone_modules/endpoint/yealinkv80/brand_data.json /var/www/html/admin/modules/_ap_phone_modules/endpoint/yealinkv80/");
-	out("MAJ base de donnees");
-$sql = "INSERT INTO `autoprov_product_list` (`id`, `brand`, `long_name`, `short_name`, `cfg_dir`, `cfg_ver`, `hidden`, `firmware_vers`, `firmware_files`, `config_files`, `special_cfgs`) VALUES ('212', 21, 'Yealink V80 T3X Models: [T30, T33, T38]', 'Yealink V80 T3X Models: ', 't3x', '', 0, '', '', 'y000000000$suffix.cfg,$mac.cfg,$mac.xml', '')";
-$db->query($sql);
-$sql = "INSERT INTO `autoprov_model_list` (`id`, `brand`, `model`, `max_lines`, `template_list`, `template_data`, `product_id`, `enabled`, `hidden`) VALUES
-('2122', 21, 'T32', 3, 'template_data.json,line_keys_32.json,soft_keys.json,hard_keys.json,remote_phonebook.json,dialnow.json,ext38.json', '', '212', 1, 0),
-('2123', 21, 'T33', 4, 'template_data.json,line_keys_33.json,soft_keys.json,hard_keys.json,remote_phonebook.json,dialnow.json', '', '212', 1, 0),
-('2128', 21, 'T38', 6, 'template_data.json,line_keys_38.json,remote_phonebook.json,soft_keys.json,hard_keys.json,memory_keys.json,dialnow.json,ext38.json', '', '212', 1, 0)";
-$db->query($sql);
-	}
+// version 16.0.0.1 installee
+	// if (version_compare_freepbx($epmdbversion,'16.0.0.1','<=')) {
+// out("MAJ vers 16.0.0.2");
+    // }
 
 
 // a suivre 
-// version 15.0.0.X installe
-//	if (version_compare_freepbx($epmdbversion,'15.0.0.X','<=')) {
-//out("MAJ 15.0.0.X to 15.0.0.Z");
+// version 16.0.0.X installe
+//	if (version_compare_freepbx($epmdbversion,'16.0.0.X','<=')) {
+//out("MAJ 16.0.0.X to 16.0.0.Z");
 // }
 	
 }
@@ -355,7 +301,7 @@ $sql = "INSERT INTO `autoprov_product_list` (`id`, `brand`, `long_name`, `short_
 ('201', 20, '[Patton FXS ]SN411X', 'SN411X', 'SN411X', '', 0, '', '', '\$mac.cfg', ''),
 ('202', 20, '[Patton FXS ]SN43XX', 'SN43XX', 'SN43XX', '', 0, '', '', '\$mac.cfg', ''),
 ('211', 21, 'Yealink V80 T2X Models: [T19, T20, T21, T22, T26, T28]', 'Yealink V80 T2X Models: ', 't2x', '', 0, '', '', 'y0000000000\$suffix.cfg,\$mac.cfg', ''),
-('212', 21, 'Yealink V80 T3X Models: [T30, T33, T38]', 'Yealink V80 T3X Models: ', 't3x', '', 0, '', '', 'y000000000$suffix.cfg,$mac.cfg,$mac.xml', ''),
+('212', 21, 'Yealink V80 T3X Models: [T30, T33, T38]', 'Yealink V80 T3X Models: ', 't3x', '', 0, '', '', 'y000000000\$suffix.cfg,\$mac.cfg,\$mac.xml', ''),
 ('214', 21, 'Yealink V80 T4X Models: [T41, T42, T46]', 'Yealink V80 T4X Models: ', 't4x', '', 0, '', '', 'y0000000000\$suffix.cfg,\$mac.cfg', ''),
 ('215', 21, 'Yealink V80 T5X Models: [T53W, T54W, T57W]', 'Yealink V80 T5X Models: ', 't5x', '', 0, '', '', 'y0000000000\$suffix.cfg,\$mac.cfg', ''),
 ('216', 21, 'Yealink V80 DECT Models: [W52P, W60P]', 'Yealink V80 DECT Models: ', 'w52p', '', 0, '', '', 'y0000000000\$suffix.cfg,\$mac.cfg', ''),
