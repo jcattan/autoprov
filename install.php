@@ -140,7 +140,8 @@ system("/bin/cp -Rf /var/www/html/admin/modules/autoprov/_ap_phone_modules/endpo
 system("/bin/cp -Rf /var/www/html/admin/modules/autoprov/_ap_phone_modules/endpoint/yealinkv80/t3x /var/www/html/admin/modules/_ap_phone_modules/endpoint/yealinkv80/");
 system("/bin/cp -Rf /var/www/html/admin/modules/autoprov/_ap_phone_modules/endpoint/yealinkv80/brand_data.json /var/www/html/admin/modules/_ap_phone_modules/endpoint/yealinkv80/");
 	out("MAJ base de donnees");
-$sql = "INSERT INTO `autoprov_product_list` (`id`, `brand`, `long_name`, `short_name`, `cfg_dir`, `cfg_ver`, `hidden`, `firmware_vers`, `firmware_files`, `config_files`, `special_cfgs`) VALUES ('212', 21, 'Yealink V80 T3X Models: [T30, T33, T38]', 'Yealink V80 T3X Models: ', 't3x', '', 0, '', '', 'y000000000$suffix.cfg,$mac.cfg,$mac.xml', '')";
+$sql = "INSERT INTO `autoprov_product_list` (`id`, `brand`, `long_name`, `short_name`, `cfg_dir`, `cfg_ver`, `hidden`, `firmware_vers`, `firmware_files`, `config_files`, `special_cfgs`) VALUES 
+('212', 21, 'Yealink V80 T3X Models: [T30, T33, T38]', 'Yealink V80 T3X Models: ', 't3x', '', 0, '', '', 'y000000000\$suffix.cfg,\$mac.cfg,\$mac.xml', '')";
 $db->query($sql);
 $sql = "INSERT INTO `autoprov_model_list` (`id`, `brand`, `model`, `max_lines`, `template_list`, `template_data`, `product_id`, `enabled`, `hidden`) VALUES
 ('2122', 21, 'T32', 3, 'template_data.json,line_keys_32.json,soft_keys.json,hard_keys.json,remote_phonebook.json,dialnow.json,ext38.json', '', '212', 1, 0),
@@ -355,7 +356,7 @@ $sql = "INSERT INTO `autoprov_product_list` (`id`, `brand`, `long_name`, `short_
 ('201', 20, '[Patton FXS ]SN411X', 'SN411X', 'SN411X', '', 0, '', '', '\$mac.cfg', ''),
 ('202', 20, '[Patton FXS ]SN43XX', 'SN43XX', 'SN43XX', '', 0, '', '', '\$mac.cfg', ''),
 ('211', 21, 'Yealink V80 T2X Models: [T19, T20, T21, T22, T26, T28]', 'Yealink V80 T2X Models: ', 't2x', '', 0, '', '', 'y0000000000\$suffix.cfg,\$mac.cfg', ''),
-('212', 21, 'Yealink V80 T3X Models: [T30, T33, T38]', 'Yealink V80 T3X Models: ', 't3x', '', 0, '', '', 'y000000000$suffix.cfg,$mac.cfg,$mac.xml', ''),
+('212', 21, 'Yealink V80 T3X Models: [T30, T33, T38]', 'Yealink V80 T3X Models: ', 't3x', '', 0, '', '', 'y000000000\$suffix.cfg,\$mac.cfg,\$mac.xml', ''),
 ('214', 21, 'Yealink V80 T4X Models: [T41, T42, T46]', 'Yealink V80 T4X Models: ', 't4x', '', 0, '', '', 'y0000000000\$suffix.cfg,\$mac.cfg', ''),
 ('215', 21, 'Yealink V80 T5X Models: [T53W, T54W, T57W]', 'Yealink V80 T5X Models: ', 't5x', '', 0, '', '', 'y0000000000\$suffix.cfg,\$mac.cfg', ''),
 ('216', 21, 'Yealink V80 DECT Models: [W52P, W60P]', 'Yealink V80 DECT Models: ', 'w52p', '', 0, '', '', 'y0000000000\$suffix.cfg,\$mac.cfg', ''),
