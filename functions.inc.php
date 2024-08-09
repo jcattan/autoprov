@@ -278,8 +278,13 @@ function autoprov_configpageload() {
 
                 $currentcomponent->addguielem($section, new gui_checkbox('epm_delete', $checked, 'Delete', 'Delete this Extension from Endpoint Manager'), 9);
 // phone web interface link
+<<<<<<< Updated upstream
 	class gui_link_nw_tab extends guitext {
     function __construct($elemname, $text, $url, $userlang = true) {
+=======
+	class class_gui_link_nw_tab extends guitext {
+    function gui_link_nw_tab($elemname, $text, $url, $userlang = true) {
+>>>>>>> Stashed changes
         $parent_class = get_parent_class($this);
         $this->html_text = "<a href=\"$url\" target=\"_blank\" id =\"$this->elemname\">$text</a>";
     }

@@ -15,38 +15,51 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
+
 // Check for safe mode
-if( ini_get('safe_mode') ){
-	die(_('Turn Off Safe Mode'));
+if (ini_get('safe_mode')) {
+    die(_('Turn Off Safe Mode'));
 }
-if(file_exists('/tftpboot')) {
-	if(!is_writeable('/tftpboot')) {
-		die(_('/tftpboot is not writable'));
-	}
+
+// Check if /tftpboot exists and is writable
+if (file_exists('/tftpboot')) {
+    if (!is_writable('/tftpboot')) {
+        die(_('/tftpboot is not writable'));
+    }
 } else {
-	die(_("Please create /tftpboot, even if you won't use it"));
+    die(_("Please create /tftpboot, even if you won't use it"));
 }
+
 include 'includes/functions.inc';
+
 global $endpoint, $debug;
 $debug = NULL;
 $endpoint = new autoprovmanager();
+
 global $global_cfg, $debug;
-if(!is_writeable(LOCAL_PATH)) {
-	chmod(LOCAL_PATH, 0764);
+
+// Check if LOCAL_PATH and PHONE_MODULES_PATH are writable
+if (defined('LOCAL_PATH') && !is_writable(LOCAL_PATH)) {
+    chmod(LOCAL_PATH, 0764);
 }
-if(!is_writeable(PHONE_MODULES_PATH)) {
-	chmod(PHONE_MODULES_PATH, 0764);
+
+if (defined('PHONE_MODULES_PATH') && !is_writable(PHONE_MODULES_PATH)) {
+    chmod(PHONE_MODULES_PATH, 0764);
 }
-if($amp_conf['AMPENGINE'] != 'asterisk') {
-	die(_("Sorry, Only Asterisk is supported currently"));
+
+// Check if AMPENGINE is set to 'asterisk'
+if (isset($amp_conf['AMPENGINE']) && $amp_conf['AMPENGINE'] !== 'asterisk') {
+    die(_("Sorry, Only Asterisk is supported currently"));
 }
-if (isset($_REQUEST['page'])) {
-	$page = $_REQUEST['page'];
-} else {
-	$page = "";
+
+// Retrieve the requested page
+$page = $_REQUEST['page'] ?? "";
+
+// Debugging: print request variables if debugging is enabled
+if (isset($global_cfg['debug']) && $global_cfg['debug']) {
+    $debug .= "Request Variables: \n" . print_r($_REQUEST, TRUE);
 }
-if($global_cfg['debug']) {
-	$debug .= "Request Variables: \n".print_r($_REQUEST, TRUE);
-}
-include LOCAL_PATH.'includes/devices_manager.inc';
+
+include LOCAL_PATH . 'includes/devices_manager.inc';
+
 ?>
