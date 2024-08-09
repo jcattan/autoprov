@@ -2,7 +2,7 @@
 	<rawname>autoprov</rawname>
 	<repo>unsupported</repo>
 	<name>AutoProv End Point Manager</name>
-	<version>16.0.0.1</version>
+	<version>16.0.0.2</version>
     <publisher>JCattan</publisher>
 	<category>Connectivity</category>
 	<license>GPLv3+</license>
@@ -19,6 +19,7 @@
 		Les sources de ce module sont dispo ici: https://github.com/jcattan/autoprov
 	</description>
 	<changelog>
+		*16.0.0.2* Correction Bug rebuild qui ne prennait pas en compte le template
 		*16.0.0.1* Version freepbx 16
 	</changelog>
 	<depends>
