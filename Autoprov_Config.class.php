@@ -391,66 +391,97 @@ class Autoprov_Config
 		return $retarr;
 	}
 
-	public function epm_config_manager_hardware_get_list_all_hide_show()
-	{
-		$row_out = array();
 
-		$i = 0;
-		$brand_list = $this->epm_config_hardware_get_list_brand(true, "name");
-		foreach ($brand_list as $row)
-		{
-			//$row_out[$i] = $row;
-			$row_out[$i]['id'] = $row['id'];
-			$row_out[$i]['name'] = $row['name'];
-			$row_out[$i]['directory'] = $row['directory'];
-			$row_out[$i]['installed'] = $row['installed'];
-			$row_out[$i]['hidden'] = $row['hidden'];
-			$row_out[$i]['count'] = $i;
-			$row_out[$i]['products'] = "";
-			if ($row['hidden'] == 1)
-			{
-				$i++;
-				continue;
-			}
+// modif fonction ci dessous par chatGTP
+// obligé de commenter la premiere ligne
+// declare(strict_types=1);
 
-			$j = 0;
-			$product_list = $this->epm_config_hardware_get_list_product($row['id'], true);
-			foreach($product_list as $row2) {
-				//$row_out[$i]['products'][$j] = $row2;
-				$row_out[$i]['products'][$j]['id'] = $row2['id'];
-				$row_out[$i]['products'][$j]['brand'] = $row2['brand'];
-				$row_out[$i]['products'][$j]['long_name'] = $row2['long_name'];
-				$row_out[$i]['products'][$j]['short_name'] = $row2['short_name'];
-				$row_out[$i]['products'][$j]['hidden'] = $row2['hidden'];
-				$row_out[$i]['products'][$j]['count'] = $j;
-				$row_out[$i]['products'][$j]['models'] = "";
-				if ($row2['hidden'] == 1)
-				{
-					$j++;
-					continue;
-				}
+public function epm_config_manager_hardware_get_list_all_hide_show(): array
+{
+    $output = [];
 
-				$k = 0;
-				$model_list = $this->epm_config_hardware_get_list_models($row2['id'], true);
-				foreach($model_list as $row3)
-				{
-					//$row_out[$i]['products'][$j]['models'][$k] = $row3;
-					$row_out[$i]['products'][$j]['models'][$k]['id'] = $row3['id'];
-					$row_out[$i]['products'][$j]['models'][$k]['brand'] = $row3['brand'];
-					$row_out[$i]['products'][$j]['models'][$k]['model'] = $row3['model'];
-					$row_out[$i]['products'][$j]['models'][$k]['product_id'] = $row3['product_id'];
-					$row_out[$i]['products'][$j]['models'][$k]['enabled'] = $row3['enabled'];
-					$row_out[$i]['products'][$j]['models'][$k]['hidden'] = $row3['hidden'];
-					$row_out[$i]['products'][$j]['models'][$k]['count'] = $k;
-					$k++;
-				}
-				$j++;
-			}
-			$i++;
-		}
-		//echo "<textarea>" . print_r($row_out, true)  . "</textarea>";
-		return $row_out;
-	}
+    try {
+        $brands = $this->epm_config_hardware_get_list_brand(true, "name");
+    } catch (\Exception $e) {
+        // Gérer l'exception (journalisation, retour d'une valeur par défaut, etc.)
+        return $output;
+    }
+
+    foreach ($brands as $brandIndex => $brand) {
+        if (!isset($brand['id'], $brand['name'], $brand['directory'], $brand['installed'], $brand['hidden'])) {
+            continue; // Sauter si des clés nécessaires sont manquantes
+        }
+
+        $output[$brandIndex] = [
+            'id' => $brand['id'],
+            'name' => $brand['name'],
+            'directory' => $brand['directory'],
+            'installed' => $brand['installed'],
+            'hidden' => $brand['hidden'],
+            'count' => $brandIndex,
+            'products' => []
+        ];
+
+        if ($brand['hidden'] == 1) {
+            continue;
+        }
+
+        try {
+            $products = $this->epm_config_hardware_get_list_product($brand['id'], true);
+        } catch (\Exception $e) {
+            // Gérer l'exception
+            continue;
+        }
+
+        foreach ($products as $productIndex => $product) {
+            if (!isset($product['id'], $product['brand'], $product['long_name'], $product['short_name'], $product['hidden'])) {
+                continue; // Sauter si des clés nécessaires sont manquantes
+            }
+
+            $output[$brandIndex]['products'][$productIndex] = [
+                'id' => $product['id'],
+                'brand' => $product['brand'],
+                'long_name' => $product['long_name'],
+                'short_name' => $product['short_name'],
+                'hidden' => $product['hidden'],
+                'count' => $productIndex,
+                'models' => []
+            ];
+
+            if ($product['hidden'] == 1) {
+                continue;
+            }
+
+            try {
+                $models = $this->epm_config_hardware_get_list_models($product['id'], true);
+            } catch (\Exception $e) {
+                // Gérer l'exception
+                continue;
+            }
+
+            foreach ($models as $modelIndex => $model) {
+                if (!isset($model['id'], $model['brand'], $model['model'], $model['product_id'], $model['enabled'], $model['hidden'])) {
+                    continue; // Sauter si des clés nécessaires sont manquantes
+                }
+
+                $output[$brandIndex]['products'][$productIndex]['models'][$modelIndex] = [
+                    'id' => $model['id'],
+                    'brand' => $model['brand'],
+                    'model' => $model['model'],
+                    'product_id' => $model['product_id'],
+                    'enabled' => $model['enabled'],
+                    'hidden' => $model['hidden'],
+                    'count' => $modelIndex
+                ];
+            }
+        }
+    }
+
+    return $output;
+}
+
+
+
 
 
 	//TODO: PENDIENTE ACTUALIZAR Y ELIMINAR DATOS NO NECESARIOS (TEMPLATES)

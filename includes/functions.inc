@@ -1352,20 +1352,18 @@ class autoprovmanager {
 
     }
 
-    /**
-     * Prepare and then send the data that Provisioner expects, then take what provisioner gives us and do what it says
-     * @param array $phone_info Everything from get_phone_info
-     * @param bool  $reboot Reboot the Phone after write
-     * @param bool  $write  Write out Directory structure.
-     */
-    function prepare_configs($phone_info, $reboot=TRUE, $write=TRUE) {
+/**
+ * Prepare and then send the data that Provisioner expects, then take what provisioner gives us and do what it says
+ * @param array $phone_info Everything from get_phone_info
+ * @param bool  $reboot Reboot the Phone after write
+ * @param bool  $write  Write out Directory structure.
+ * @return bool
+ */
+function prepare_configs(array $phone_info, bool $reboot = true, bool $write = true): bool {
 
-        define('PROVISIONER_BASE', PHONE_MODULES_PATH);
-        if (file_exists(PHONE_MODULES_PATH . 'autoload.php')) {
-            if (!class_exists('ProvisionerConfig')) {
-                require(PHONE_MODULES_PATH . 'autoload.php');
-            }
+    define('PROVISIONER_BASE', PHONE_MODULES_PATH);
 
+<<<<<<< Updated upstream
             //Load Provisioner
             $class = "endpoint_" . $phone_info['directory'] . "_" . $phone_info['cfg_dir'] . '_phone';
             $base_class = "endpoint_" . $phone_info['directory'] . '_base';
@@ -1634,8 +1632,308 @@ class autoprovmanager {
         } else {
             $this->error['parse_configs'] = "Can't Load the Autoloader!";
             return(FALSE);
+=======
+    if (file_exists(PHONE_MODULES_PATH . 'autoload.php')) {
+        if (!class_exists('ProvisionerConfig')) {
+            require_once(PHONE_MODULES_PATH . 'autoload.php');
+>>>>>>> Stashed changes
         }
+
+        // Load Provisioner
+        $class = "endpoint_" . $phone_info['directory'] . "_" . $phone_info['cfg_dir'] . '_phone';
+        $base_class = "endpoint_" . $phone_info['directory'] . '_base';
+        $master_class = "endpoint_base";
+
+        if (!class_exists($master_class)) {
+            ProvisionerConfig::endpointsAutoload($master_class);
+        }
+        if (!class_exists($base_class)) {
+            ProvisionerConfig::endpointsAutoload($base_class);
+        }
+        if (!class_exists($class)) {
+            ProvisionerConfig::endpointsAutoload($class);
+        }
+
+        if (class_exists($class)) {
+            $provisioner_lib = new $class();
+
+            // Determine if global settings have been overridden
+            if ($phone_info['template_id'] > 0) {
+                $settings = isset($phone_info['template_data_info']['global_settings_override'])
+                    ? unserialize($phone_info['template_data_info']['global_settings_override'])
+                    : [
+                        'srvip' => $this->global_cfg['srvip'],
+                        'ntp' => $this->global_cfg['ntp'],
+                        'config_location' => $this->global_cfg['config_location'],
+                        'tz' => $this->global_cfg['tz']
+                    ];
+            } else {
+                $settings = isset($phone_info['global_settings_override'])
+                    ? unserialize($phone_info['global_settings_override'])
+                    : [
+                        'srvip' => $this->global_cfg['srvip'],
+                        'ntp' => $this->global_cfg['ntp'],
+                        'config_location' => $this->global_cfg['config_location'],
+                        'tz' => $this->global_cfg['tz']
+                    ];
+            }
+
+            // Tell the system who we are and where to find the data
+            $provisioner_lib->root_dir = PHONE_MODULES_PATH;
+            $provisioner_lib->engine = 'asterisk';
+            $provisioner_lib->engine_location = !empty($this->global_cfg['asterisk_location'])
+                ? $this->global_cfg['asterisk_location']
+                : 'asterisk';
+            $provisioner_lib->system = 'unix';
+
+            // Set brand and family line
+            $provisioner_lib->brand_name = $phone_info['directory'];
+            $provisioner_lib->family_line = $phone_info['cfg_dir'];
+
+            // Phone Model
+            $provisioner_lib->model = $phone_info['model'];
+
+            // Timezone
+            require_once('timezone.inc');
+            try {
+                $provisioner_lib->DateTimeZone = new DateTimeZone($settings['tz']);
+            } catch (Exception $e) {
+                $this->error['parse_configs'] = 'Error Returned From Timezone Library: ' . $e->getMessage();
+                return false;
+            }
+
+            $temp = "";
+            $template_data = unserialize($phone_info['template_data']);
+            $global_user_cfg_data = unserialize($phone_info['global_user_cfg_data']);
+
+            if ($phone_info['template_id'] > 0) {
+                $global_custom_cfg_data = unserialize($phone_info['template_data_info']['global_custom_cfg_data']);
+                // Provide alternate Configuration file instead of the one from the hard drive
+                if (!empty($phone_info['template_data_info']['config_files_override'])) {
+                    $temp = unserialize($phone_info['template_data_info']['config_files_override']);
+                    foreach ($temp as $list) {
+                        $sql = "SELECT original_name, data FROM autoprov_custom_configs WHERE id = ?";
+                        $res = $this->eda->sql($sql, [$list]);
+                        if (count($res) > 0) {
+                            $data = $this->eda->sql($sql, 'getRow', DB_FETCHMODE_ASSOC);
+                            $provisioner_lib->config_files_override[$data['original_name']] = $data['data'];
+                        }
+                    }
+                }
+            } else {
+                $global_custom_cfg_data = unserialize($phone_info['global_custom_cfg_data']);
+                // Provide alternate Configuration file instead of the one from the hard drive
+                if (!empty($phone_info['config_files_override'])) {
+                    $temp = unserialize($phone_info['config_files_override']);
+                    foreach ($temp as $list) {
+                        $sql = "SELECT original_name, data FROM autoprov_custom_configs WHERE id = ?";
+                        $res = $this->eda->sql($sql, [$list]);
+                        if (count($res) > 0) {
+                            $data = $this->eda->sql($sql, 'getRow', DB_FETCHMODE_ASSOC);
+                            $provisioner_lib->config_files_override[$data['original_name']] = $data['data'];
+                        }
+                    }
+                }
+            }
+
+            if (!empty($global_custom_cfg_data)) {
+                $global_custom_cfg_ari = array_key_exists('data', $global_custom_cfg_data)
+                    ? $global_custom_cfg_data['ari']
+                    : [];
+                $global_custom_cfg_data = array_key_exists('data', $global_custom_cfg_data)
+                    ? $global_custom_cfg_data['data']
+                    : [];
+            }
+
+            $new_template_data = [];
+            $line_ops = [];
+
+            if (is_array($global_custom_cfg_data)) {
+                foreach ($global_custom_cfg_data as $key => $data) {
+                    $full_key = $key;
+                    $key = explode('|', $key);
+                    $count = count($key);
+
+                    switch ($count) {
+                        case 1:
+                            if ($this->global_cfg['enable_ari'] == 1
+                                && isset($global_custom_cfg_ari[$full_key])
+                                && isset($global_user_cfg_data[$full_key])
+                            ) {
+                                $new_template_data[$full_key] = $global_user_cfg_data[$full_key];
+                            } else {
+                                $new_template_data[$full_key] = $global_custom_cfg_data[$full_key];
+                            }
+                            break;
+                        case 2:
+                            $breaks = explode('_', $key[1]);
+                            if ($this->global_cfg['enable_ari'] == 1
+                                && isset($global_custom_cfg_ari[$full_key])
+                                && isset($global_user_cfg_data[$full_key])
+                            ) {
+                                $new_template_data['loops'][$breaks[0]][$breaks[2]][$breaks[1]] = $global_user_cfg_data[$full_key];
+                            } else {
+                                $new_template_data['loops'][$breaks[0]][$breaks[2]][$breaks[1]] = $global_custom_cfg_data[$full_key];
+                            }
+                            break;
+                        case 3:
+                            if ($this->global_cfg['enable_ari'] == 1
+                                && isset($global_custom_cfg_ari[$full_key])
+                                && isset($global_user_cfg_data[$full_key])
+                            ) {
+                                $line_ops[$key[1]][$key[2]] = $global_user_cfg_data[$full_key];
+                            } else {
+                                $line_ops[$key[1]][$key[2]] = $global_custom_cfg_data[$full_key];
+                            }
+                            break;
+                    }
+                }
+            }
+
+            if (!$write) {
+                $new_template_data['provision'] = [
+                    'type' => 'dynamic',
+                    'protocol' => 'http',
+                    'path' => rtrim($settings['srvip'] . dirname($_SERVER['REQUEST_URI']) . '/', '/'),
+                    'encryption' => false
+                ];
+            } else {
+                $new_template_data['provision'] = [
+                    'type' => 'file',
+                    'protocol' => 'tftp',
+                    'path' => $settings['srvip'],
+                    'encryption' => false
+                ];
+            }
+
+            $new_template_data['ntp'] = $settings['ntp'];
+
+            // Overwrite all specific settings variables now
+            $specific_settings = !empty($phone_info['specific_settings'])
+                ? unserialize($phone_info['specific_settings'])
+                : [];
+
+            $provisioner_lib->settings = $new_template_data;
+
+            // Loop through Lines!
+            $li = 0;
+            foreach ($phone_info['line'] as $line) {
+                $line_key = isset($line['line']) ? $line['line'] : null;
+
+                // Ensure $line_ops[$line_key] is an array or convert to an empty array
+                $line_options = isset($line_ops[$line_key]) && is_array($line_ops[$line_key])
+                    ? $line_ops[$line_key]
+                    : [];
+
+                // Verify elements in $line and $this->global_cfg
+                $line_statics = [
+                    'line' => $line_key,
+                    'username' => isset($line['ext']) ? $line['ext'] : '',
+                    'authname' => isset($line['ext']) ? $line['ext'] : '',
+                    'secret' => isset($line['secret']) ? $line['secret'] : '',
+                    'displayname' => isset($line['description']) ? $line['description'] : '',
+                    'server_host' => isset($this->global_cfg['srvip']) ? $this->global_cfg['srvip'] : '',
+                    'server_port' => '5060',
+                    'user_extension' => isset($line['user_extension']) ? $line['user_extension'] : '',
+                    'tech' => isset($line['tech']) ? $line['tech'] : '',
+                    'email' => isset($line['email']) ? $line['email'] : ''
+                ];
+
+                // Merge the options and statics arrays
+                $provisioner_lib->settings['line'][$li] = array_merge($line_options, $line_statics);
+                $li++;
+            }
+
+            if (array_key_exists('data', $specific_settings)) {
+                foreach ($specific_settings['data'] as $key => $data) {
+                    $default_exp = preg_split("/\|/i", $key);
+
+                    if (isset($default_exp[2])) {
+                        // lineloop
+                        $var = $default_exp[2];
+                        $line = $default_exp[1];
+                        $loc = $this->arraysearchrecursive($line, $provisioner_lib->settings['line'], 'line');
+                        if ($loc !== false) {
+                            $k = $loc[0];
+                            $provisioner_lib->settings['line'][$k][$var] = $data;
+                        } else {
+                            // Adding a new line-ish type options
+                            if (isset($specific_settings['data']['line|' . $line . '|line_enabled'])) {
+                                $lastkey = array_key_last($provisioner_lib->settings['line']) + 1;
+                                $provisioner_lib->settings['line'][$lastkey]['line'] = $line;
+                                $provisioner_lib->settings['line'][$lastkey][$var] = $data;
+                            }
+                        }
+                    } else {
+                        switch ($key) {
+                            case "connection_type":
+                                $provisioner_lib->settings['network'][$key] = $data;
+                                break;
+                            case "ip4_address":
+                                $provisioner_lib->settings['network']['ipv4'] = $data;
+                                break;
+                            case "ip6_address":
+                                $provisioner_lib->settings['network']['ipv6'] = $data;
+                                break;
+                            case "subnet_mask":
+                                $provisioner_lib->settings['network']['subnet'] = $data;
+                                break;
+                            case "gateway_address":
+                                $provisioner_lib->settings['network']['gateway'] = $data;
+                                break;
+                            case "primary_dns":
+                                $provisioner_lib->settings['network'][$key] = $data;
+                                break;
+                            default:
+                                $provisioner_lib->settings[$key] = $data;
+                                break;
+                        }
+                    }
+                }
+            }
+
+            $provisioner_lib->settings['mac'] = $phone_info['mac'];
+            $provisioner_lib->mac = $phone_info['mac'];
+
+            // Setting a line variable here
+            $provisioner_lib->processor_info = "EndPoint Manager Version " . $this->global_cfg['version'];
+
+            // Start timer
+            $time_start = microtime(true);
+
+            $provisioner_lib->debug = true;
+
+            try {
+                $returned_data = $provisioner_lib->generate_all_files();
+            } catch (Exception $e) {
+                $this->error['prepare_configs'] = 'Error Returned From Provisioner Library: ' . $e->getMessage();
+                return false;
+            }
+
+            // End timer
+            $time_end = microtime(true);
+            $time = $time_end - $time_start;
+            if ($time > 360) {
+                $this->error['generate_time'] = "It took an awfully long time to generate configs...(" . round($time, 2) . " seconds)";
+            }
+
+            if ($write) {
+                $this->write_configs($provisioner_lib, $reboot, $settings['config_location'], $phone_info, $returned_data);
+            } else {
+                return $returned_data;
+            }
+
+            return true;
+        } else {
+            $this->error['parse_configs'] = "Can't Load \"" . $class . "\" Class!";
+            return false;
+        }
+    } else {
+        $this->error['parse_configs'] = "Can't Load the Autoloader!";
+        return false;
     }
+}
+
 
     /**
      * Check for new firmware on the servers

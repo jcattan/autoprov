@@ -188,7 +188,7 @@ define('JSON_PRETTY_PRINT', 100);
  * </code>
  */
 if(!class_exists('Services_JSON')) {
-	class Services_JSON
+	class class_Services_JSON
 	{
 	   /**
 	    * constructs a new JSON instance
@@ -854,7 +854,7 @@ if(!class_exists('Services_JSON')) {
 
 	if (class_exists('PEAR_Error')) {
 
-	    class Services_JSON_Error extends PEAR_Error
+	    class class_Services_JSON_Error extends PEAR_Error
 	    {
 	        function __construct($message = 'unknown error', $code = null,
 	                                     $mode = null, $options = null, $userinfo = null)
@@ -868,7 +868,7 @@ if(!class_exists('Services_JSON')) {
 	    /**
 	     * @todo Ultimately, this class shall be descended from PEAR_Error
 	     */
-	    class Services_JSON_Error
+	    class class_Services_JSON_Error
 	    {
 	        function __construct($message = 'unknown error', $code = null,
 	                                     $mode = null, $options = null, $userinfo = null)
