@@ -63,7 +63,7 @@ define( "IN_RAINTPL", true );
  * 
  */
 
-class class_RainTPL{
+class RainTPL{
 	
 	/**
 	 * All templates variables
@@ -151,7 +151,7 @@ class class_RainTPL{
 		//var of all template
 		$var = $this->variables;
 
-		if( !file_exists( $template_file = class_RainTPL::$tpl_dir . $tpl_dir . $tpl_name . '.' . TPL_EXT ) ){
+		if( !file_exists( $template_file = RainTPL::$tpl_dir . $tpl_dir . $tpl_name . '.' . TPL_EXT ) ){
 			trigger_error( "Template not found: $tpl_name" );
 			if( $return_string )
 				return "<div style=\"background-color:#f8f8ff; border: 1px solid #aaaaff; padding:10px;\">Template <b>$tpl_name</b> not found</div>";
