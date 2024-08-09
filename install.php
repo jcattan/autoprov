@@ -91,9 +91,9 @@ $epmdbversion = !empty($modinfo['autoprov']['dbversion']) ? $modinfo['autoprov']
 if (!empty($epmdbversion)) {
 
 // version 16.0.0.1 installee
-	// if (version_compare_freepbx($epmdbversion,'16.0.0.1','<=')) {
-// out("MAJ vers 16.0.0.2");
-    // }
+	 if (version_compare_freepbx($epmdbversion,'16.0.0.1','<=')) {
+ out("MAJ vers 16.0.0.2");
+     }
 
 
 // a suivre 
