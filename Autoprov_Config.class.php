@@ -1166,7 +1166,7 @@ public function epm_config_manager_hardware_get_list_all_hide_show(): array
 					sql($sql);
 
 
-					if (count($family_line_xml['data']['model_list']) > 0) {
+					if (count((array)$family_line_xml['data']['model_list']) > 0) {
 						out(_("-- Updating Model Lines ... "));
 	                    foreach ($family_line_xml['data']['model_list'] as $model_list) {
 	                        $template_list = implode(",", $model_list['template_data']);
