@@ -94,7 +94,10 @@ if (!empty($epmdbversion)) {
 	 if (version_compare_freepbx($epmdbversion,'16.0.0.1','<=')) {
  out("MAJ vers 16.0.0.2");
      }
-
+// version 16.0.0.2 installee	 
+	 if (version_compare_freepbx($epmdbversion,'16.0.0.2','<=')) {
+ out("MAJ vers 16.0.0.3");
+     }
 
 // a suivre 
 // version 16.0.0.X installe
