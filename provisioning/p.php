@@ -86,7 +86,8 @@ if(getMethod() == "GET") {
         
         #Just moved this Block of code up to fix the provisioning for Snom Phones
         require_once (PROVISIONER_BASE.'endpoint/base.php');
-        $data = Provisioner_Globals::dynamic_global_files($filename, FreePBX::Autoprov()->configmod->get("config_location"), $web_path);
+$provisionerGlobals = new Provisioner_Globals();
+$data = $provisionerGlobals->dynamic_global_files($filename, FreePBX::Autoprov()->configmod->get("config_location"), $web_path);
         if($data !== FALSE) {
             echo $data;
         } 
