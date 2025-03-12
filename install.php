@@ -59,9 +59,13 @@ global $db;
 
 out("Endpoint Manager Installer");
 
-define("PHONE_MODULES_PATH", $amp_conf['AMPWEBROOT'] . '/admin/modules/_ap_phone_modules/');
-define("LOCAL_PATH", $amp_conf['AMPWEBROOT'] . '/admin/modules/autoprov/');
+if (!defined("PHONE_MODULES_PATH")) {
+    define("PHONE_MODULES_PATH", $amp_conf['AMPWEBROOT'] . '/admin/modules/_ap_phone_modules/');
+}
 
+if (!defined("LOCAL_PATH")) {
+    define("LOCAL_PATH", $amp_conf['AMPWEBROOT'] . '/admin/modules/autoprov/');
+}
 
 if (!file_exists(PHONE_MODULES_PATH)) {
     mkdir(PHONE_MODULES_PATH, 0764);
