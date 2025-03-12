@@ -11,16 +11,23 @@ namespace FreePBX\modules;
 
 class Autoprov_Templates
 {
-	public function __construct($freepbx = null, $cfgmod = null, $epm_config, $eda) 
-	{
-		$this->freepbx = $freepbx;
-		$this->db = $freepbx->Database;
-		$this->config = $freepbx->Config;
-		$this->configmod = $cfgmod;
-		$this->epm_config = $epm_config;
-		$this->eda = $eda;
-	}
+    public $freepbx; // Déclaration explicite de la propriété freepbx
+    public $db;
+    public $config;
+    public $configmod;
+    public $epm_config;
+    public $eda;
 
+    public function __construct($freepbx = null, $cfgmod = null, $epm_config, $eda) 
+    {
+        $this->freepbx = $freepbx;
+        $this->db = $freepbx->Database;
+        $this->config = $freepbx->Config;
+        $this->configmod = $cfgmod;
+        $this->epm_config = $epm_config;
+        $this->eda = $eda;
+    }
+	
 	public function myShowPage(&$pagedata) {
 		if(empty($pagedata))
 		{

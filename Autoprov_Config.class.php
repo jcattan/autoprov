@@ -11,19 +11,25 @@ namespace FreePBX\modules;
 
 class Autoprov_Config
 {
-	public $UPDATE_PATH;
-    public $MODULES_PATH;
-	public $LOCAL_PATH;
-	public $PHONE_MODULES_PATH;
-	public $PROVISIONER_BASE;
+    public $freepbx; // Déclaration explicite de la propriété freepbx
+    public $db;
+    public $config;
+    public $configmod;
+    public $system;
 
-	public function __construct($freepbx = null, $cfgmod = null, $system = null)
-	{
-		$this->freepbx = $freepbx;
-		$this->db = $freepbx->Database;
-		$this->config = $freepbx->Config;
-		$this->configmod = $cfgmod;
-		$this->system = $system;
+    public $UPDATE_PATH;
+    public $MODULES_PATH;
+    public $LOCAL_PATH;
+    public $PHONE_MODULES_PATH;
+    public $PROVISIONER_BASE;
+
+    public function __construct($freepbx = null, $cfgmod = null, $system = null)
+    {
+        $this->freepbx = $freepbx;
+        $this->db = $freepbx->Database;
+        $this->config = $freepbx->Config;
+        $this->configmod = $cfgmod;
+        $this->system = $system;
 
 
 		$this->UPDATE_PATH = $this->configmod->get('update_server');

@@ -2,9 +2,6 @@
 /**
  * Endpoint Manager Object Module
  *
- * @author Andrew Nagy
- * @author Javier Pastor
- * @license MPL / GPLv2 / LGPL
  * @package Provisioner
  */
 
@@ -12,104 +9,102 @@ namespace FreePBX\modules;
 
 function format_txt($texto = "", $css_class = "", $remplace_txt = array())
 {
-	if (count($remplace_txt) > 0) 
-	{
-		foreach ($remplace_txt as $clave => $valor) {
-			$texto = str_replace($clave, $valor, $texto);
-		}
-	}
-	return '<p ' . ($css_class != '' ? 'class="' . $css_class . '"' : '') . '>'.$texto.'</p>';	
+    if (count($remplace_txt) > 0) 
+    {
+        foreach ($remplace_txt as $clave => $valor) {
+            $texto = str_replace($clave, $valor, $texto);
+        }
+    }
+    return '<p ' . ($css_class != '' ? 'class="' . $css_class . '"' : '') . '>'.$texto.'</p>';    
 }
 
 function generate_xml_from_array ($array, $node_name, &$tab = -1) 
 {
-	$tab++;
-	$xml ="";
-	if (is_array($array) || is_object($array)) {
-		foreach ($array as $key=>$value) {
-			if (is_numeric($key)) {
-				$key = $node_name;
-			}
-			
-			$xml .= str_repeat("	", $tab). '<' . $key . '>' . "\n";
-			$xml .= generate_xml_from_array($value, $node_name, $tab);
-			$xml .= str_repeat("	", $tab). '</' . $key . '>' . "\n";
-			
-		}
-	} else {
-		$xml = str_repeat("	", $tab) . htmlspecialchars($array, ENT_QUOTES) . "\n";
-	}
-	$tab--;
-	return $xml;
+    $tab++;
+    $xml ="";
+    if (is_array($array) || is_object($array)) {
+        foreach ($array as $key=>$value) {
+            if (is_numeric($key)) {
+                $key = $node_name;
+            }
+            
+            $xml .= str_repeat("\t", $tab). '<' . $key . '>' . "\n";
+            $xml .= generate_xml_from_array($value, $node_name, $tab);
+            $xml .= str_repeat("\t", $tab). '</' . $key . '>' . "\n";
+            
+        }
+    } else {
+        $xml = str_repeat("\t", $tab) . htmlspecialchars($array, ENT_QUOTES) . "\n";
+    }
+    $tab--;
+    return $xml;
 }
 
-
 class Autoprov implements \BMO {
-	
-	//public $epm_config;
-	
-	
-	public $db; //Database from FreePBX
-	public $eda; //endpoint data abstraction layer
-	public $tpl; //Template System Object (RAIN TPL)
-	//public $system;
-	
-    public $error; //error construct
-    public $message; //message construct
-	
-	public $UPDATE_PATH;
+
+    public $freepbx;
+    public $db; // Database from FreePBX
+    public $config; // Configuration property explicitly declared
+    public $configmod; // Configuration module property explicitly declared
+    public $system; // System property explicitly declared
+    public $eda; // endpoint data abstraction layer
+    public $tpl; // Template System Object (RAIN TPL)
+    public $error; // error construct
+    public $message; // message construct
+    public $epm_config; // Déclaration explicite de la propriété epm_config
+	public $epm_advanced; // Déclaration explicite de la propriété epm_advanced
+	public $epm_templates;
+	public $epm_devices;
+
+    public $UPDATE_PATH;
     public $MODULES_PATH;
-	public $LOCAL_PATH;
-	public $PHONE_MODULES_PATH;
-	public $PROVISIONER_BASE;
-	
-	
-	public function __construct($freepbx = null) {
-		if ($freepbx == null) {
-			throw new \Exception("Not given a FreePBX Object");
-		}
-		require_once('lib/json.class.php');
-		require_once('lib/Config.class.php');
-		require_once('lib/epm_system.class.php');
-		require_once('lib/datetimezone.class.php');
-		require_once('lib/epm_data_abstraction.class.php');
-		//require_once("lib/RainTPL.class.php");
-		
-		$this->freepbx = $freepbx;
-		$this->db = $freepbx->Database;
-		$this->config = $freepbx->Config;
-		$this->configmod = new Autoprov\Config();
-		$this->system = new epm_system();
-		$this->eda = new epm_data_abstraction($this->config, $this->configmod);
-		
-		
-		$this->configmod->set('disable_epm', FALSE);
-		$this->eda->global_cfg = $this->configmod->getall();
-		
-        //Generate empty array
+    public $LOCAL_PATH;
+    public $PHONE_MODULES_PATH;
+    public $PROVISIONER_BASE;
+
+    public function __construct($freepbx = null) {
+        if ($freepbx == null) {
+            throw new \Exception("Not given a FreePBX Object");
+        }
+        require_once('lib/json.class.php');
+        require_once('lib/Config.class.php');
+        require_once('lib/epm_system.class.php');
+        require_once('lib/datetimezone.class.php');
+        require_once('lib/epm_data_abstraction.class.php');
+        //require_once("lib/RainTPL.class.php");
+        
+        $this->freepbx = $freepbx;
+        $this->db = $freepbx->Database;
+        $this->config = $freepbx->Config;
+        $this->configmod = new \FreePBX\modules\Autoprov\Config();
+        $this->system = new \FreePBX\modules\epm_system();
+        $this->eda = new \FreePBX\modules\epm_data_abstraction($this->config, $this->configmod);
+        
+        $this->configmod->set('disable_epm', FALSE);
+        $this->eda->global_cfg = $this->configmod->getall();
+
+        // Generate empty array
         $this->error = array();
         $this->message = array();
-		
-		
-		$this->configmod->set('tz', $this->config->get('PHPTIMEZONE'));
-		date_default_timezone_set($this->configmod->get('tz'));
-		
-		$this->UPDATE_PATH = $this->configmod->get('update_server');
+
+        $this->configmod->set('tz', $this->config->get('PHPTIMEZONE'));
+        date_default_timezone_set($this->configmod->get('tz'));
+
+        $this->UPDATE_PATH = $this->configmod->get('update_server');
         $this->MODULES_PATH = $this->config->get('AMPWEBROOT') . '/admin/modules/';
-        
-define("UPDATE_PATH", $this->UPDATE_PATH);
-define("MODULES_PATH", $this->MODULES_PATH);
-        
-		
-        //Determine if local path is correct!
+
+        define("UPDATE_PATH", $this->UPDATE_PATH);
+        define("MODULES_PATH", $this->MODULES_PATH);
+
+        // Determine if local path is correct!
         if (file_exists($this->MODULES_PATH . "autoprov/")) {
             $this->LOCAL_PATH = $this->MODULES_PATH . "autoprov/";
-define("LOCAL_PATH", $this->LOCAL_PATH);
+            define("LOCAL_PATH", $this->LOCAL_PATH);
         } else {
             die("Can't Load Local Endpoint Manager Directory!");
         }
-		
-        //Define the location of phone modules, keeping it outside of the module directory so that when the user updates autoprovmanager they don't lose all of their phones
+
+        // Define the location of phone modules, keeping it outside of the module directory so that when the user updates autoprovmanager they don't lose all of their phones
         if (file_exists($this->MODULES_PATH . "_ap_phone_modules/")) {
             $this->PHONE_MODULES_PATH = $this->MODULES_PATH . "_ap_phone_modules/";
         } else {
@@ -124,19 +119,19 @@ define("LOCAL_PATH", $this->LOCAL_PATH);
                 die('Endpoint Manager can not create the modules folder!');
             }
         }
-define("PHONE_MODULES_PATH", $this->PHONE_MODULES_PATH);
-		
-        //Define error reporting
+        define("PHONE_MODULES_PATH", $this->PHONE_MODULES_PATH);
+
+        // Define error reporting
         if (($this->configmod->get('debug')) AND (!isset($_REQUEST['quietmode']))) {
             error_reporting(E_ALL);
             ini_set('display_errors', 1);
         } else {
             ini_set('display_errors', 0);
         }
-		
-        //Check if config location is writable and/or exists!
+
+        // Check if config location is writable and/or exists!
         if ($this->configmod->isExiste('config_location')) {
-			$config_location = $this->configmod->get('config_location');
+            $config_location = $this->configmod->get('config_location');
             if (is_dir($config_location)) {
                 if (!is_writeable($config_location)) {
                     $user = exec('whoami');
@@ -144,391 +139,330 @@ define("PHONE_MODULES_PATH", $this->PHONE_MODULES_PATH);
                     $this->error['config_location'] = _("Configuration Directory is not writable!") . "<br />" .
                             _("Please change the location:") . "<a href='config.php?display=epm_advanced'>" . _("Here") . "</a><br />" .
                             _("Or run this command on SSH:") . "<br />" .
-							"'chown -hR root: " . $group . " " . $config_location . "'<br />" .
-							"'chmod g+w " . $config_location . "'";
-					$this->configmod->set('disable_epm', TRUE);
+                            "'chown -hR root: " . $group . " " . $config_location . "'<br />" .
+                            "'chmod g+w " . $config_location . "'";
+                    $this->configmod->set('disable_epm', TRUE);
                 }
             } else {
                 $this->error['config_location'] = _("Configuration Directory is not a directory or does not exist! Please change the location here:") . "<a href='config.php?display=epm_advanced'>" . _("Here") . "</a>";
-				$this->configmod->set('disable_epm', TRUE);
+                $this->configmod->set('disable_epm', TRUE);
             }
         }
+
+        require_once('Autoprov_Config.class.php');
+        $this->epm_config = new Autoprov_Config($freepbx, $this->configmod, $this->system);
+
+        require_once('Autoprov_Advanced.class.php');
+        $this->epm_advanced = new Autoprov_Advanced($freepbx, $this->configmod, $this->epm_config);
+
+        require_once('Autoprov_Templates.class.php');
+        $this->epm_templates = new Autoprov_Templates($freepbx, $this->configmod, $this->epm_config, $this->eda);
+
+        require_once('Autoprov_Devices.class.php');
+        $this->epm_devices = new Autoprov_Devices($freepbx, $this->configmod);
+    }
+
+    public function chownFreepbx() {
+        $webroot = $this->config->get('AMPWEBROOT');
+        $modulesdir = $webroot . '/admin/modules/';
+        $files = array();
+        $files[] = array('type' => 'dir',
+                            'path' => $modulesdir . '/_ap_phone_modules/',
+                            'perms' => 0755);
+        $files[] = array('type' => 'file',
+                            'path' => $modulesdir . '/_ap_phone_modules/setup.php',
+                            'perms' => 0755);
+        $files[] = array('type' => 'dir',
+                            'path' => '/tftpboot',
+                            'perms' => 0755);
+        return $files;
+    }
+
+    public function ajaxRequest($req, &$setting) {
+        $setting['authenticate'] = true;
+        $setting['allowremote'] = true;
+        return true;
         
-        //$this->tpl = new RainTPL(LOCAL_PATH . '_old/templates/freepbx', LOCAL_PATH . '_old/templates/freepbx/compiled', '/admin/assets/autoprov/images');
-		//$this->tpl = new RainTPL('/admin/assets/autoprov/images');
-		
-		
-		require_once('Autoprov_Config.class.php');
-		$this->epm_config = new Autoprov_Config($freepbx, $this->configmod, $this->system);
-		
-		require_once('Autoprov_Advanced.class.php');
-		$this->epm_advanced = new Autoprov_Advanced($freepbx, $this->configmod, $this->epm_config);
-		
-		require_once('Autoprov_Templates.class.php');
-		$this->epm_templates = new Autoprov_Templates($freepbx, $this->configmod, $this->epm_config, $this->eda);
-		
-		require_once('Autoprov_Devices.class.php');
-		$this->epm_devices = new Autoprov_Devices($freepbx, $this->configmod);
-		
-	}
-	
-	public function chownFreepbx() {
-		$webroot = $this->config->get('AMPWEBROOT');
-		$modulesdir = $webroot . '/admin/modules/';
-		$files = array();
-		$files[] = array('type' => 'dir',
-						'path' => $modulesdir . '/_ap_phone_modules/',
-						'perms' => 0755);
-		$files[] = array('type' => 'file',
-						'path' => $modulesdir . '/_ap_phone_modules/setup.php',
-						'perms' => 0755);
-		$files[] = array('type' => 'dir',
-						'path' => '/tftpboot',
-						'perms' => 0755);
-		return $files;
-	}
-	
-	public function ajaxRequest($req, &$setting) {
-		//AVISO!!!!!!!!!!!!!!!!!!!!!!!!!!
-		//PERMITE TODO!!!!!!!!!!!!!!!!!!!
-		$setting['authenticate'] = true;
-		$setting['allowremote'] = true;
-		return true;
-		
-		$module_sec = isset($_REQUEST['module_sec'])? trim($_REQUEST['module_sec']) : '';
-		if ($module_sec == "") { return false; }
-		
-		switch($module_sec)
-		{
-			case "epm_devices": 
-				return $this->epm_devices->ajaxRequest(trim($req), $setting);
-				break;
-			
-			case "epm_config": 
-				return $this->epm_config->ajaxRequest(trim($req), $setting);
-				break;
-				
-			case "epm_advanced": 
-				return $this->epm_advanced->ajaxRequest(trim($req), $setting);
-				break;
-				
-			case "epm_templates": 
-				return $this->epm_templates->ajaxRequest(trim($req), $setting);
-				break;
-		}
+        $module_sec = isset($_REQUEST['module_sec'])? trim($_REQUEST['module_sec']) : '';
+        if ($module_sec == "") { return false; }
+        
+        switch($module_sec)
+        {
+            case "epm_devices": 
+                return $this->epm_devices->ajaxRequest(trim($req), $setting);
+                break;
+            
+            case "epm_config": 
+                return $this->epm_config->ajaxRequest(trim($req), $setting);
+                break;
+                
+            case "epm_advanced": 
+                return $this->epm_advanced->ajaxRequest(trim($req), $setting);
+                break;
+                
+            case "epm_templates": 
+                return $this->epm_templates->ajaxRequest(trim($req), $setting);
+                break;
+        }
         return false;
     }
-	
+
     public function ajaxHandler() {
 
-		$module_sec = isset($_REQUEST['module_sec'])? trim($_REQUEST['module_sec']) : '';
-		$module_tab = isset($_REQUEST['module_tab'])? trim($_REQUEST['module_tab']) : '';
-		$command = isset($_REQUEST['command'])? trim($_REQUEST['command']) : '';
-		
-		if ($command == "") { 
-			return array("status" => false, "message" => _("No command was sent!"));
-		}
-		
-		$arrVal['mod_sec'] = array("epm_devices", "epm_templates", "epm_config", "epm_advanced");
-		if (! in_array($module_sec, $arrVal['mod_sec'])) {
-			return array("status" => false, "message" => _("Invalid section module!"));
-		}
-		
-		switch ($module_sec) 
-		{
-			case "epm_devices": 
-				return $this->epm_devices->ajaxHandler($module_tab, $command);
-				break;
-				
-			case "epm_templates":
-				return $this->epm_templates->ajaxHandler($module_tab, $command);
-				break;
-				
-			case "epm_config":
-				return $this->epm_config->ajaxHandler($module_tab, $command);
-				break;
-				
-			case "epm_advanced":
-				return $this->epm_advanced->ajaxHandler($module_tab, $command);
-				break;
-		}
-		return false;
+        $module_sec = isset($_REQUEST['module_sec'])? trim($_REQUEST['module_sec']) : '';
+        $module_tab = isset($_REQUEST['module_tab'])? trim($_REQUEST['module_tab']) : '';
+        $command = isset($_REQUEST['command'])? trim($_REQUEST['command']) : '';
+        
+        if ($command == "") { 
+            return array("status" => false, "message" => _("No command was sent!"));
+        }
+        
+        $arrVal['mod_sec'] = array("epm_devices", "epm_templates", "epm_config", "epm_advanced");
+        if (! in_array($module_sec, $arrVal['mod_sec'])) {
+            return array("status" => false, "message" => _("Invalid section module!"));
+        }
+        
+        switch ($module_sec) 
+        {
+            case "epm_devices": 
+                return $this->epm_devices->ajaxHandler($module_tab, $command);
+                break;
+                
+            case "epm_templates":
+                return $this->epm_templates->ajaxHandler($module_tab, $command);
+                break;
+                
+            case "epm_config":
+                return $this->epm_config->ajaxHandler($module_tab, $command);
+                break;
+                
+            case "epm_advanced":
+                return $this->epm_advanced->ajaxHandler($module_tab, $command);
+                break;
+        }
+        return false;
     }
-	
-	public static function myDialplanHooks() {
-		return true;
-	}
-	
-	public function doConfigPageInit($page) {
-		//TODO: Pendiente revisar y eliminar moule_tab.
-		$module_tab = isset($_REQUEST['module_tab'])? trim($_REQUEST['module_tab']) : '';
-		if ($module_tab == "") {
-			$module_tab = isset($_REQUEST['subpage'])? trim($_REQUEST['subpage']) : '';
-		}
-		$command = isset($_REQUEST['command'])? trim($_REQUEST['command']) : '';
-		
-		
-		$arrVal['mod_sec'] = array("epm_devices","epm_templates", "epm_config", "epm_advanced");
-		if (! in_array($page, $arrVal['mod_sec'])) {
-			die(_("Invalid section module!"));
-		}
-		
-		switch ($page) 
-		{
-			case "epm_devices": 
-				$this->epm_devices->doConfigPageInit($module_tab, $command);
-				break;
-				
-			case "epm_templates":
-				$this->epm_templates->doConfigPageInit($module_tab, $command);
-				break;
-				
-			case "epm_config":
-				$this->epm_config->doConfigPageInit($module_tab, $command);
-				break;
-				
-			case "epm_advanced":
-				$this->epm_advanced->doConfigPageInit($module_tab, $command);
-				break;
-		}
-	}
-	
-	public function doGeneralPost() {
-		if (!isset($_REQUEST['Submit'])) 	{ return; }
-		if (!isset($_REQUEST['display'])) 	{ return; }
-		
-		needreload();
-	}
-	
-	public function myShowPage() {
-		if (! isset($_REQUEST['display']))
-			return $this->pagedata;
-		
-		switch ($_REQUEST['display']) 
-		{
-			case "epm_devices":
-				$this->epm_devices->myShowPage($this->pagedata);
-				break;
-				
-			case "epm_templates":
-				$this->epm_templates->myShowPage($this->pagedata);
-				return $this->pagedata;
-				break;
-				
-			case "epm_config":
-				$this->epm_config->myShowPage($this->pagedata);
-				break;
-				
-			case "epm_advanced":
-				$this->epm_advanced->myShowPage($this->pagedata);
-				break;
-		}
-		
-		if(! empty($this->pagedata)) {
-			foreach($this->pagedata as &$page) {
-				ob_start();
-				include($page['page']);
-				$page['content'] = ob_get_contents();
-				ob_end_clean();
-			}
-			return $this->pagedata;
-		}
-	}
-	
-	public function getActiveModules() {
-		
-	}
-	
-	//http://wiki.freepbx.org/display/FOP/Adding+Floating+Right+Nav+to+Your+Module
-	public function getRightNav($request) {
-		if (! isset($_REQUEST['display'])) 
-			return '';
-		
-		switch($_REQUEST['display'])
-		{
-			case "epm_devices": 
-				return $this->epm_devices->getRightNav($request);
-				break;
-			
-			case "epm_config": 
-				return $this->epm_config->getRightNav($request);
-				break;
-				
-			case "epm_advanced": 
-				return $this->epm_advanced->getRightNav($request);
-				break;
-				
-			case "epm_templates": 
-				return $this->epm_templates->getRightNav($request);
-				break;
-				
-			default:
-		        return '';
-			
-		}
-	}
-	
-	//http://wiki.freepbx.org/pages/viewpage.action?pageId=29753755
-	public function getActionBar($request) {
-			if (! isset($_REQUEST['display'])) 
-			return '';
-		
-		switch($_REQUEST['display'])
-		{
-			case "epm_devices": 
-				return $this->epm_devices->getActionBar($request);
-				break;
-			
-			case "epm_config": 
-				return $this->epm_config->getActionBar($request);
-				break;
-				
-			case "epm_advanced": 
-				return $this->epm_advanced->getActionBar($request);
-				break;
-				
-			case "epm_templates": 
-				return $this->epm_templates->getActionBar($request);
-				break;
-				
-			default:
-		        return '';
-			
-		}
-	}
-	
-	public function install() {
-		
-	}
-	
-    public function uninstall() {
-    	out(_("Removing Phone Modules Directory"));
-    	$this->system->rmrf($this->PHONE_MODULES_PATH);
-    	exec("rm -R ". $this->PHONE_MODULES_PATH);
-    	
-    	out(_('Removing symlink to web provisioner'));
-    	$provisioning_path = $this->config->get('AMPWEBROOT')."/provisioning";
-    	if(is_link($provisioning_path)) { unlink($provisioning_path); }
-    	
-    	if(!is_link($this->config->get('AMPWEBROOT').'/admin/assets/autoprov')) {
-    		$this->system->rmrf($this->config->get('AMPWEBROOT').'/admin/assets/autoprov');
-    	}
-    	
-    	out(_("Dropping all relevant tables"));
-    	$sql = "DROP TABLE `autoprov_brand_list`";
-    	$sth = $this->db->prepare($sql);
-    	$sth->execute();
-    	$sql = "DROP TABLE `autoprov_global_vars`";
-    	$sth = $this->db->prepare($sql);
-    	$sth->execute();
-    	// $sql = "DROP TABLE `autoprov_mac_list`";
-    	// $sth = $this->db->prepare($sql);
-    	// $sth->execute();
-    	// $sql = "DROP TABLE `autoprov_line_list`";
-    	// $sth = $this->db->prepare($sql);
-    	// $sth->execute();
-    	$sql = "DROP TABLE `autoprov_model_list`";
-    	$sth = $this->db->prepare($sql);
-    	$sth->execute();
-    	$sql = "DROP TABLE `autoprov_oui_list`";
-    	$sth = $this->db->prepare($sql);
-    	$sth->execute();
-    	$sql = "DROP TABLE `autoprov_product_list`";
-    	$sth = $this->db->prepare($sql);
-    	$sth->execute();
-    	// $sql = "DROP TABLE `autoprov_template_list`";
-    	// $sth = $this->db->prepare($sql);
-    	// $sth->execute();
-    	// $sql = "DROP TABLE `autoprov_time_zones`";
-    	// $sth = $this->db->prepare($sql);
-    	// $sth->execute();
-    	// $sql = "DROP TABLE `autoprov_custom_configs`";
-    	// $sth = $this->db->prepare($sql);
-    	// $sth->execute();
-    	return true;
-	}
-	
-    public function backup() {
-	}
-	
-    public function restore($backup) {
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	private function epm_config_manual_install($install_type = "", $package ="")
-	{
-		if ($install_type == "") {
-			throw new \Exception("Not send install_type!");
-		}
-	
-		switch($install_type) {
-			case "export_brand":
 
-				break;
-	
-			case "upload_master_xml":
-				if (file_exists($this->PHONE_MODULES_PATH."temp/master.xml")) {
-					$handle = fopen($this->PHONE_MODULES_PATH."temp/master.xml", "rb");
-					$contents = stream_get_contents($handle);
-					fclose($handle);
-					@$a = simplexml_load_string($contents);
-					if($a===FALSE) {
-						echo "Not a valid xml file";
-						break;
-					} else {
-						rename($this->PHONE_MODULES_PATH."temp/master.xml", $this->PHONE_MODULES_PATH."master.xml");
-						echo "Move Successful<br />";
-						$this->update_check();
-						echo "Updating Brands<br />";
-					}
-				} else {
-				}
-				break;
-	
-			case "upload_provisioner":
-				
-				break;
-	
-			case "upload_brand":
-			
-				break;
-		}
-	}
-	
-	
-	
-	
-	
-	
-	/*****************************************
-	****** CODIGO ANTIGUO -- REVISADO ********
-	*****************************************/
-	
-	
-	
-	
-	
-	//TODO: DUPLICADO AQUI Y EN epm_advandec
-	/**
-     * This function takes a string and tries to determine if it's a valid mac addess, return FALSE if invalid
-     * @param string $mac The full mac address
-     * @return mixed The cleaned up MAC is it was a MAC or False if not a mac
-     */
+    public static function myDialplanHooks() {
+        return true;
+    }
+
+    public function doConfigPageInit($page) {
+        $module_tab = isset($_REQUEST['module_tab'])? trim($_REQUEST['module_tab']) : '';
+        if ($module_tab == "") {
+            $module_tab = isset($_REQUEST['subpage'])? trim($_REQUEST['subpage']) : '';
+        }
+        $command = isset($_REQUEST['command'])? trim($_REQUEST['command']) : '';
+        
+        $arrVal['mod_sec'] = array("epm_devices","epm_templates", "epm_config", "epm_advanced");
+        if (! in_array($page, $arrVal['mod_sec'])) {
+            die(_("Invalid section module!"));
+        }
+        
+        switch ($page) 
+        {
+            case "epm_devices": 
+                $this->epm_devices->doConfigPageInit($module_tab, $command);
+                break;
+                
+            case "epm_templates":
+                $this->epm_templates->doConfigPageInit($module_tab, $command);
+                break;
+                
+            case "epm_config":
+                $this->epm_config->doConfigPageInit($module_tab, $command);
+                break;
+                
+            case "epm_advanced":
+                $this->epm_advanced->doConfigPageInit($module_tab, $command);
+                break;
+        }
+    }
+
+    public function doGeneralPost() {
+        if (!isset($_REQUEST['Submit'])) { return; }
+        if (!isset($_REQUEST['display'])) { return; }
+        
+        needreload();
+    }
+
+    public function myShowPage() {
+        if (! isset($_REQUEST['display']))
+            return $this->pagedata;
+        
+        switch ($_REQUEST['display']) 
+        {
+            case "epm_devices":
+                $this->epm_devices->myShowPage($this->pagedata);
+                break;
+                
+            case "epm_templates":
+                $this->epm_templates->myShowPage($this->pagedata);
+                return $this->pagedata;
+                break;
+                
+            case "epm_config":
+                $this->epm_config->myShowPage($this->pagedata);
+                break;
+                
+            case "epm_advanced":
+                $this->epm_advanced->myShowPage($this->pagedata);
+                break;
+        }
+        
+        if(! empty($this->pagedata)) {
+            foreach($this->pagedata as &$page) {
+                ob_start();
+                include($page['page']);
+                $page['content'] = ob_get_contents();
+                ob_end_clean();
+            }
+            return $this->pagedata;
+        }
+    }
+
+    public function getActiveModules() {
+        
+    }
+
+    public function getRightNav($request) {
+        if (! isset($_REQUEST['display'])) 
+            return '';
+        
+        switch($_REQUEST['display'])
+        {
+            case "epm_devices": 
+                return $this->epm_devices->getRightNav($request);
+                break;
+            
+            case "epm_config": 
+                return $this->epm_config->getRightNav($request);
+                break;
+                
+            case "epm_advanced": 
+                return $this->epm_advanced->getRightNav($request);
+                break;
+                
+            case "epm_templates": 
+                return $this->epm_templates->getRightNav($request);
+                break;
+                
+            default:
+                return '';
+            
+        }
+    }
+
+    public function getActionBar($request) {
+        if (! isset($_REQUEST['display'])) 
+            return '';
+        
+        switch($_REQUEST['display'])
+        {
+            case "epm_devices": 
+                return $this->epm_devices->getActionBar($request);
+                break;
+            
+            case "epm_config": 
+                return $this->epm_config->getActionBar($request);
+                break;
+                
+            case "epm_advanced": 
+                return $this->epm_advanced->getActionBar($request);
+                break;
+                
+            case "epm_templates": 
+                return $this->epm_templates->getActionBar($request);
+                break;
+                
+            default:
+                return '';
+            
+        }
+    }
+
+    public function install() {
+        
+    }
+
+    public function uninstall() {
+        out(_("Removing Phone Modules Directory"));
+        $this->system->rmrf($this->PHONE_MODULES_PATH);
+        exec("rm -R ". $this->PHONE_MODULES_PATH);
+        
+        out(_('Removing symlink to web provisioner'));
+        $provisioning_path = $this->config->get('AMPWEBROOT')."/provisioning";
+        if(is_link($provisioning_path)) { unlink($provisioning_path); }
+        
+        if(!is_link($this->config->get('AMPWEBROOT').'/admin/assets/autoprov')) {
+            $this->system->rmrf($this->config->get('AMPWEBROOT').'/admin/assets/autoprov');
+        }
+        
+        out(_("Dropping all relevant tables"));
+        $sql = "DROP TABLE `autoprov_brand_list`";
+        $sth = $this->db->prepare($sql);
+        $sth->execute();
+        $sql = "DROP TABLE `autoprov_global_vars`";
+        $sth = $this->db->prepare($sql);
+        $sth->execute();
+        $sql = "DROP TABLE `autoprov_model_list`";
+        $sth = $this->db->prepare($sql);
+        $sth->execute();
+        $sql = "DROP TABLE `autoprov_oui_list`";
+        $sth = $this->db->prepare($sql);
+        $sth->execute();
+        $sql = "DROP TABLE `autoprov_product_list`";
+        $sth = $this->db->prepare($sql);
+        $sth->execute();
+        return true;
+    }
+
+    public function backup() {
+    }
+
+    public function restore($backup) {
+    }
+
+    private function epm_config_manual_install($install_type = "", $package ="")
+    {
+        if ($install_type == "") {
+            throw new \Exception("Not send install_type!");
+        }
+    
+        switch($install_type) {
+            case "export_brand":
+
+                break;
+    
+            case "upload_master_xml":
+                if (file_exists($this->PHONE_MODULES_PATH."temp/master.xml")) {
+                    $handle = fopen($this->PHONE_MODULES_PATH."temp/master.xml", "rb");
+                    $contents = stream_get_contents($handle);
+                    fclose($handle);
+                    @$a = simplexml_load_string($contents);
+                    if($a===FALSE) {
+                        echo "Not a valid xml file";
+                        break;
+                    } else {
+                        rename($this->PHONE_MODULES_PATH."temp/master.xml", $this->PHONE_MODULES_PATH."master.xml");
+                        echo "Move Successful<br />";
+                        $this->update_check();
+                        echo "Updating Brands<br />";
+                    }
+                } else {
+                }
+                break;
+    
+            case "upload_provisioner":
+                
+                break;
+    
+            case "upload_brand":
+            
+                break;
+        }
+    }
+
     function mac_check_clean($mac) {
     	if ((strlen($mac) == "17") OR (strlen($mac) == "12")) {
     		//It might be better to use switch here instead of these IF statements...
@@ -1482,110 +1416,11 @@ $this->error['parse_configs'] = "File not written to hard drive!";
     	}
     }
 	
-    
-    
-    
-    
-   
-    
-    
-    
-    
-    
-    
-   
-    
-    
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-	
-	
-	
-	
-	
-	
-	
+
 	/*********************************************
 	****** CODIGO ANTIGUO -- SIN REVISADO ********
 	*********************************************/
-	
-	
-	
-	
-	
-	
-	
-	
 
-    
 
     function download_json($location, $directory=NULL) {
         $temp_directory = $this->sys_get_temp_dir() . "/epm_temp/";
@@ -1839,23 +1674,7 @@ $this->error['parse_configs'] = "File not written to hard drive!";
         return(TRUE);
     }
 
-	
-	
-	
-	
-	
-    
 
-
-
-   
-
-    
-   
-
-
-
-    
 
     function update_device($macid, $model, $template, $luid=NULL, $name=NULL, $line=NULL, $update_lines=TRUE) {
         $sql = "UPDATE autoprov_mac_list SET model = " . $model . ", template_id =  " . $template . " WHERE id = " . $macid;
@@ -1953,12 +1772,6 @@ $this->error['parse_configs'] = "File not written to hard drive!";
         }
     }
 
-
-    
-
-    
-
-    
 
     /**
      * Save template from the template view pain
@@ -2113,16 +1926,6 @@ $this->error['parse_configs'] = "File not written to hard drive!";
 
     }
 
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
    
     //BORRAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//OBSOLETO, ANTIGUAMENTE VENTANAS EMERGENTES, AHORA SON DIALOGOS JQUERY.
