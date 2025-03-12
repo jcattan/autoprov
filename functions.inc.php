@@ -26,6 +26,7 @@ function autoprov_get_config($engine) {
                 $core_conf->addSipNotify('linksys-warm-restart', array('Event' => 'restart_now', 'Content-Length' => '0'));
                 $core_conf->addSipNotify('spa-reboot', array('Event' => 'reboot', 'Content-Length' => '0'));
                 $core_conf->addSipNotify('reboot-yealink', array('Event' => 'check-sync\;reboot=true', 'Content-Length' => '0'));
+				$core_conf->addSipNotify('reload-yealink', array('Event' => 'check-sync\;reboot=false', 'Content-Length' => '0'));
             }
             break;
     }
@@ -342,7 +343,7 @@ function autoprov_module_install_check_callback($mods = array()) {
 
     $ret = array();
     $current_mod = 'autoprov';
-    $conflicting_mods = array('endpoint','restart');
+    $conflicting_mods = array('restart');
 
 	foreach($mods as $k => $v) {
 		if (in_array($k, $conflicting_mods) && !in_array($active_modules[$current_mod]['status'],array(MODULE_STATUS_NOTINSTALLED,MODULE_STATUS_BROKEN))) {
