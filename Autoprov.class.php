@@ -55,6 +55,7 @@ class Autoprov implements \BMO {
 	public $epm_advanced; // Déclaration explicite de la propriété epm_advanced
 	public $epm_templates;
 	public $epm_devices;
+	public $pagedata;
 
     public $UPDATE_PATH;
     public $MODULES_PATH;
