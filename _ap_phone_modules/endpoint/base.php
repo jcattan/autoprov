@@ -20,7 +20,7 @@ if (!function_exists('json_last_error')) {
     }
 
 }
-
+#[AllowDynamicProperties]
 abstract class endpoint_base {
 
     public $modules_path = "endpoint/";

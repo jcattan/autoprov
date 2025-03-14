@@ -1,9 +1,5 @@
-<?PHP
-/**
- * Endpoint Manager FreePBX AJAX Select File
- *
- * @author Andrew Nagy
- * @license MPL / GPLv2 / LGPL
- * @package Endpoint Manager
- */
-include('includes/ajax.inc');
+<?php
+if (!@include_once(getenv('FREEPBX_CONF') ? getenv('FREEPBX_CONF') : '/etc/freepbx.conf')) {
+    include_once('/etc/asterisk/freepbx.conf');
+}
+require_once('includes/ajax.inc');

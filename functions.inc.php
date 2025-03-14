@@ -264,23 +264,27 @@ function autoprov_configpageload() {
 
                 $info = $endpoint->get_phone_info($line_info['mac_id']);
 
-                $brand_list = $endpoint->brands_available($info['brand_id'], true);
-                if (!empty($info['brand_id'])) {
-                    $model_list = $endpoint->models_available(NULL, $info['brand_id']);
-                    $line_list = $endpoint->linesAvailable($line_info['luid']);
-                    $template_list = $endpoint->display_templates($info['product_id']);
-                } else {
-                    $model_list = array();
-                    $line_list = array();
-                    $template_list = array();
-                }
+		if ($info) {
+		$brand_list = $endpoint->brands_available($info['brand_id'], true);
+			if (!empty($info['brand_id'])) {
+        $model_list = $endpoint->models_available(NULL, $info['brand_id']);
+        $line_list = $endpoint->linesAvailable($line_info['luid']);
+        $template_list = $endpoint->display_templates($info['product_id']);
+			} else {
+        $model_list = array();
+        $line_list = array();
+        $template_list = array();
+					}
 
-                $checked = false;
+    $checked = false;
 
                 $currentcomponent->addguielem($section, new gui_checkbox('epm_delete', $checked, 'Delete', 'Delete this Extension from Endpoint Manager'), 9);
 // phone web interface link
-	class gui_link_nw_tab extends guitext {
+class gui_link_nw_tab extends guitext {
+    public $elemname;
+    
     function __construct($elemname, $text, $url, $userlang = true) {
+        $this->elemname = $elemname;
         $parent_class = get_parent_class($this);
         $this->html_text = "<a href=\"$url\" target=\"_blank\" id =\"$this->elemname\">$text</a>";
     }
@@ -329,7 +333,11 @@ function autoprov_configpageload() {
                 $currentcomponent->addguielem($section, new gui_selectbox('epm_temps', $template_list, $info['template_id'], 'Template', 'The Template of this Phone.', false, '', false), 9);
                 $currentcomponent->addguielem($section, new guitext('epm_note', 'Note: This might reboot the phone if it\'s already registered to Asterisk'));
 		
-            }
+				}
+			} else {
+    // si $info est vide (pas de poste attribue
+    // on affiche rien
+					}
         }
     }
 }

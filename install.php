@@ -136,8 +136,8 @@ if (empty($epmdbversion)) {
   `line` smallint(2) NOT NULL,
   `ext` varchar(15) NOT NULL,
   `description` varchar(20) NOT NULL,
-  `custom_cfg_data` longblob NOT NULL,
-  `user_cfg_data` longblob NOT NULL,
+  `custom_cfg_data` longblob DEFAULT NULL,
+  `user_cfg_data` longblob DEFAULT NULL,
   PRIMARY KEY (`luid`)
 ) ENGINE=MyISAM";
     $db->query($sql);
