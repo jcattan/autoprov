@@ -1,33 +1,40 @@
 <?php
 /**
- * Endpoint Manager Object Module - Sec Templates
+ * Autoprov Object Module - Sec Templates
  *
- * @author Javier Pastor
- * @license MPL / GPLv2 / LGPL
- * @package Provisioner
+ * @author JCattan
+ * @license MPL / GPLv3/ LGPL
+ * @package Autoprov Manager
  */
 
 namespace FreePBX\modules;
 
+#[\AllowDynamicProperties]
 class Autoprov_Templates
 {
-    public $freepbx; // Déclaration explicite de la propriété freepbx
-    public $db;
-    public $config;
-    public $configmod;
-    public $epm_config;
-    public $eda;
+	public $freepbx;
+	public $db;
+	public $config;
+	public $configmod;
+	public $epm_config;
+	public $eda;
 
-    public function __construct($freepbx = null, $cfgmod = null, $epm_config, $eda) 
-    {
-        $this->freepbx = $freepbx;
-        $this->db = $freepbx->Database;
-        $this->config = $freepbx->Config;
-        $this->configmod = $cfgmod;
-        $this->epm_config = $epm_config;
-        $this->eda = $eda;
+	public function __construct($freepbx, $cfgmod, $epm_config, $eda)
+	{
+    if ($epm_config === null) {
+        throw new \InvalidArgumentException('$epm_config is required');
     }
-	
+	    if ($eda === null) {
+        throw new \InvalidArgumentException('$eda is required');
+    }
+		$this->freepbx = $freepbx;
+		$this->db = $freepbx->Database;
+		$this->config = $freepbx->Config;
+		$this->configmod = $cfgmod;
+		$this->epm_config = $epm_config;
+		$this->eda = $eda;
+	}
+
 	public function myShowPage(&$pagedata) {
 		if(empty($pagedata))
 		{

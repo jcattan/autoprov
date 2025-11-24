@@ -191,16 +191,16 @@ class Text_Diff_Engine_native {
                     continue;
                 }
                 $matches = $ymatches[$line];
-                reset($matches);
-                while (list(, $y) = each($matches)) {
+		reset($matches);
+		while (list(, $y) = each($matches)) {
                     if (empty($this->in_seq[$y])) {
                         $k = $this->_lcsPos($y);
                         assert($k > 0);
                         $ymids[$k] = $ymids[$k - 1];
                         break;
                     }
-                }
-                while (list(, $y) = each($matches)) {
+		}
+		while (list(, $y) = each($matches)) {
                     if ($y > $this->seq[$k - 1]) {
                         assert($y <= $this->seq[$k]);
                         /* Optimization: this is a common case: next match is

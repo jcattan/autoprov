@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 /**
  * Autoprov Manager Installer
@@ -58,7 +58,6 @@ function find_exec($exec) {
 global $db;
 
 out("Endpoint Manager Installer");
-
 if (!defined("PHONE_MODULES_PATH")) {
     define("PHONE_MODULES_PATH", $amp_conf['AMPWEBROOT'] . '/admin/modules/_ap_phone_modules/');
 }
@@ -136,8 +135,8 @@ if (empty($epmdbversion)) {
   `line` smallint(2) NOT NULL,
   `ext` varchar(15) NOT NULL,
   `description` varchar(20) NOT NULL,
-  `custom_cfg_data` longblob DEFAULT NULL,
-  `user_cfg_data` longblob DEFAULT NULL,
+  `custom_cfg_data` longblob NOT NULL,
+  `user_cfg_data` longblob NOT NULL,
   PRIMARY KEY (`luid`)
 ) ENGINE=MyISAM";
     $db->query($sql);

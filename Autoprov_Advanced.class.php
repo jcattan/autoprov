@@ -1,34 +1,37 @@
 <?php
 /**
- * Endpoint Manager Object Module - Sec Advanced
+ * Autoprov Object Module - Sec Advanced
  *
- * @author Javier Pastor
- * @license MPL / GPLv2 / LGPL
- * @package Provisioner
+ * @author JCattan
+ * @license MPL / GPLv3/ LGPL
+ * @package Autoprov Manager
  */
 
 namespace FreePBX\modules;
 use FreePBX;
 
+#[\AllowDynamicProperties]
 class Autoprov_Advanced
 {
-    public $freepbx; // Déclaration explicite de la propriété freepbx
-    public $db;
-    public $config;
-    public $configmod;
-    public $epm_config;
-
     public $MODULES_PATH;
-    public $LOCAL_PATH;
+	public $LOCAL_PATH;
     public $PHONE_MODULES_PATH;
+    	public $freepbx;
+	public $db;
+	public $config;
+	public $configmod;
+	public $epm_config;
 
-    public function __construct($freepbx = null, $cfgmod = null, $epm_config)
-    {
-        $this->freepbx = $freepbx;
-        $this->db = $freepbx->Database;
-        $this->config = $freepbx->Config;
-        $this->configmod = $cfgmod;
-        $this->epm_config = $epm_config;
+	public function __construct($freepbx, $cfgmod, $epm_config)	
+{
+    if ($epm_config === null) {
+        throw new \InvalidArgumentException('$epm_config is required');
+    }
+		$this->freepbx = $freepbx;
+		$this->db = $freepbx->Database;
+		$this->config = $freepbx->Config;
+		$this->configmod = $cfgmod;
+		$this->epm_config = $epm_config;
 
         $this->MODULES_PATH = $this->config->get('AMPWEBROOT') . '/admin/modules/';
         if (file_exists($this->MODULES_PATH . "autoprov/")) {
@@ -36,7 +39,7 @@ class Autoprov_Advanced
         } else {
             die("Can't Load Local Endpoint Manager Directory!");
         }
-        if (file_exists($this->MODULES_PATH . "_ap_phone_modules/")) {
+		if (file_exists($this->MODULES_PATH . "_ap_phone_modules/")) {
             $this->PHONE_MODULES_PATH = $this->MODULES_PATH . "_ap_phone_modules/";
         } else {
             $this->PHONE_MODULES_PATH = $this->MODULES_PATH . "_ap_phone_modules/";
@@ -50,7 +53,7 @@ class Autoprov_Advanced
                 die('Endpoint Manager can not create the modules folder!');
             }
         }
-    }
+	}
 
 	public function myShowPage(&$pagedata) {
 		if(empty($pagedata))
