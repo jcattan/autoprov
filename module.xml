@@ -2,7 +2,7 @@
 	<rawname>autoprov</rawname>
 	<repo>unsupported</repo>
 	<name>AutoProv End Point Manager</name>
-	<version>17.0.0.1</version>
+	<version>16.0.0.3</version>
     <publisher>JCattan</publisher>
 	<category>Connectivity</category>
 	<license>GPLv3+</license>
@@ -19,16 +19,19 @@
 		Les sources de ce module sont dispo ici: https://github.com/jcattan/autoprov
 	</description>
 	<changelog>
-		*17.0.0.1* Compatibilité FreePBX 17 et PHP 8.1
 		*16.0.0.3* Correction Bug php 7.4
 		*16.0.0.2* Correction Bug rebuild qui ne prennait pas en compte le template
 		*16.0.0.1* Version freepbx 16
 	</changelog>
 	<depends>
-        <module>framework ge 17.0.0</module>
-		<version>8.1</version>
+        <module>framework ge 16.0.0</module>
 	</depends>
 	<supported>
-		<version>17.0</version>
+		<version>16.0</version>
 	</supported>
+	<hooks>
+		<framework namespace="FreePBX\Console\Command" class="Chown">
+			<method namespace="FreePBX\modules" class="Autoprov" callingMethod="fwcChownFiles">chownFreepbx</method>
+		</framework>
+	</hooks>
 </module>
