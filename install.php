@@ -1,4 +1,4 @@
-<?php
+<?PHP
 
 /**
  * Autoprov Manager Installer
@@ -58,13 +58,14 @@ function find_exec($exec) {
 global $db;
 
 out("Endpoint Manager Installer");
-if (!defined("PHONE_MODULES_PATH")) {
-    define("PHONE_MODULES_PATH", $amp_conf['AMPWEBROOT'] . '/admin/modules/_ap_phone_modules/');
+
+if(!defined("PHONE_MODULES_PATH")) {
+	define("PHONE_MODULES_PATH", $amp_conf['AMPWEBROOT'] . '/admin/modules/_ap_phone_modules/');
+}
+if(!defined("LOCAL_PATH")) {
+	define("LOCAL_PATH", $amp_conf['AMPWEBROOT'] . '/admin/modules/autoprov/');
 }
 
-if (!defined("LOCAL_PATH")) {
-    define("LOCAL_PATH", $amp_conf['AMPWEBROOT'] . '/admin/modules/autoprov/');
-}
 
 if (!file_exists(PHONE_MODULES_PATH)) {
     mkdir(PHONE_MODULES_PATH, 0764);
@@ -208,7 +209,7 @@ if (empty($epmdbversion)) {
   `model` varchar(25) NOT NULL COMMENT 'Model',
   `max_lines` smallint(2) NOT NULL,
   `template_list` text NOT NULL,
-  `template_data` longblob NOT NULL,
+  `template_data` longblob NULL DEFAULT NULL,
   `product_id` varchar(11) NOT NULL,
   `enabled` int(1) NOT NULL DEFAULT '0',
   `hidden` int(1) NOT NULL DEFAULT '0',
@@ -236,8 +237,8 @@ if (empty($epmdbversion)) {
   `cfg_dir` varchar(255) NOT NULL,
   `cfg_ver` varchar(255) NOT NULL,
   `hidden` int(1) NOT NULL DEFAULT '0',
-  `firmware_vers` varchar(255) NOT NULL,
-  `firmware_files` text NOT NULL,
+  `firmware_vers` varchar(255) NULL DEFAULT NULL,
+  `firmware_files` text NULL DEFAULT NULL,
   `config_files` text,
   `special_cfgs` blob NOT NULL,
   PRIMARY KEY (`id`)

@@ -1,6 +1,7 @@
 <?php
 namespace FreePBX\modules;
 
+#[\AllowDynamicProperties]
 class epm_system {
     /**
      * Fixes the display are special strings so we can visible see them instead of them being transformed

@@ -1,10 +1,10 @@
 <?php
 /**
- * Autoprov Object Module - Sec Advanced
+ * Endpoint Manager Object Module - Sec Advanced
  *
- * @author JCattan
- * @license MPL / GPLv3/ LGPL
- * @package Autoprov Manager
+ * @author Javier Pastor
+ * @license MPL / GPLv2 / LGPL
+ * @package Provisioner
  */
 
 namespace FreePBX\modules;
@@ -13,20 +13,17 @@ use FreePBX;
 #[\AllowDynamicProperties]
 class Autoprov_Advanced
 {
-    public $MODULES_PATH;
-	public $LOCAL_PATH;
-    public $PHONE_MODULES_PATH;
-    	public $freepbx;
+	public $freepbx;
 	public $db;
 	public $config;
 	public $configmod;
 	public $epm_config;
+    public $MODULES_PATH;
+	public $LOCAL_PATH;
+	public $PHONE_MODULES_PATH;
 
-	public function __construct($freepbx, $cfgmod, $epm_config)	
-{
-    if ($epm_config === null) {
-        throw new \InvalidArgumentException('$epm_config is required');
-    }
+	public function __construct($freepbx = null, $cfgmod = null, $epm_config = null)
+	{
 		$this->freepbx = $freepbx;
 		$this->db = $freepbx->Database;
 		$this->config = $freepbx->Config;
@@ -349,7 +346,7 @@ class Autoprov_Advanced
 							$retarr = array("status" => false, "message" => _("Directory Not Writable!"));
 						}
 					} else {
-						$retarr = array("status" => false, "message" => _("Not a Vaild Directory.<br /> Try to run 'mkdir " . $_POST['config_loc'] . "' as root."));
+						$retarr = array("status" => false, "message" => _("Not a Vaild Directory.<br /> Try to run 'mkdir " . ($_POST['config_loc'] ?? '') . "' as root."));
 					}
 				} else {
 					$retarr = array("status" => false, "message" => _("No Configuration Location Defined!"));
@@ -443,6 +440,12 @@ class Autoprov_Advanced
 
 	public function epm_advanced_poce_select()
 	{
+		// Initialize all variables at function start
+		$retarr = null;
+		$file_list = null;
+		$sql_file_list = null;
+		$template_file_list = array();
+
 			if (! isset($_REQUEST['product_select'])) {
 			$retarr = array("status" => false, "message" => _("No send Product Select!"));
 		}
@@ -518,6 +521,7 @@ class Autoprov_Advanced
 				//$template_file_list[$i]['value'] = "template_data_" . $list['model'] . "_custom.xml";
 				$template_file_list[$i]['value'] = $list['id'];
 				$template_file_list[$i]['text'] = "template_data_" . $list['model'] . "_custom.xml";
+				$i++;
 			}
 
 			$retarr = array("status" => true,
@@ -534,6 +538,16 @@ class Autoprov_Advanced
 
 	public function epm_advanced_poce_select_file()
 	{
+		// Initialize all variables at function start
+		$type = null;
+		$sendidt = null;
+		$product_select = null;
+		$save_as_name_value = null;
+		$original_name = null;
+		$filename = null;
+		$location = null;
+		$config_data = null;
+
 		$arrVal['VAR_REQUEST'] = array("product_select", "file_id", "file_name", "type_file");
 		foreach ($arrVal['VAR_REQUEST'] as $valor) {
 			if (! array_key_exists($valor, $_REQUEST)) {
@@ -598,7 +612,7 @@ class Autoprov_Advanced
 				$config_data = $contents;
 			}
 			else {
-				$retarr = array("status" => false, "message" => _("File not readable, check the permission! ").$filename);
+				return array("status" => false, "message" => _("File not readable, check the permission! ").$filename);
 			}
 		}
 		elseif ($dget['type_file'] == "tfile")
@@ -699,7 +713,7 @@ class Autoprov_Advanced
 
 	function epm_advanced_poce_save_file()
 	{
-		$arrVal['VAR_REQUEST'] = array("product_select", "sendid", "type_file", "config_text", "save_as_name", "file_name", "original_name");
+		$arrVal['VAR_REQUEST'] = array("product_select", "sendid", "type_file", "config_text", "save_as_name", "file_name", "original_name", "command");
 		foreach ($arrVal['VAR_REQUEST'] as $valor) {
 			if (! array_key_exists($valor, $_REQUEST)) {
 				return array("status" => false, "message" => _("No send value!")." [".$valor."]");

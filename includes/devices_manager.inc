@@ -77,12 +77,16 @@ switch ($sub_type) {
 
                 $lines_list = $endpoint->eda->sql($sql,'getAll',DB_FETCHMODE_ASSOC);
 
-                foreach($lines_list as $row) {
-                    $sql = "SELECT description FROM devices WHERE id = ".$_REQUEST['ext_list_'.$row['luid']];
-                    $name = $endpoint->eda->sql($sql,'getOne');
+                if (is_array($lines_list)) {
+                    foreach($lines_list as $row) {
+                        if (is_array($row) && isset($row['luid'])) {
+                            $sql = "SELECT description FROM devices WHERE id = ".$endpoint->eda->escapeSimple($_REQUEST['ext_list_'.$row['luid']]);
+                            $name = $endpoint->eda->sql($sql,'getOne');
 
-                    $sql = "UPDATE autoprov_line_list SET line = '".$_REQUEST['line_list_'.$row['luid']]."', ext = '".$_REQUEST['ext_list_'.$row['luid']]."', description = '".$endpoint->eda->escapeSimple($name)."' WHERE luid =  ". $row['luid'];
-                    $endpoint->eda->sql($sql);
+                            $sql = "UPDATE autoprov_line_list SET line = '".$endpoint->eda->escapeSimple($_REQUEST['line_list_'.$row['luid']])."', ext = '".$endpoint->eda->escapeSimple($_REQUEST['ext_list_'.$row['luid']])."', description = '".$endpoint->eda->escapeSimple($name)."' WHERE luid =  ". $endpoint->eda->escapeSimple($row['luid']);
+                            $endpoint->eda->sql($sql);
+                        }
+                    }
                 }
 
                 $sql = "UPDATE autoprov_mac_list SET template_id = '".$_REQUEST['template_list']."', model = '".$_REQUEST['model_list']."' WHERE id =  ". $_REQUEST['edit_id'];
@@ -108,7 +112,12 @@ switch ($sub_type) {
         $edit_row['id'] = $_REQUEST['edit_id'];
         break;
     case "add" :
-        $mac_id = $endpoint->add_device($_REQUEST['mac'],$_REQUEST['model_list'],$_REQUEST['ext_list'],$_REQUEST['template_list'],$_REQUEST['line_list']);
+        $mac = $_REQUEST['mac'] ?? null;
+        $model_list = $_REQUEST['model_list'] ?? null;
+        $ext_list = $_REQUEST['ext_list'] ?? null;
+        $template_list = $_REQUEST['template_list'] ?? null;
+        $line_list = $_REQUEST['line_list'] ?? null;
+        $mac_id = $endpoint->add_device($mac, $model_list, $ext_list, $template_list, $line_list);
         if($mac_id) {
             $phone_info = $endpoint->get_phone_info($mac_id);
             $endpoint->prepare_configs($phone_info);
@@ -180,11 +189,15 @@ switch ($sub_type) {
             $endpoint->message['page:devices_manager'] = "Rebuilt Configs ".$rebooted_msg." All Phones";
         break;
     case "reboot_brand" :
-        if($_REQUEST['rb_brand'] != "") {
-            $sql = 'SELECT autoprov_mac_list.id FROM autoprov_mac_list , autoprov_model_list , autoprov_brand_list , autoprov_product_list WHERE autoprov_brand_list.id = autoprov_model_list.brand AND autoprov_model_list.id = autoprov_mac_list.model AND autoprov_model_list.product_id = autoprov_product_list.id AND autoprov_brand_list.id = '.$_REQUEST['rb_brand'].' ORDER BY autoprov_product_list.cfg_dir ASC';
+        $rb_brand = $_REQUEST['rb_brand'] ?? '';
+        if($rb_brand != "") {
+            $sql = 'SELECT autoprov_mac_list.id FROM autoprov_mac_list , autoprov_model_list , autoprov_brand_list , autoprov_product_list WHERE autoprov_brand_list.id = autoprov_model_list.brand AND autoprov_model_list.id = autoprov_mac_list.model AND autoprov_model_list.product_id = autoprov_product_list.id AND autoprov_brand_list.id = '.$rb_brand.' ORDER BY autoprov_product_list.cfg_dir ASC';
             $data = $endpoint->eda->sql($sql,'getAll',DB_FETCHMODE_ASSOC);
-            if(!empty($data)) {
+            if(!empty($data) && is_array($data)) {
                 foreach($data as $row) {
+                    if(!is_array($row) || !isset($row['id'])) {
+                        continue;
+                    }
                     if(!class_exists('ProvisionerConfig')) {
                         require(PHONE_MODULES_PATH.'setup.php');
                     }
@@ -219,7 +232,18 @@ switch ($sub_type) {
                     $provisioner_lib->brand_name = $phone_info['directory'];
                     $provisioner_lib->family_line = $phone_info['cfg_dir'];
 
-                    $provisioner_lib->settings['line'][0] = array('username' => $phone_info['line'][1]['ext'], 'authname' => $phone_info['line'][1]['ext'], 'tech' => $phone_info['line'][1]['tech']);
+                    // Set line settings if available (need at least one line for reboot)
+                    if (isset($phone_info['line']) && is_array($phone_info['line']) && !empty($phone_info['line'])) {
+                        // Get first available line
+                        $first_line = reset($phone_info['line']);
+                        if (isset($first_line['ext']) && isset($first_line['tech'])) {
+                            $provisioner_lib->settings['line'][0] = array(
+                                'username' => $first_line['ext'],
+                                'authname' => $first_line['ext'],
+                                'tech' => $first_line['tech']
+                            );
+                        }
+                    }
                     $provisioner_lib->reboot();
                     unset($provisioner_lib);
                 }
@@ -232,25 +256,30 @@ switch ($sub_type) {
         }
         break;
     case "go" :
-        $sql = "UPDATE autoprov_global_vars SET value = '".$_REQUEST['netmask']."' WHERE var_name = 'nmap_search'";
+        $netmask = $_REQUEST['netmask'] ?? '';
+        $sql = "UPDATE autoprov_global_vars SET value = '".$netmask."' WHERE var_name = 'nmap_search'";
         $endpoint->eda->sql($sql);
-        $endpoint->global_cfg['nmap_search'] = $_REQUEST['netmask'];
+        $endpoint->global_cfg['nmap_search'] = $netmask;
         if ((isset($_REQUEST['nmap'])) AND ($_REQUEST['nmap'] == 1)) {
-            $temp = $endpoint->discover_new($_REQUEST['netmask']);
+            $temp = $endpoint->discover_new($netmask);
         } else {
-            $temp = $endpoint->discover_new($_REQUEST['netmask'], FALSE);
+            $temp = $endpoint->discover_new($netmask, FALSE);
         }
 
         foreach($temp as $key => $data) {
             if ((!$data['endpoint_managed']) AND ($data['brand'])) {
                 $final[$key] = $data;
                 $final[$key]['id'] = $key;
-                $sqln = "SELECT * FROM autoprov_model_list WHERE enabled = 1 AND brand =".$data['brand_id'];
+                $sqln = "SELECT * FROM autoprov_model_list WHERE enabled = 1 AND brand =".$endpoint->eda->escapeSimple($data['brand_id']);
                 $model_list = $endpoint->eda->sql($sqln,'getAll',DB_FETCHMODE_ASSOC);
                 $j = 0;
-                foreach($model_list as $row) {
-                    $final[$key]['list'][$j] = $row;
-                    $j++;
+                if (is_array($model_list)) {
+                    foreach($model_list as $row) {
+                        if (is_array($row)) {
+                            $final[$key]['list'][$j] = $row;
+                            $j++;
+                        }
+                    }
                 }
             }
         }
@@ -264,7 +293,10 @@ switch ($sub_type) {
     case "add_selected_phones" :
         if(isset($_REQUEST['add'])) {
             foreach($_REQUEST['add'] as $num) {
-                $mac_id = $endpoint->add_device($_REQUEST['mac_'.$num],$_REQUEST['model_list_'.$num],$_REQUEST['ext_list_'.$num]);
+                $mac = $_REQUEST['mac_'.$num] ?? null;
+                $model_list = $_REQUEST['model_list_'.$num] ?? null;
+                $ext_list = $_REQUEST['ext_list_'.$num] ?? null;
+                $mac_id = $endpoint->add_device($mac, $model_list, $ext_list);
                 if($mac_id) {
                     $phone_info = $endpoint->get_phone_info($mac_id);
                     if(isset($_REQUEST['reboot_sel'])) {
@@ -278,9 +310,11 @@ switch ($sub_type) {
         break;
     case "change_brand" :
         if(isset($_REQUEST['selected'])) {
-            if(($_REQUEST['brand_list_selected'] > 0) AND ($_REQUEST['model_list_selected'] > 0)) {
+            $brand_list_selected = $_REQUEST['brand_list_selected'] ?? 0;
+            $model_list_selected = $_REQUEST['model_list_selected'] ?? 0;
+            if(($brand_list_selected > 0) AND ($model_list_selected > 0)) {
                 foreach($_REQUEST['selected'] as $key => $data) {
-                    $sql = "UPDATE autoprov_mac_list SET global_custom_cfg_data = '', template_id = 0, global_user_cfg_data = '', config_files_override = '', model = '".$_REQUEST['model_list_selected']."' WHERE id =  ". $_REQUEST['selected'][$key];
+                    $sql = "UPDATE autoprov_mac_list SET global_custom_cfg_data = '', template_id = 0, global_user_cfg_data = '', config_files_override = '', model = '".$model_list_selected."' WHERE id =  ". $_REQUEST['selected'][$key];
                     $endpoint->eda->sql($sql);
 
                     $phone_info = $endpoint->get_phone_info($_REQUEST['selected'][$key]);
@@ -302,54 +336,68 @@ switch ($sub_type) {
         }
         break;
     case "rebuild_reboot" :
-        if($_REQUEST['product_select'] == "") {
+        $product_select = $_REQUEST['product_select'] ?? '';
+        $template_selector = $_REQUEST['template_selector'] ?? '';
+        if($product_select == "") {
             $message = _("Please select a product");
-        } elseif($_REQUEST['template_selector'] == "") {
+        } elseif($template_selector == "") {
             $message = _("Please select a template");
         } else {
-            $sql = "SELECT autoprov_mac_list.id FROM autoprov_mac_list, autoprov_brand_list, autoprov_product_list, autoprov_model_list WHERE autoprov_brand_list.id = autoprov_product_list.brand AND autoprov_product_list.id = autoprov_model_list.product_id AND autoprov_mac_list.model = autoprov_model_list.id AND autoprov_product_list.id = '".$_REQUEST['product_select']."'";
+            $sql = "SELECT autoprov_mac_list.id FROM autoprov_mac_list, autoprov_brand_list, autoprov_product_list, autoprov_model_list WHERE autoprov_brand_list.id = autoprov_product_list.brand AND autoprov_product_list.id = autoprov_model_list.product_id AND autoprov_mac_list.model = autoprov_model_list.id AND autoprov_product_list.id = '".$endpoint->eda->escapeSimple($product_select)."'";
             $data = $endpoint->eda->sql($sql,'getAll',DB_FETCHMODE_ASSOC);
-            foreach($data as $row) {
-                $sql = "UPDATE autoprov_mac_list SET template_id = '".$_REQUEST['template_selector']."' WHERE id =  ". $row['id'];
-                $endpoint->eda->sql($sql);
-                $phone_info = $endpoint->get_phone_info($row['id']);
-                if(isset($_REQUEST['reboot'])) {
-                    $endpoint->prepare_configs($phone_info);
-                    $rebooted_msg = "& Rebooted Phones";
-                } else {
-                    $endpoint->prepare_configs($phone_info,FALSE);
-                    $rebooted_msg = "";
-                }
-                foreach($phone_info['line'] as $line) {
-                    $sql = "UPDATE autoprov_line_list SET description = '".$endpoint->eda->escapeSimple($line['description'])."' WHERE luid = ".$line['luid'];
+            if (is_array($data)) {
+                foreach($data as $row) {
+                    if (!is_array($row) || !isset($row['id'])) {
+                        continue;
+                    }
+                    $sql = "UPDATE autoprov_mac_list SET template_id = '".$endpoint->eda->escapeSimple($template_selector)."' WHERE id =  ". $endpoint->eda->escapeSimple($row['id']);
                     $endpoint->eda->sql($sql);
+                    $phone_info = $endpoint->get_phone_info($row['id']);
+                    if(isset($_REQUEST['reboot'])) {
+                        $endpoint->prepare_configs($phone_info);
+                        $rebooted_msg = "& Rebooted Phones";
+                    } else {
+                        $endpoint->prepare_configs($phone_info,FALSE);
+                        $rebooted_msg = "";
+                    }
+                    foreach($phone_info['line'] as $line) {
+                        $sql = "UPDATE autoprov_line_list SET description = '".$endpoint->eda->escapeSimple($line['description'])."' WHERE luid = ".$endpoint->eda->escapeSimple($line['luid']);
+                        $endpoint->eda->sql($sql);
+                    }
                 }
             }
             $endpoint->message['page:devices_manager'] = "Rebuilt Configs " . $rebooted_msg;
         }
         break;
     case "mrebuild_reboot" :
-        if($_REQUEST['model_select'] == "") {
+        $model_select = $_REQUEST['model_select'] ?? '';
+        $model_template_selector = $_REQUEST['model_template_selector'] ?? '';
+        if($model_select == "") {
             $message = _("Please select a model");
-        } elseif($_REQUEST['model_template_selector'] == "") {
+        } elseif($model_template_selector == "") {
             $message = _("Please select a template");
         } else {
-            $sql = "SELECT autoprov_mac_list.id FROM autoprov_mac_list, autoprov_brand_list, autoprov_product_list, autoprov_model_list WHERE autoprov_brand_list.id = autoprov_product_list.brand AND autoprov_product_list.id = autoprov_model_list.product_id AND autoprov_mac_list.model = autoprov_model_list.id AND autoprov_model_list.id = '".$_REQUEST['model_select']."'";
+            $sql = "SELECT autoprov_mac_list.id FROM autoprov_mac_list, autoprov_brand_list, autoprov_product_list, autoprov_model_list WHERE autoprov_brand_list.id = autoprov_product_list.brand AND autoprov_product_list.id = autoprov_model_list.product_id AND autoprov_mac_list.model = autoprov_model_list.id AND autoprov_model_list.id = '".$endpoint->eda->escapeSimple($model_select)."'";
             $data = $endpoint->eda->sql($sql,'getAll',DB_FETCHMODE_ASSOC);
-            foreach($data as $row) {
-                $sql = "UPDATE autoprov_mac_list SET template_id = '".$_REQUEST['model_template_selector']."' WHERE id =  ". $row['id'];
-                $endpoint->eda->sql($sql);
-                $phone_info = $endpoint->get_phone_info($row['id']);
-                if(isset($_REQUEST['reboot'])) {
-                    $endpoint->prepare_configs($phone_info);
-                    $rebooted_msg = "& Rebooted Phones";
-                } else {
-                    $endpoint->prepare_configs($phone_info,FALSE);
-                    $rebooted_msg = "";
-                }
-                foreach($phone_info['line'] as $line) {
-                    $sql = "UPDATE autoprov_line_list SET description = '".$endpoint->eda->escapeSimple($line['description'])."' WHERE luid = ".$line['luid'];
+            if (is_array($data)) {
+                foreach($data as $row) {
+                    if (!is_array($row) || !isset($row['id'])) {
+                        continue;
+                    }
+                    $sql = "UPDATE autoprov_mac_list SET template_id = '".$endpoint->eda->escapeSimple($model_template_selector)."' WHERE id =  ". $endpoint->eda->escapeSimple($row['id']);
                     $endpoint->eda->sql($sql);
+                    $phone_info = $endpoint->get_phone_info($row['id']);
+                    if(isset($_REQUEST['reboot'])) {
+                        $endpoint->prepare_configs($phone_info);
+                        $rebooted_msg = "& Rebooted Phones";
+                    } else {
+                        $endpoint->prepare_configs($phone_info,FALSE);
+                        $rebooted_msg = "";
+                    }
+                    foreach($phone_info['line'] as $line) {
+                        $sql = "UPDATE autoprov_line_list SET description = '".$endpoint->eda->escapeSimple($line['description'])."' WHERE luid = ".$endpoint->eda->escapeSimple($line['luid']);
+                        $endpoint->eda->sql($sql);
+                    }
                 }
             }
             $endpoint->message['page:devices_manager'] = "Rebuilt Configs " . $rebooted_msg;
@@ -373,7 +421,7 @@ foreach($device_statuses as $key => $data) {
     if(!empty($extout[1])) {
         if(preg_match('/OK \(.*\)/i', $data)) {
            $devices_status[$extout[1]]['status'] = TRUE;
-           $devices_status[$extout[1]]['ip'] = $ipaddress[0];
+           $devices_status[$extout[1]]['ip'] = isset($ipaddress[0]) ? $ipaddress[0] : '';
         } else {
             $devices_status[$extout[1]]['status'] = FALSE;
         }
@@ -389,7 +437,7 @@ foreach($device_statuses as $key => $data) {
     if(!empty($extout[1])) {
         if(preg_match('/Avail\s+\d+/i', $data)) {
            $devices_status[$extout[1]]['status'] = TRUE;
-           $devices_status[$extout[1]]['ip'] = $ipaddress[0];
+           $devices_status[$extout[1]]['ip'] = isset($ipaddress[0]) ? $ipaddress[0] : '';
         } else {
             $devices_status[$extout[1]]['status'] = FALSE;
         }
@@ -413,13 +461,17 @@ foreach($devices_list as $devices_row) {
         $list[$i]['model'] = $devices_row['model']."<i>(Disabled)</i>";
     }
     $list[$i]['master_id'] = $i;
-    foreach($line_list as $line_row) {
-        $list[$i]['line'][$z]['ext'] = $line_row['ext'];
-        $list[$i]['line'][$z]['line'] = $line_row['line'];
-        $list[$i]['line'][$z]['description'] = $line_row['description'];
-        $list[$i]['line'][$z]['luid'] = $line_row['luid'];
-        $list[$i]['line'][$z]['master_id'] = $i;
-        $z++;
+    if (is_array($line_list)) {
+        foreach($line_list as $line_row) {
+            if (is_array($line_row) && isset($line_row['ext']) && isset($line_row['line']) && isset($line_row['description']) && isset($line_row['luid'])) {
+                $list[$i]['line'][$z]['ext'] = $line_row['ext'];
+                $list[$i]['line'][$z]['line'] = $line_row['line'];
+                $list[$i]['line'][$z]['description'] = $line_row['description'];
+                $list[$i]['line'][$z]['luid'] = $line_row['luid'];
+                $list[$i]['line'][$z]['master_id'] = $i;
+                $z++;
+            }
+        }
     }
     $ext = $list[$i]['line'][0]['ext'];
 
@@ -431,15 +483,20 @@ foreach($devices_list as $devices_row) {
 
 $unknown_list = $endpoint->eda->all_unknown_devices();
 
-foreach($unknown_list as $row) {	#Displays unknown phones in the database with edit and delete buttons
-    $list[$i] = $row;
+if (is_array($unknown_list)) {
+    foreach($unknown_list as $row) {	#Displays unknown phones in the database with edit and delete buttons
+        if (!is_array($row) || !isset($row['mac'])) {
+            continue;
+        }
+        $list[$i] = $row;
 
-    $brand_info = $endpoint->get_brand_from_mac($row['mac']);
+        $brand_info = $endpoint->get_brand_from_mac($row['mac']);
 
-    $list[$i]['name'] = $brand_info['name'];
-    $list[$i]['template_name'] = "N/A";
-    $list[$i]['model'] = _("Unknown");
-    $i++;
+        $list[$i]['name'] = isset($brand_info['name']) ? $brand_info['name'] : '';
+        $list[$i]['template_name'] = "N/A";
+        $list[$i]['model'] = _("Unknown");
+        $i++;
+    }
 }
 
 $amp_send['AMPDBUSER'] = $amp_conf['AMPDBUSER'];
@@ -453,10 +510,14 @@ $i = 1;
 $product_list = array();
 $product_list[0]['value'] = 0;
 $product_list[0]['text'] = "";
-foreach($template_list as $row) {
-        $product_list[$i]['value'] = $row['id'];
-        $product_list[$i]['text'] = $row['short_name'];
-        $i++;
+if (is_array($template_list)) {
+    foreach($template_list as $row) {
+        if (is_array($row) && isset($row['id']) && isset($row['short_name'])) {
+            $product_list[$i]['value'] = $row['id'];
+            $product_list[$i]['text'] = $row['short_name'];
+            $i++;
+        }
+    }
 }
 
 $sql = "SELECT DISTINCT autoprov_model_list.* FROM autoprov_product_list, autoprov_model_list WHERE autoprov_product_list.id = autoprov_model_list.product_id AND autoprov_model_list.hidden = 0 AND autoprov_model_list.enabled = 1 AND autoprov_product_list.hidden != 1 AND autoprov_product_list.cfg_dir !=  ''";
@@ -465,10 +526,14 @@ $i = 1;
 $model_list = array();
 $model_list[0]['value'] = 0;
 $model_list[0]['text'] = "";
-foreach($template_list as $row) {
-        $model_list[$i]['value'] = $row['id'];
-        $model_list[$i]['text'] = $row['model'];
-        $i++;
+if (is_array($template_list)) {
+    foreach($template_list as $row) {
+        if (is_array($row) && isset($row['id']) && isset($row['model'])) {
+            $model_list[$i]['value'] = $row['id'];
+            $model_list[$i]['text'] = $row['model'];
+            $i++;
+        }
+    }
 }
 
 //initialize a Rain TPL object

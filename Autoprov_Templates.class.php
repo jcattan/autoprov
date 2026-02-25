@@ -1,10 +1,10 @@
 <?php
 /**
- * Autoprov Object Module - Sec Templates
+ * Endpoint Manager Object Module - Sec Templates
  *
- * @author JCattan
- * @license MPL / GPLv3/ LGPL
- * @package Autoprov Manager
+ * @author Javier Pastor
+ * @license MPL / GPLv2 / LGPL
+ * @package Provisioner
  */
 
 namespace FreePBX\modules;
@@ -19,14 +19,8 @@ class Autoprov_Templates
 	public $epm_config;
 	public $eda;
 
-	public function __construct($freepbx, $cfgmod, $epm_config, $eda)
+	public function __construct($freepbx = null, $cfgmod = null, $epm_config = null, $eda = null)
 	{
-    if ($epm_config === null) {
-        throw new \InvalidArgumentException('$epm_config is required');
-    }
-	    if ($eda === null) {
-        throw new \InvalidArgumentException('$eda is required');
-    }
 		$this->freepbx = $freepbx;
 		$this->db = $freepbx->Database;
 		$this->config = $freepbx->Config;
@@ -125,6 +119,9 @@ class Autoprov_Templates
 					$return[] = array('value' => 'va12', 'txt' => 'txt2', 'select' => "ON");
 					$return[] = array('value' => 'va13', 'txt' => 'txt3', 'select' => "OFF");
 				*/
+					if (!isset($_REQUEST['idsel']) || !isset($_REQUEST['custom']) || !isset($_REQUEST['namefile'])) {
+						return array("status" => false, "message" => _("Missing required parameters"));
+					}
 					return $this->edit_template_display_files($_REQUEST['idsel'],$_REQUEST['custom'], $_REQUEST['namefile']);
 					break;
 					
@@ -246,8 +243,8 @@ class Autoprov_Templates
 			$dget['tid'] = $_REQUEST['tid'];
 			
 			
-			$_REQUEST['srvip'] = trim($_REQUEST['srvip']);  #trim whitespace from IP address
-			$_REQUEST['config_loc'] = trim($_REQUEST['config_loc']);  #trim whitespace from Config Location
+			$_REQUEST['srvip'] = isset($_REQUEST['srvip']) ? trim($_REQUEST['srvip']) : '';  #trim whitespace from IP address
+			$_REQUEST['config_loc'] = isset($_REQUEST['config_loc']) ? trim($_REQUEST['config_loc']) : '';  #trim whitespace from Config Location
 	
 			$settings_warning = "";
 			if (strlen($_REQUEST['config_loc']) > 0) {

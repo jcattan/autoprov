@@ -1,10 +1,11 @@
 <?php
 /**
- * Autoprov Object Module
+ * Endpoint Manager Object Module
  *
- * @author JCattan
- * @license MPL / GPLv3/ LGPL
- * @package Autoprov Manager
+ * @author Andrew Nagy
+ * @author Javier Pastor
+ * @license MPL / GPLv2 / LGPL
+ * @package Provisioner
  */
 
 namespace FreePBX\modules;
@@ -42,35 +43,31 @@ function generate_xml_from_array ($array, $node_name, &$tab = -1)
 	return $xml;
 }
 
+
 #[\AllowDynamicProperties]
 class Autoprov implements \BMO {
-	
-	//public $epm_config;
-	
-	public $freepbx; //FreePBX Object	
+
+	public $freepbx; //FreePBX Object
 	public $db; //Database from FreePBX
+	public $config; //FreePBX Config Object
+	public $configmod; //Autoprov Config Object
+	public $system; //EPM System Object
 	public $eda; //endpoint data abstraction layer
 	public $tpl; //Template System Object (RAIN TPL)
-	//public $system;
-	public $system; //System object
-	public $config; //Config object
-	public $configmod; //Config module object
+	public $epm_config; //Autoprov Config Module
+	public $epm_advanced; //Autoprov Advanced Module
+	public $epm_templates; //Autoprov Templates Module
+	public $epm_devices; //Autoprov Devices Module
 
     public $error; //error construct
     public $message; //message construct
-	
+
 	public $UPDATE_PATH;
     public $MODULES_PATH;
 	public $LOCAL_PATH;
 	public $PHONE_MODULES_PATH;
 	public $PROVISIONER_BASE;
-	public $epm_config;
-	public $epm_advanced;
-	public $epm_templates;
-	public $epm_devices;
-	public $epm_oss;
-	public $epm_placeholders;
-	public $pagedata;
+	
 	
 	public function __construct($freepbx = null) {
 		if ($freepbx == null) {
@@ -104,15 +101,21 @@ class Autoprov implements \BMO {
 		
 		$this->UPDATE_PATH = $this->configmod->get('update_server');
         $this->MODULES_PATH = $this->config->get('AMPWEBROOT') . '/admin/modules/';
-        
-define("UPDATE_PATH", $this->UPDATE_PATH);
-define("MODULES_PATH", $this->MODULES_PATH);
+
+if(!defined("UPDATE_PATH")) {
+	define("UPDATE_PATH", $this->UPDATE_PATH);
+}
+if(!defined("MODULES_PATH")) {
+	define("MODULES_PATH", $this->MODULES_PATH);
+}
         
 		
         //Determine if local path is correct!
         if (file_exists($this->MODULES_PATH . "autoprov/")) {
             $this->LOCAL_PATH = $this->MODULES_PATH . "autoprov/";
-define("LOCAL_PATH", $this->LOCAL_PATH);
+if(!defined("LOCAL_PATH")) {
+	define("LOCAL_PATH", $this->LOCAL_PATH);
+}
         } else {
             die("Can't Load Local Endpoint Manager Directory!");
         }
@@ -132,7 +135,9 @@ define("LOCAL_PATH", $this->LOCAL_PATH);
                 die('Endpoint Manager can not create the modules folder!');
             }
         }
-define("PHONE_MODULES_PATH", $this->PHONE_MODULES_PATH);
+if(!defined("PHONE_MODULES_PATH")) {
+	define("PHONE_MODULES_PATH", $this->PHONE_MODULES_PATH);
+}
 		
         //Define error reporting
         if (($this->configmod->get('debug')) AND (!isset($_REQUEST['quietmode']))) {
@@ -1036,14 +1041,15 @@ echo 'TFTP Server check failed on last past. Skipping';
     		//Returns Brand Name, Brand Directory, Model Name, Mac Address, Extension (FreePBX), Custom Configuration Template, Custom Configuration Data, Product Name, Product ID, Product Configuration Directory, Product Configuration Version, Product XML name,
     		$sql = "SELECT autoprov_mac_list.specific_settings, autoprov_mac_list.config_files_override, autoprov_mac_list.global_user_cfg_data, autoprov_model_list.id as model_id, autoprov_brand_list.id as brand_id, autoprov_brand_list.name, autoprov_brand_list.directory, autoprov_model_list.model, autoprov_mac_list.mac, autoprov_mac_list.template_id, autoprov_mac_list.global_custom_cfg_data, autoprov_product_list.long_name, autoprov_product_list.id as product_id, autoprov_product_list.cfg_dir, autoprov_product_list.cfg_ver, autoprov_model_list.template_data, autoprov_model_list.enabled, autoprov_mac_list.global_settings_override FROM autoprov_line_list, autoprov_mac_list, autoprov_model_list, autoprov_brand_list, autoprov_product_list WHERE autoprov_mac_list.model = autoprov_model_list.id AND autoprov_brand_list.id = autoprov_model_list.brand AND autoprov_product_list.id = autoprov_model_list.product_id AND autoprov_mac_list.id = autoprov_line_list.mac_id AND autoprov_mac_list.id = " . $mac_id;
     		$phone_info = sql($sql, 'getRow', DB_FETCHMODE_ASSOC);
-    
-    		if (!$phone_info) {
+
+    		if (!$phone_info || !is_array($phone_info)) {
 //$this->error['get_phone_info'] =
 			out(_("Error with SQL Statement"));
+			return false;
     		}
-    
+
     		//If there is a template associated with this phone then pull that information and put it into the array
-    		if ($phone_info['template_id'] > 0) {
+    		if (isset($phone_info['template_id']) && $phone_info['template_id'] > 0) {
     			$sql = "SELECT name, global_custom_cfg_data, config_files_override, global_settings_override FROM autoprov_template_list WHERE id = " . $phone_info['template_id'];
     			$phone_info['template_data_info'] = sql($sql, 'getRow', DB_FETCHMODE_ASSOC);
     		}
@@ -1060,7 +1066,12 @@ echo 'TFTP Server check failed on last past. Skipping';
     		$sql = "SELECT id, mac FROM autoprov_mac_list WHERE id =" . $mac_id;
     		//Phone is unknown, we need to display this to the end user so that they can make corrections
     		$row = sql($sql, 'getRow', DB_FETCHMODE_ASSOC);
-    
+
+    		if (!is_array($row)) {
+    			out(_("Phone not found in database"));
+    			return false;
+    		}
+
 			$brand = $this->get_brand_from_mac($row['mac']);
     		if ($brand) {
     			$phone_info['brand_id'] = $brand['id'];
@@ -1069,7 +1080,7 @@ echo 'TFTP Server check failed on last past. Skipping';
     			$phone_info['brand_id'] = 0;
     			$phone_info['name'] = 'Unknown';
     		}
-    
+
     		$phone_info['id'] = $mac_id;
     		$phone_info['model_id'] = 0;
     		$phone_info['product_id'] = 0;
@@ -1124,10 +1135,12 @@ echo 'TFTP Server check failed on last past. Skipping';
      * @param bool  $reboot Reboot the Phone after write
      * @param bool  $write  Write out Directory structure.
      */
-    function prepare_configs($phone_info, $reboot=TRUE, $write=TRUE) 
+    function prepare_configs($phone_info, $reboot=TRUE, $write=TRUE)
     {
     	$this->PROVISIONER_BASE = $this->PHONE_MODULES_PATH;
-define('PROVISIONER_BASE', $this->PROVISIONER_BASE);
+        if (!defined('PROVISIONER_BASE')) {
+            define('PROVISIONER_BASE', $this->PROVISIONER_BASE);
+        }
     	if (file_exists($this->PHONE_MODULES_PATH . 'autoload.php')) {
     		if (!class_exists('ProvisionerConfig')) {
     			require($this->PHONE_MODULES_PATH . 'autoload.php');
@@ -1151,24 +1164,31 @@ define('PROVISIONER_BASE', $this->PROVISIONER_BASE);
 				$provisioner_lib = new $class();
     
     			//Determine if global settings have been overridden
+    			$settings = array();
     			if ($phone_info['template_id'] > 0) {
-    				if (isset($phone_info['template_data_info']['global_settings_override'])) {
+    				if (is_array($phone_info['template_data_info'] ?? null) && isset($phone_info['template_data_info']['global_settings_override'])) {
     					$settings = unserialize($phone_info['template_data_info']['global_settings_override']);
-    				} else {
-    					$settings['srvip'] = $this->configmod->get('srvip');
-    					$settings['ntp'] = $this->configmod->get('ntp');
-    					$settings['config_location'] = $this->configmod->get('config_location');
-    					$settings['tz'] = $this->configmod->get('tz');
     				}
     			} else {
     				if (isset($phone_info['global_settings_override'])) {
     					$settings = unserialize($phone_info['global_settings_override']);
-    				} else {
-    					$settings['srvip'] = $this->configmod->get('srvip');
-    					$settings['ntp'] = $this->configmod->get('ntp');
-    					$settings['config_location'] = $this->configmod->get('config_location');
-    					$settings['tz'] = $this->configmod->get('tz');
     				}
+    			}
+    			// Ensure $settings is a valid array with required keys
+    			if (!is_array($settings)) {
+    				$settings = array();
+    			}
+    			if (!isset($settings['srvip'])) {
+    				$settings['srvip'] = $this->configmod->get('srvip');
+    			}
+    			if (!isset($settings['ntp'])) {
+    				$settings['ntp'] = $this->configmod->get('ntp');
+    			}
+    			if (!isset($settings['config_location'])) {
+    				$settings['config_location'] = $this->configmod->get('config_location');
+    			}
+    			if (!isset($settings['tz'])) {
+    				$settings['tz'] = $this->configmod->get('tz');
     			}
     
     
@@ -1200,21 +1220,26 @@ $this->error['parse_configs'] = 'Error Returned From Timezone Library: ' . $e->g
     			$temp = "";
     			$template_data = unserialize($phone_info['template_data']);
     			$global_user_cfg_data = unserialize($phone_info['global_user_cfg_data']);
-    			if ($phone_info['template_id'] > 0) {
-    				$global_custom_cfg_data = unserialize($phone_info['template_data_info']['global_custom_cfg_data']);
+    			if ($phone_info['template_id'] > 0 && is_array($phone_info['template_data_info'] ?? null)) {
+    				$global_custom_cfg_data = unserialize($phone_info['template_data_info']['global_custom_cfg_data'] ?? '');
     				//Provide alternate Configuration file instead of the one from the hard drive
     				if (!empty($phone_info['template_data_info']['config_files_override'])) {
     					$temp = unserialize($phone_info['template_data_info']['config_files_override']);
-    					foreach ($temp as $list) {
-    						$sql = "SELECT original_name,data FROM autoprov_custom_configs WHERE id = " . $list;
-    						//$res = sql($sql);
-							$res = sql($sql, 'getAll', DB_FETCHMODE_ASSOC);
-    						if (count($res)) {
-    							$data = sql($sql, 'getRow', DB_FETCHMODE_ASSOC);
-    							$provisioner_lib->config_files_override[$data['original_name']] = $data['data'];
+    					if (is_array($temp)) {
+    						foreach ($temp as $list) {
+    							$sql = "SELECT original_name,data FROM autoprov_custom_configs WHERE id = " . $list;
+    							$res = sql($sql, 'getAll', DB_FETCHMODE_ASSOC);
+    							if (count($res)) {
+    								$data = sql($sql, 'getRow', DB_FETCHMODE_ASSOC);
+    								if (is_array($data)) {
+    									$provisioner_lib->config_files_override[$data['original_name']] = $data['data'];
+    								}
+    							}
     						}
     					}
     				}
+    			} elseif ($phone_info['template_id'] > 0) {
+    				$global_custom_cfg_data = false;
     			} else {
     				$global_custom_cfg_data = unserialize($phone_info['global_custom_cfg_data']);
     				//Provide alternate Configuration file instead of the one from the hard drive
@@ -1226,7 +1251,9 @@ $this->error['parse_configs'] = 'Error Returned From Timezone Library: ' . $e->g
 							$res = sql($sql, 'getAll', DB_FETCHMODE_ASSOC);
     						if (count($res)) {
     							$data = sql($sql, 'getRow', DB_FETCHMODE_ASSOC);
-    							$provisioner_lib->config_files_override[$data['original_name']] = $data['data'];
+    							if (is_array($data)) {
+    								$provisioner_lib->config_files_override[$data['original_name']] = $data['data'];
+    							}
     						}
     					}
     				}
@@ -1260,6 +1287,9 @@ $this->error['parse_configs'] = 'Error Returned From Timezone Library: ' . $e->g
     							break;
     						case 2:
     							$breaks = explode('_', $key[1]);
+    							if (!isset($breaks[0]) || !isset($breaks[1]) || !isset($breaks[2])) {
+    								break;
+    							}
     							if (($this->eda->global_cfg['enable_ari'] == 1) AND (isset($global_custom_cfg_ari[$full_key])) AND (isset($global_user_cfg_data[$full_key]))) {
     								$new_template_data['loops'][$breaks[0]][$breaks[2]][$breaks[1]] = $global_user_cfg_data[$full_key];
     							} else {
@@ -1280,7 +1310,8 @@ $this->error['parse_configs'] = 'Error Returned From Timezone Library: ' . $e->g
     			if (!$write) {
     				$new_template_data['provision']['type'] = 'dynamic';
     				$new_template_data['provision']['protocol'] = 'http';
-    				$new_template_data['provision']['path'] =  rtrim($settings['srvip'] . dirname($_SERVER['REQUEST_URI']) . '/', '/');
+    				$request_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
+    				$new_template_data['provision']['path'] =  rtrim($settings['srvip'] . dirname($request_uri) . '/', '/');
     				$new_template_data['provision']['encryption'] = FALSE;
     			} else {
     				$new_template_data['provision']['type'] = 'file';
@@ -1319,12 +1350,15 @@ $this->error['parse_configs'] = 'Error Returned From Timezone Library: ' . $e->g
     			if (array_key_exists('data', $specific_settings)) {
     				foreach ($specific_settings['data'] as $key => $data) {
     					$default_exp = preg_split("/\|/i", $key);
-    					if (isset($default_exp[2])) {
+					if ($default_exp === false || !is_array($default_exp)) {
+						continue;
+					}
+    					if (isset($default_exp[2]) && isset($default_exp[1])) {
     						//lineloop
     						$var = $default_exp[2];
     						$line = $default_exp[1];
     						$loc = $this->system->arraysearchrecursive($line, $provisioner_lib->settings['line'], 'line');
-    						if ($loc !== FALSE) {
+    						if ($loc !== FALSE && is_array($loc) && isset($loc[0])) {
     							$k = $loc[0];
     							$provisioner_lib->settings['line'][$k][$var] = $data;
     						} else {
@@ -1754,6 +1788,9 @@ $this->error['parse_configs'] = "File not written to hard drive!";
             //Pull out the IP address from row. It's always the first entry in the row and it can only be a max of 15 characters with the delimiters
             preg_match_all("/\((.*?)\)/", $value, $matches);
             $ip = $matches[1];
+            if (!isset($ip[0])) {
+                continue;
+            }
             $ip = $ip[0];
 
             //Pull out the mac address by looking for the delimiter

@@ -40,11 +40,19 @@ global $global_cfg, $debug;
 
 // Check if LOCAL_PATH and PHONE_MODULES_PATH are writable
 if (defined('LOCAL_PATH') && !is_writable(LOCAL_PATH)) {
-    chmod(LOCAL_PATH, 0764);
+    // Try to fix permissions, but don't fail if we can't
+    if (!@chmod(LOCAL_PATH, 0764)) {
+        // Log warning but continue execution
+        error_log('AutoProv: Unable to change permissions on LOCAL_PATH (' . LOCAL_PATH . '). Please fix manually: chmod 775 ' . LOCAL_PATH);
+    }
 }
 
 if (defined('PHONE_MODULES_PATH') && !is_writable(PHONE_MODULES_PATH)) {
-    chmod(PHONE_MODULES_PATH, 0764);
+    // Try to fix permissions, but don't fail if we can't
+    if (!@chmod(PHONE_MODULES_PATH, 0764)) {
+        // Log warning but continue execution
+        error_log('AutoProv: Unable to change permissions on PHONE_MODULES_PATH (' . PHONE_MODULES_PATH . '). Please fix manually: chmod 775 ' . PHONE_MODULES_PATH);
+    }
 }
 
 // Check if AMPENGINE is set to 'asterisk'

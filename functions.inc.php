@@ -1,11 +1,11 @@
-<?php
+<?PHP
 
 /**
- * Autoprov FreePBX Hooks File
+ * Endpoint Manager FreePBX Hooks File
  *
- * @author JCattan
- * @license MPL / GPLv3/ LGPL
- * @package Autoprov Manager
+ * @author Andrew Nagy
+ * @license MPL / GPLv2 / LGPL
+ * @package Endpoint Manager
  */
 function autoprov_get_config($engine) {
     global $db;
@@ -26,7 +26,6 @@ function autoprov_get_config($engine) {
                 $core_conf->addSipNotify('linksys-warm-restart', array('Event' => 'restart_now', 'Content-Length' => '0'));
                 $core_conf->addSipNotify('spa-reboot', array('Event' => 'reboot', 'Content-Length' => '0'));
                 $core_conf->addSipNotify('reboot-yealink', array('Event' => 'check-sync\;reboot=true', 'Content-Length' => '0'));
-                $core_conf->addSipNotify('reload-yealink', array('Event' => 'check-sync\;reboot=false', 'Content-Length' => '0'));
             }
             break;
     }
@@ -118,9 +117,10 @@ function autoprov_configpageinit($pagename) {
                         $name = isset($_REQUEST['description']) ? $_REQUEST['description'] : null;
                     }
                     if (isset($_REQUEST['deviceid'])) {
-                        if ($_REQUEST['devicetype'] == "fixed") {
+                        if (isset($_REQUEST['devicetype']) && $_REQUEST['devicetype'] == "fixed") {
                             //SQL to get the Description of the  extension from the extension table
-                            $sql = "SELECT name FROM users WHERE extension = '" . $_REQUEST['deviceuser'] . "'";
+                            $deviceuser = $_REQUEST['deviceuser'] ?? '';
+                            $sql = "SELECT name FROM users WHERE extension = '" . $deviceuser . "'";
                             $name_o = $endpoint->eda->sql($sql, 'getOne');
 							if($name_o) {
 								$name = $name_o;
@@ -209,7 +209,7 @@ function autoprov_configpageload() {
     }
 
  $extension_address = $astman->database_get("SIP","Registry"."/$extdisplay");
-    $extension_address = explode(":",$extension_address);
+    $extension_address = $extension_address ? explode(":",$extension_address) : array('');
   // echo $extension_address['0'];
 
     if (isset($tech) && (($tech == 'sip') OR ($tech == 'pjsip') OR ($tech == 'sip_generic'))) {
@@ -264,31 +264,29 @@ function autoprov_configpageload() {
 
                 $info = $endpoint->get_phone_info($line_info['mac_id']);
 
-		if ($info) {
-		$brand_list = $endpoint->brands_available($info['brand_id'], true);
-			if (!empty($info['brand_id'])) {
-        $model_list = $endpoint->models_available(NULL, $info['brand_id']);
-        $line_list = $endpoint->linesAvailable($line_info['luid']);
-        $template_list = $endpoint->display_templates($info['product_id']);
-			} else {
-        $model_list = array();
-        $line_list = array();
-        $template_list = array();
-					}
+                $brand_list = $endpoint->brands_available($info['brand_id'], true);
+                if (!empty($info['brand_id'])) {
+                    $model_list = $endpoint->models_available(NULL, $info['brand_id']);
+                    $line_list = $endpoint->linesAvailable($line_info['luid']);
+                    $template_list = $endpoint->display_templates($info['product_id']);
+                } else {
+                    $model_list = array();
+                    $line_list = array();
+                    $template_list = array();
+                }
 
-    $checked = false;
+                $checked = false;
 
                 $currentcomponent->addguielem($section, new gui_checkbox('epm_delete', $checked, 'Delete', 'Delete this Extension from Endpoint Manager'), 9);
 // phone web interface link
-#[\AllowDynamicProperties]
 	class gui_link_nw_tab extends guitext {
     function __construct($elemname, $text, $url, $userlang = true) {
-		$this->elemname = $elemname;
         $parent_class = get_parent_class($this);
         $this->html_text = "<a href=\"$url\" target=\"_blank\" id =\"$this->elemname\">$text</a>";
     }
 }        
 				$currentcomponent->addguielem($section, new gui_link_nw_tab('epm_account_phone', 'Go to phone web interface', "http://$extension_address[0]"));
+//
 				$currentcomponent->addguielem($section, new gui_textbox('epm_mac', $info['mac'], 'MAC Address', 'The MAC Address of the Phone Assigned to this Extension/Device. <br />(Leave Blank to Remove from Endpoint Manager)', '', 'Please enter a valid MAC Address', true, 17, false), 9);
                 $currentcomponent->addguielem($section, new gui_selectbox('epm_brand', $brand_list, $info['brand_id'], 'Brand', 'The Brand of this Phone.', false, 'frm_' . $display . '_brand_change(this.options[this.selectedIndex].value)', false), 9);
                 $currentcomponent->addguielem($section, new gui_selectbox('epm_model', $model_list, $info['model_id'], 'Model', 'The Model of this Phone.', false, 'frm_' . $display . '_model_change(this.options[this.selectedIndex].value,\'' . $line_info['luid'] . '\')', false), 9);
@@ -296,6 +294,9 @@ function autoprov_configpageload() {
                 $currentcomponent->addguielem($section, new gui_selectbox('epm_temps', $template_list, $info['template_id'], 'Template', 'The Template of this Phone.', false, '', false), 9);
                 $currentcomponent->addguielem($section, new gui_checkbox('epm_reboot', $checked, 'Reboot', 'Reboot this Phone on Submit'), 9);
             } else {
+                // Initialize $info and $line_info arrays for else branch
+                $info = array('mac' => '', 'brand_id' => '', 'model_id' => '', 'template_id' => '');
+                $line_info = array('line' => '');
 
                 $js = "
                         $.ajaxSetup({ cache: false });
@@ -332,10 +333,6 @@ function autoprov_configpageload() {
                 $currentcomponent->addguielem($section, new guitext('epm_note', 'Note: This might reboot the phone if it\'s already registered to Asterisk'));
 		
             }
-			} else {
-    // si $info est vide (pas de poste attribue
-    // on affiche rien	
-			}	
         }
     }
 }
@@ -349,7 +346,7 @@ function autoprov_module_install_check_callback($mods = array()) {
 
     $ret = array();
     $current_mod = 'autoprov';
-    $conflicting_mods = array('restart');
+    $conflicting_mods = array('endpoint','restart');
 
 	foreach($mods as $k => $v) {
 		if (in_array($k, $conflicting_mods) && !in_array($active_modules[$current_mod]['status'],array(MODULE_STATUS_NOTINSTALLED,MODULE_STATUS_BROKEN))) {

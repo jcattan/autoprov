@@ -1,6 +1,8 @@
 <?php
 namespace FreePBX\modules\autoprov;
 use FreePBX\modules\Backup as Base;
+
+#[\AllowDynamicProperties]
 class Restore Extends Base\RestoreBase{
     public function runRestore()
     {

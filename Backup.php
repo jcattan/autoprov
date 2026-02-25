@@ -3,6 +3,8 @@ namespace FreePBX\modules\autoprov;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use FreePBX\modules\Backup as Base;
+
+#[\AllowDynamicProperties]
 class Backup Extends Base\BackupBase{
   public function runBackup($id,$transaction){
                 $tables = $this->dumpTables();

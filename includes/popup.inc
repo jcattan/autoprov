@@ -46,6 +46,10 @@ if($_REQUEST['pop_type'] == 'edit_specifics') {
         } else {
             $sql = 'SELECT specific_settings FROM autoprov_mac_list WHERE id ='. $_REQUEST['edit_id'];
             $specific_data = unserialize($endpoint->eda->sql($sql, 'getOne'));
+            // Initialize as array if unserialize failed or returned false
+            if ($specific_data === false || !is_array($specific_data)) {
+                $specific_data = array('data' => array());
+            }
         }
 
         foreach($phone_info['line'] as $data) {

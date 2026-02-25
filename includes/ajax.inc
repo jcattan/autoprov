@@ -30,30 +30,30 @@ if(($_REQUEST['id'] == "") OR ($_REQUEST['id'] == "0")) {
 }
 
 if($_REQUEST['atype'] == "model") {
-	$sql = "SELECT * FROM autoprov_model_list WHERE enabled = 1 AND brand =". $_GET['id'];
+	$sql = "SELECT * FROM autoprov_model_list WHERE enabled = 1 AND brand = ". $endpoint->eda->escapeSimple($_GET['id']);
 } elseif ($_REQUEST['atype'] == "template") {
-	$sql = "SELECT id, name as model FROM  autoprov_template_list WHERE  product_id = '". $_GET['id']."'";
+	$sql = "SELECT id, name as model FROM  autoprov_template_list WHERE  product_id = '". $endpoint->eda->escapeSimple($_GET['id'])."'";
 } elseif ($_REQUEST['atype'] == "mtemplate") {
-	$sql = "SELECT id, name as model FROM  autoprov_template_list WHERE  model_id = '". $_GET['id']."'";
+	$sql = "SELECT id, name as model FROM  autoprov_template_list WHERE  model_id = '". $endpoint->eda->escapeSimple($_GET['id'])."'";
 } elseif ($_REQUEST['atype'] == "template2") {
-	$sql = "SELECT DISTINCT autoprov_template_list.id, autoprov_template_list.name as model FROM autoprov_template_list, autoprov_model_list, autoprov_product_list WHERE autoprov_template_list.product_id = autoprov_model_list.product_id AND autoprov_model_list.product_id = autoprov_product_list.id AND autoprov_model_list.id = '". $_GET['id']."'";
+	$sql = "SELECT DISTINCT autoprov_template_list.id, autoprov_template_list.name as model FROM autoprov_template_list, autoprov_model_list, autoprov_product_list WHERE autoprov_template_list.product_id = autoprov_model_list.product_id AND autoprov_model_list.product_id = autoprov_product_list.id AND autoprov_model_list.id = '". $endpoint->eda->escapeSimple($_GET['id'])."'";
 } elseif ($_REQUEST['atype'] == "model_clone") {
-        $sql = "SELECT autoprov_model_list.id, autoprov_model_list.model as model FROM autoprov_model_list, autoprov_product_list WHERE autoprov_product_list.id = autoprov_model_list.product_id AND autoprov_model_list.enabled = 1 AND autoprov_model_list.hidden = 0 AND product_id = '". $_GET['id']."'";
+        $sql = "SELECT autoprov_model_list.id, autoprov_model_list.model as model FROM autoprov_model_list, autoprov_product_list WHERE autoprov_product_list.id = autoprov_model_list.product_id AND autoprov_model_list.enabled = 1 AND autoprov_model_list.hidden = 0 AND product_id = '". $endpoint->eda->escapeSimple($_GET['id'])."'";
 } elseif ($_REQUEST['atype'] == "lines") {
     if(isset($_REQUEST['macid'])) {
-        $sql = "SELECT autoprov_model_list.max_lines FROM autoprov_model_list,autoprov_line_list,autoprov_mac_list WHERE autoprov_mac_list.id = autoprov_line_list.mac_id AND autoprov_model_list.id = autoprov_mac_list.model AND autoprov_line_list.luid = ". $_REQUEST['macid'];
+        $sql = "SELECT autoprov_model_list.max_lines FROM autoprov_model_list,autoprov_line_list,autoprov_mac_list WHERE autoprov_mac_list.id = autoprov_line_list.mac_id AND autoprov_model_list.id = autoprov_mac_list.model AND autoprov_line_list.luid = ". $endpoint->eda->escapeSimple($_REQUEST['macid']);
     } elseif(isset($_REQUEST['mac'])) {
         $sql = "SELECT id FROM autoprov_mac_list WHERE mac = '".$endpoint->mac_check_clean($_REQUEST['mac'])."'";
         $macid = $endpoint->eda->sql($sql,'getOne');
         if($macid) {
             $_REQUEST['mac'] = $macid;
-            $sql = "SELECT autoprov_model_list.max_lines FROM autoprov_model_list,autoprov_line_list,autoprov_mac_list WHERE autoprov_mac_list.id = autoprov_line_list.mac_id AND autoprov_model_list.id = autoprov_mac_list.model AND autoprov_mac_list.id = ". $macid;
+            $sql = "SELECT autoprov_model_list.max_lines FROM autoprov_model_list,autoprov_line_list,autoprov_mac_list WHERE autoprov_mac_list.id = autoprov_line_list.mac_id AND autoprov_model_list.id = autoprov_mac_list.model AND autoprov_mac_list.id = ". $endpoint->eda->escapeSimple($macid);
         } else {
             unset($_REQUEST['mac']);
-            $sql = "SELECT max_lines FROM autoprov_model_list WHERE id = '". $_GET['id']."'";
+            $sql = "SELECT max_lines FROM autoprov_model_list WHERE id = '". $endpoint->eda->escapeSimple($_GET['id'])."'";
         }
     } else {
-        $sql = "SELECT max_lines FROM autoprov_model_list WHERE id = '". $_GET['id']."'";
+        $sql = "SELECT max_lines FROM autoprov_model_list WHERE id = '". $endpoint->eda->escapeSimple($_GET['id'])."'";
     }
 }
 

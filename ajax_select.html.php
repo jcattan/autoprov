@@ -1,13 +1,9 @@
-<?php
+<?PHP
 /**
- * Autoprov FreePBX AJAX Select File
+ * Endpoint Manager FreePBX AJAX Select File
  *
- * @author JCattan
- * @license MPL / GPLv3/ LGPL
- * @package Autoprov Manager
+ * @author Andrew Nagy
+ * @license MPL / GPLv2 / LGPL
+ * @package Endpoint Manager
  */
- 
-if (!@include_once(getenv('FREEPBX_CONF') ? getenv('FREEPBX_CONF') : '/etc/freepbx.conf')) {
-    include_once('/etc/asterisk/freepbx.conf');
-}
-require_once('includes/ajax.inc');
+include('includes/ajax.inc');

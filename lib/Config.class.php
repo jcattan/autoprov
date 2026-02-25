@@ -9,6 +9,7 @@
 
 namespace FreePBX\modules\Autoprov;
 
+#[\AllowDynamicProperties]
 class Config {
 	private $module_conf;
 	

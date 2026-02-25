@@ -70,7 +70,7 @@
 		if(!empty($extout[1])) {
 			if(preg_match('/OK \(.*\)/i', $data)) {
 				$devices_status[$extout[1]]['status'] = TRUE;
-				$devices_status[$extout[1]]['ip'] = $ipaddress[0];
+				$devices_status[$extout[1]]['ip'] = isset($ipaddress[0]) ? $ipaddress[0] : '';
 			} else {
 				$devices_status[$extout[1]]['status'] = FALSE;
 			}
@@ -923,7 +923,9 @@ switch ($sub_type) {
 
 
                 $row = $endpoint->get_phone_info($_REQUEST['edit_id']);
-                $endpoint->prepare_configs($row);
+                if ($row && is_array($row)) {
+                    $endpoint->prepare_configs($row);
+                }
 
                 $endpoint->message['edit_save'] = _("Saved")."!";
                 $mode = NULL;
@@ -948,7 +950,9 @@ switch ($sub_type) {
         $mac_id = $endpoint->add_device($_REQUEST['mac'],$_REQUEST['model_list'],$_REQUEST['ext_list'],$_REQUEST['template_list'],$_REQUEST['line_list']);
         if($mac_id) {
             $phone_info = $endpoint->get_phone_info($mac_id);
-            $endpoint->prepare_configs($phone_info);
+            if ($phone_info && is_array($phone_info)) {
+                $endpoint->prepare_configs($phone_info);
+            }
         }
         break;
 		
@@ -1001,12 +1005,14 @@ switch ($sub_type) {
         if(isset($_REQUEST['selected'])) {
             foreach($_REQUEST['selected'] as $key => $data) {
                 $phone_info = $endpoint->get_phone_info($_REQUEST['selected'][$key]);
-                if(isset($_REQUEST['reboot'])) {
-                    $endpoint->prepare_configs($phone_info);
-                    $rebooted_msg = "& Rebooted";
-                } else {
-                    $endpoint->prepare_configs($phone_info,FALSE);
-                    $rebooted_msg = "For";
+                if ($phone_info && is_array($phone_info)) {
+                    if(isset($_REQUEST['reboot'])) {
+                        $endpoint->prepare_configs($phone_info);
+                        $rebooted_msg = "& Rebooted";
+                    } else {
+                        $endpoint->prepare_configs($phone_info,FALSE);
+                        $rebooted_msg = "For";
+                    }
                 }
             }
             $endpoint->message['page:devices_manager'] = "Rebuilt Configs ".$rebooted_msg." Selected Phones";
@@ -1023,9 +1029,14 @@ switch ($sub_type) {
         $mac_list =& $endpoint->eda->sql($sql,'getAll',DB_FETCHMODE_ASSOC);
         foreach($mac_list as $data) {
             $phone_info = $endpoint->get_phone_info($data['id']);
-            foreach($phone_info['line'] as $line) {
-                $sql = "UPDATE autoprov_line_list SET description = '".$endpoint->eda->escapeSimple($line['description'])."' WHERE luid = ".$line['luid'];
-                $endpoint->eda->sql($sql);
+            if (!$phone_info || !is_array($phone_info)) {
+                continue;
+            }
+            if (isset($phone_info['line']) && is_array($phone_info['line'])) {
+                foreach($phone_info['line'] as $line) {
+                    $sql = "UPDATE autoprov_line_list SET description = '".$endpoint->eda->escapeSimple($line['description'])."' WHERE luid = ".$line['luid'];
+                    $endpoint->eda->sql($sql);
+                }
             }
             if(isset($_REQUEST['reboot'])) {
                 $endpoint->prepare_configs($phone_info);
@@ -1137,10 +1148,12 @@ switch ($sub_type) {
                 $mac_id = $endpoint->add_device($_REQUEST['mac_'.$num],$_REQUEST['model_list_'.$num],$_REQUEST['ext_list_'.$num]);
                 if($mac_id) {
                     $phone_info = $endpoint->get_phone_info($mac_id);
-                    if(isset($_REQUEST['reboot_sel'])) {
-                        $endpoint->prepare_configs($phone_info,TRUE);
-                    } else {
-                        $endpoint->prepare_configs($phone_info,FALSE);
+                    if ($phone_info && is_array($phone_info)) {
+                        if(isset($_REQUEST['reboot_sel'])) {
+                            $endpoint->prepare_configs($phone_info,TRUE);
+                        } else {
+                            $endpoint->prepare_configs($phone_info,FALSE);
+                        }
                     }
                 }
             }
@@ -1158,15 +1171,16 @@ switch ($sub_type) {
                     $endpoint->eda->sql($sql);
 
                     $phone_info = $endpoint->get_phone_info($_REQUEST['selected'][$key]);
-                    $endpoint->prepare_configs($phone_info);
-                    $rebooted = "";
-                    if(isset($_REQUEST['reboot_change'])) {
-                        $endpoint->prepare_configs($phone_info);
-                        $rebooted = " & Rebooted";
-                    } else {
-                        $endpoint->prepare_configs($phone_info,FALSE);
+                    if ($phone_info && is_array($phone_info)) {
+                        $rebooted = "";
+                        if(isset($_REQUEST['reboot_change'])) {
+                            $endpoint->prepare_configs($phone_info);
+                            $rebooted = " & Rebooted";
+                        } else {
+                            $endpoint->prepare_configs($phone_info,FALSE);
+                        }
+                        $endpoint->message['page:devices_manager'] = _("Saved").$rebooted."!";
                     }
-                    $endpoint->message['page:devices_manager'] = _("Saved").$rebooted."!";
                 }
             } else {
                 $endpoint->error['page:devices_manager'] = _("Please select a Brand and/or Model");
@@ -1190,6 +1204,9 @@ switch ($sub_type) {
                 $sql = "UPDATE autoprov_mac_list SET template_id = '".$_REQUEST['template_selector']."' WHERE id =  ". $row['id'];
                 $endpoint->eda->sql($sql);
                 $phone_info = $endpoint->get_phone_info($row['id']);
+                if (!$phone_info || !is_array($phone_info)) {
+                    continue;
+                }
                 if(isset($_REQUEST['reboot'])) {
                     $endpoint->prepare_configs($phone_info);
                     $rebooted_msg = "& Rebooted Phones";
@@ -1197,9 +1214,11 @@ switch ($sub_type) {
                     $endpoint->prepare_configs($phone_info,FALSE);
                     $rebooted_msg = "";
                 }
-                foreach($phone_info['line'] as $line) {
-                    $sql = "UPDATE autoprov_line_list SET description = '".$endpoint->eda->escapeSimple($line['description'])."' WHERE luid = ".$line['luid'];
-                    $endpoint->eda->sql($sql);
+                if (isset($phone_info['line']) && is_array($phone_info['line'])) {
+                    foreach($phone_info['line'] as $line) {
+                        $sql = "UPDATE autoprov_line_list SET description = '".$endpoint->eda->escapeSimple($line['description'])."' WHERE luid = ".$line['luid'];
+                        $endpoint->eda->sql($sql);
+                    }
                 }
             }
             $endpoint->message['page:devices_manager'] = "Rebuilt Configs " . $rebooted_msg;
@@ -1220,6 +1239,9 @@ switch ($sub_type) {
                 $sql = "UPDATE autoprov_mac_list SET template_id = '".$_REQUEST['model_template_selector']."' WHERE id =  ". $row['id'];
                 $endpoint->eda->sql($sql);
                 $phone_info = $endpoint->get_phone_info($row['id']);
+                if (!$phone_info || !is_array($phone_info)) {
+                    continue;
+                }
                 if(isset($_REQUEST['reboot'])) {
                     $endpoint->prepare_configs($phone_info);
                     $rebooted_msg = "& Rebooted Phones";
@@ -1227,9 +1249,11 @@ switch ($sub_type) {
                     $endpoint->prepare_configs($phone_info,FALSE);
                     $rebooted_msg = "";
                 }
-                foreach($phone_info['line'] as $line) {
-                    $sql = "UPDATE autoprov_line_list SET description = '".$endpoint->eda->escapeSimple($line['description'])."' WHERE luid = ".$line['luid'];
-                    $endpoint->eda->sql($sql);
+                if (isset($phone_info['line']) && is_array($phone_info['line'])) {
+                    foreach($phone_info['line'] as $line) {
+                        $sql = "UPDATE autoprov_line_list SET description = '".$endpoint->eda->escapeSimple($line['description'])."' WHERE luid = ".$line['luid'];
+                        $endpoint->eda->sql($sql);
+                    }
                 }
             }
             $endpoint->message['page:devices_manager'] = "Rebuilt Configs " . $rebooted_msg;

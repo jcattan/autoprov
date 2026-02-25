@@ -22,8 +22,9 @@ if (!@include_once(getenv('FREEPBX_CONF') ? getenv('FREEPBX_CONF') : '/etc/freep
 
 $epm = FreePBX::create()->Autoprov;
 
-
-define('PROVISIONER_BASE', $amp_conf['AMPWEBROOT'].'/admin/modules/_ap_phone_modules/');
+if (!defined('PROVISIONER_BASE')) {
+    define('PROVISIONER_BASE', $amp_conf['AMPWEBROOT'].'/admin/modules/_ap_phone_modules/');
+}
 $server_type = FreePBX::Autoprov()->configmod->get("server_type");
 
 
@@ -86,8 +87,7 @@ if(getMethod() == "GET") {
         
         #Just moved this Block of code up to fix the provisioning for Snom Phones
         require_once (PROVISIONER_BASE.'endpoint/base.php');
-$provisionerGlobals = new Provisioner_Globals();
-$data = $provisionerGlobals->dynamic_global_files($filename, FreePBX::Autoprov()->configmod->get("config_location"), $web_path);
+        $data = Provisioner_Globals::dynamic_global_files($filename, FreePBX::Autoprov()->configmod->get("config_location"), $web_path);
         if($data !== FALSE) {
             echo $data;
         } 

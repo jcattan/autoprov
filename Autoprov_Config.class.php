@@ -12,18 +12,18 @@ namespace FreePBX\modules;
 #[\AllowDynamicProperties]
 class Autoprov_Config
 {
-	public $UPDATE_PATH;
-    public $MODULES_PATH;
-	public $LOCAL_PATH;
-	public $PHONE_MODULES_PATH;
-	public $PROVISIONER_BASE;
 	public $freepbx;
 	public $db;
 	public $config;
 	public $configmod;
 	public $system;
+	public $UPDATE_PATH;
+    public $MODULES_PATH;
+	public $LOCAL_PATH;
+	public $PHONE_MODULES_PATH;
+	public $PROVISIONER_BASE;
 
-	public function __construct($freepbx, $cfgmod, $system)
+	public function __construct($freepbx = null, $cfgmod = null, $system = null)
 	{
 		$this->freepbx = $freepbx;
 		$this->db = $freepbx->Database;
@@ -333,6 +333,9 @@ class Autoprov_Config
 
 	private function epm_config_manager_saveconfig()
 	{
+		// Initialize return array
+		$retarr = array("status" => false, "message" => _("Unknown error"));
+
 		$arrVal['VAR_REQUEST'] = array("typesavecfg", "value", "idtype", "idbt");
 		foreach ($arrVal['VAR_REQUEST'] as $valor) {
 			if (! array_key_exists($valor, $_REQUEST)) {
@@ -366,7 +369,7 @@ class Autoprov_Config
 				$sql = "UPDATE autoprov_model_list SET enabled = " .$dget['value']. " WHERE id = '".$dget['id']."'";
 			}
 			else {
-				$retarr = array("status" => false, "message" => _("IdType not valid to typesavecfg!"));
+				return array("status" => false, "message" => _("IdType not valid to typesavecfg!"));
 			}
 		}
 		else {
@@ -650,7 +653,7 @@ public function epm_config_manager_hardware_get_list_all_hide_show(): array
 		foreach ($row as $ava_brands) {
 			$key = $this->system->arraysearchrecursive($ava_brands['directory'], $out, 'directory');
 
-			if ($key === FALSE) {
+			if ($key === FALSE || !is_array($key) || !isset($key[0])) {
 				$tmp = $ava_brands;
 				$tmp['update'] = -1;
 				$out[] = $tmp;
@@ -793,7 +796,7 @@ public function epm_config_manager_hardware_get_list_all_hide_show(): array
 
                     foreach ($row as $ava_brands) {
 						$key = $this->system->arraysearchrecursive($ava_brands['directory'], $out, 'directory');
-                        if ($key === FALSE) {
+                        if ($key === FALSE || !is_array($key) || !isset($key[0])) {
 							$this->remove_brand($ava_brands['id']);
                         } else {
                             $key = $key[0];
@@ -839,7 +842,7 @@ public function epm_config_manager_hardware_get_list_all_hide_show(): array
 
             foreach ($out as $data) {
                 $temp = $this->file2json($this->PHONE_MODULES_PATH . 'endpoint/' . $data['directory'] . '/brand_data.json');
-                if (key_exists('directory', $temp['data']['brands'])) {
+                if (array_key_exists('directory', $temp['data']['brands'])) {
 
                     //Pull in all variables
                     $directory = $temp['data']['brands']['directory'];
@@ -865,7 +868,7 @@ public function epm_config_manager_hardware_get_list_all_hide_show(): array
 
                         /* DONT DO THIS YET
                           $require_firmware = NULL;
-                          if ((key_exists('require_firmware', $family_line_xml['data'])) && ($remote) && ($family_line_xml['data']['require_firmware'] == "TRUE")) {
+                          if ((array_key_exists('require_firmware', $family_line_xml['data'])) && ($remote) && ($family_line_xml['data']['require_firmware'] == "TRUE")) {
                           echo "Firmware Requirment Detected!..........<br/>";
                           $this->install_firmware($family_line_xml['data']['id']);
                           }
@@ -975,7 +978,7 @@ public function epm_config_manager_hardware_get_list_all_hide_show(): array
 
             //TODO: Add local file checks to avoid slow reloading on PHP < 5.3
 			$key = $this->system->arraysearchrecursive($model_row['model'], $family_line_json['data']['model_list'], 'model');
-            if ($key === FALSE) {
+            if ($key === FALSE || !is_array($key) || !isset($key[0])) {
                 $error['sync_model'] = "Can't locate model in family JSON file";
                 return(FALSE);
             } else {
@@ -1086,7 +1089,7 @@ public function epm_config_manager_hardware_get_list_all_hide_show(): array
 
         if (file_exists($temp_directory . $package . '/brand_data.json')) {
             $temp = $this->file2json($temp_directory . $package . '/brand_data.json');
-            if (key_exists('directory', $temp['data']['brands'])) {
+            if (array_key_exists('directory', $temp['data']['brands'])) {
 				out(_("Appears to be a valid Provisioner.net JSON file.....Continuing"));
                 //Pull in all variables
                 $directory = $temp['data']['brands']['directory'];
@@ -1153,7 +1156,7 @@ public function epm_config_manager_hardware_get_list_all_hide_show(): array
                     $family_line_xml['data']['last_modified'] = isset($family_line_xml['data']['last_modified']) ? $family_line_xml['data']['last_modified'] : '';
 
                     $require_firmware = NULL;
-                    if ((key_exists('require_firmware', $family_line_xml['data'])) && ($remote) && ($family_line_xml['data']['require_firmware'] == "TRUE")) {
+                    if ((array_key_exists('require_firmware', $family_line_xml['data'])) && ($remote) && ($family_line_xml['data']['require_firmware'] == "TRUE")) {
 						out(_("Firmware Requirment Detected!.........."));
 						$this->install_firmware($family_line_xml['data']['id']);
                     }
@@ -1648,6 +1651,10 @@ if ($this->configmod->get('debug')) echo format_txt(_("---Inserting Model %_NAME
 
 
 	function merge_data($path, $template_list, $maxlines = 12) {
+    	// Initialize arrays at function start
+    	$data = array('data' => array());
+    	$sub_cat_data = array();
+
     	//TODO: fix
     	foreach ($template_list as $files_data) {
     		$full_path = $path . $files_data;
@@ -1689,7 +1696,7 @@ if ($this->configmod->get('debug')) echo format_txt(_("---Inserting Model %_NAME
     									foreach ($item['data']['item'] as $item_loop) {
     										if ($item_loop['type'] != 'break') {
     											$z_tmp = explode("_", $item_loop['variable']);
-    											$z = $z_tmp[1];
+    											$z = isset($z_tmp[1]) ? $z_tmp[1] : '';
     											$items_loop[$var_nam][$z] = $item_loop;
     											$items_loop[$var_nam][$z]['description'] = str_replace('{$count}', $i, $items_loop[$var_nam][$z]['description']);
     											$items_loop[$var_nam][$z]['variable'] = str_replace('_', '_' . $i . '_', $items_loop[$var_nam][$z]['variable']);

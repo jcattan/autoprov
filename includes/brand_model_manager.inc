@@ -79,6 +79,12 @@ switch ($_REQUEST['subpage']) {
             if($check_for_updates) {
                 $id = $endpoint->arraysearchrecursive($row['name'], $brand_up,'name');
 
+                if ($id === false || !is_array($id) || !isset($id[0])) {
+                    $row_out[$i]['update'] = NULL;
+                    $row_out[$i]['update_vers'] = NULL;
+                    $i++;
+                    continue;
+                }
                 $id = $id[0];
                 if((isset($brand_up[$id]['update'])) AND ($row['installed'] == 1)) {
                     $row_out[$i]['update'] = $brand_up[$id]['update'];

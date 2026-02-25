@@ -1,10 +1,10 @@
 <?php
 /**
- * Autoprov Object Module - Sec Devices
+ * Endpoint Manager Object Module - Sec Devices
  *
- * @author JCattan
- * @license MPL / GPLv3/ LGPL
- * @package Autoprov Manager
+ * @author Javier Pastor
+ * @license MPL / GPLv2 / LGPL
+ * @package Provisioner
  */
 
 namespace FreePBX\modules;
@@ -17,8 +17,7 @@ class Autoprov_Devices
 	public $config;
 	public $configmod;
 
-	public function __construct($freepbx, $cfgmod)
-
+	public function __construct($freepbx = null, $cfgmod = null)
 	{
 		$this->freepbx = $freepbx;
 		$this->db = $freepbx->Database;
