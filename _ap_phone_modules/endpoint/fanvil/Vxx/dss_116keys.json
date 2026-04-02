@@ -1,0 +1,135 @@
+{
+    "template_data":{
+        "category":[
+        {
+            "name":"keys",
+            "subcategory":[
+            {
+                "name":"basic",
+                "item":[
+                {
+                    "description":"Touches (1-116)",
+                    "type":"loop",
+                    "loop_start":"1",
+                    "loop_end":"116",
+                    "data":{
+                        "item":[
+                        {
+                            "variable":"$linekey_type",
+                            "default_value":"",
+                            "description":"Touche {$count} Type",
+                            "type":"list",
+                            "data":[
+                            {
+                                "text":"Aucun",
+                                "value":"0"
+                            },
+                            {
+                                "text":"Touche Memoire",
+                                "value":"1"
+                            },
+                            {
+                                "text":"Ligne",
+                                "value":"2"
+                            },
+                            {
+                                "text":"Touche Evenement",
+                                "value":"3"
+                            },
+                            {
+                                "text":"Dtmf",
+                                "value":"4"
+                            } 
+                            ]
+                        },
+						                        {
+                            "variable":"$linekey_sous_type",
+                            "default_value":"92",
+                            "description":"Touche {$count} Sous Type",
+                            "type":"list",
+                            "data":[
+                            {
+                                "text":"Aucun",
+                                "value":"21"
+                            },
+                            {
+                                "text":"BLF/NEW CAll",
+                                "value":"90"
+                            },
+                            {
+                                "text":"BLF/BXFER",
+                                "value":"91"
+                            },
+                            {
+                                "text":"BLF/AXFER",
+                                "value":"92"
+                            },
+                            {
+                                "text":"Num Rapide",
+                                "value":"25"
+                            } 
+                            ]
+                        },
+                        {
+                            "variable":"$linekey_line",
+                            "default_value":"1",
+                            "description":"Touche {$count} Line",
+                            "type":"list",
+                            "data":[
+                            {
+                                "text":"Line 1",
+                                "value":"1"
+                            },
+                            {
+                                "text":"Line 2",
+                                "value":"2"
+                            },
+                            {
+                                "text":"Line 3",
+                                "value":"3"
+                            },
+                            {
+                                "text":"Line 4",
+                                "value":"4"
+                            },
+                            {
+                                "text":"Line 5",
+                                "value":"5"
+                            },
+                            {
+                                "text":"Line 6",
+                                "value":"6"
+                            }
+                            ]
+                        },
+                        {
+                            "variable":"$linekey_label",
+                            "default_value":"",
+                            "description":"Touche {$count} Nom",
+                            "type":"input"
+                        },
+                        {
+                            "variable":"$linekey_value",
+                            "default_value":"",
+                            "description":"Touche {$count} Valeur",
+                            "type":"input"
+                        },
+                        {
+                          "variable":"$linekey_pickup",
+                          "default_value":"{$pickup_value}",
+                          "description":"Touche {$count} Pickup Number",
+                          "type":"input"
+                        },
+                        {
+                            "type":"break"
+                        }
+                        ]
+                    }
+                }
+                ]
+            }
+            ]
+        }
+        ]
+    }
+}

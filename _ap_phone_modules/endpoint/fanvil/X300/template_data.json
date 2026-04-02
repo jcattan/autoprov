@@ -1,0 +1,188 @@
+{
+    "template_data":{
+        "category":[
+        {
+            "name":"general",
+            "subcategory":[
+            {
+                "name":"general",
+                "item":[
+				{
+                    "variable":"$longueur_touches",
+                    "default_value":"2",
+                    "description":"Longueur des touches",
+                    "type":"list",
+                    "data":[
+                    {
+                        "text":"Courtes",
+                        "value":"0"
+                    },
+					                    {
+                        "text":"Moyennes",
+                        "value":"1"
+                    },
+                    {
+                        "text":"Longues",
+                        "value":"2"
+                    }
+                    ]
+                },
+                {
+                    "type":"break"
+                },
+                {
+                    "variable":"$adminpw",
+                    "default_value":"admin",
+                    "description":"Mot de passe Administrateur",
+                    "type":"input"
+                }
+                ]
+            }
+            ]
+        },
+		{
+			"name":"preferences",
+			"subcategory":[
+			{
+				"name":"preferences",
+				"item":[		
+				{	"variable":"$dss_transfer",
+					"description":"Type de transfer BLF",
+					"default_value":"92",
+					"type":"list",
+					"data":[
+					{
+						"text":"Nouvel Appel",
+						"value":"90"
+					},
+					{
+						"text":"Transfert Aveugle",
+						"value":"91"
+					},
+					{
+						"text":"Transfer Assiste",
+						"value":"92"
+					},
+					{
+						"text":"Conference",
+						"value":"93"
+					},
+					{
+						"text":"Jouer DTMF",
+						"value":"94"
+					}
+					]
+				}
+				]
+			}
+			]
+		},
+		{
+			"name":"network",
+			"subcategory":[
+			{
+				"name":"network",
+				"item":[		
+				{
+					"variable": "$manual_use_outbound_proxy",
+					"default_value": "0",
+					"description": "Use Outbound Proxy",
+					"type": "list",
+					"data":[
+					{
+						"text":"Yes",
+						"value":"1"
+					},
+					{
+						"text":"No",
+						"value":"0"
+					}
+					]
+				},
+				{
+					"variable": "$manual_outbound_proxy_server",
+					"default_value": "{$server_host.line.1}",
+					"description": "Outbound Proxy Server",
+					"type": "input"
+				},
+				{
+					"variable": "$manual_outbound_port",
+					"default_value": "5060",
+					"description": "Outbound Proxy Port",
+					"type":"input"
+				},
+				{
+					"type":"break"
+				},
+				{
+					"variable": "$sip_server_override",
+					"default_value": "{$server_host.line.1}",
+					"description": "SIP Server Override",
+					"type": "input"
+				},
+				{
+					"type":"break"
+				},
+				{
+						"variable":"$voice_vlan_enable",
+						"default_value":"0",
+						"description":"Voice VLAN Enable",
+						"type":"list",
+						"data":[
+						{
+							"text":"True",
+							"value":"1"
+						},
+						{
+							"text":"False",
+							"value":"0"
+						}
+							   ]
+				},
+				{
+					"variable": "$voice_vlan_id",
+					"default_value": "2",
+					"description": "Voice VLAN ID",
+					"type": "input"
+				},
+				{
+					"variable": "$voice_vlan_qos",
+					"default_value": "6",
+					"description": "VLAN QOS",
+					"type": "input"
+				},
+				{
+						"variable":"$data_vlan_enable",
+						"default_value":"0",
+						"description":"Data VLAN Enable",
+						"type":"list",
+						"data":[
+						{
+							"text":"True",
+							"value":"1"
+						},
+						{
+							"text":"False",
+							"value":"0"
+						}
+								]
+				},
+				{
+					"variable": "$data_vlan_id",
+					"default_value": "0",
+					"description": "Data VLAN ID",
+					"type": "input"
+				},
+				{
+					"variable": "$data_vlan_qos",
+					"default_value": "0",
+					"description": "Data VLAN QOS",
+					"type": "input"
+				}
+				]
+			}
+			]
+		}
+        ]
+    }
+}

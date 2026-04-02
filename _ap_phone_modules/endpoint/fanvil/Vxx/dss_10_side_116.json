@@ -1,0 +1,621 @@
+{
+    "template_data":{
+        "category":[
+        {
+            "name":"Line-keys",
+            "subcategory":[
+            {
+                "name":"basic",
+                "item":[
+                {
+                    "description":"Touches Pricipales  (1-10)",
+                    "type":"loop",
+                    "loop_start":"1",
+                    "loop_end":"10",
+                    "data":{
+                        "item":[
+                        {
+                            "variable":"$linekey1_type",
+                            "default_value":"",
+                            "description":"Touche {$count} Type",
+                            "type":"list",
+                            "data":[
+                            {
+                                "text":"Aucun",
+                                "value":"0"
+                            },
+                            {
+                                "text":"Touche Memoire",
+                                "value":"1"
+                            },
+                            {
+                                "text":"Ligne",
+                                "value":"2"
+                            },
+                            {
+                                "text":"Touche Evenement",
+                                "value":"3"
+                            },
+                            {
+                                "text":"Dtmf",
+                                "value":"4"
+                            } 
+                            ]
+                        },
+						                        {
+                            "variable":"$linekey1_sous_type",
+                            "default_value":"92",
+                            "description":"Touche {$count} Sous Type",
+                            "type":"list",
+                            "data":[
+                            {
+                                "text":"Aucun",
+                                "value":"21"
+                            },
+                            {
+                                "text":"BLF/NEW CAll",
+                                "value":"90"
+                            },
+                            {
+                                "text":"BLF/BXFER",
+                                "value":"91"
+                            },
+                            {
+                                "text":"BLF/AXFER",
+                                "value":"92"
+                            },
+                            {
+                                "text":"Num Rapide",
+                                "value":"25"
+                            } 
+                            ]
+                        },
+                        {
+                            "variable":"$linekey1_line",
+                            "default_value":"1",
+                            "description":"Touche {$count} Line",
+                            "type":"list",
+                            "data":[
+                            {
+                                "text":"Line 1",
+                                "value":"1"
+                            },
+                            {
+                                "text":"Line 2",
+                                "value":"2"
+                            },
+                            {
+                                "text":"Line 3",
+                                "value":"3"
+                            },
+                            {
+                                "text":"Line 4",
+                                "value":"4"
+                            },
+                            {
+                                "text":"Line 5",
+                                "value":"5"
+                            },
+                            {
+                                "text":"Line 6",
+                                "value":"6"
+                            }
+                            ]
+                        },
+                        {
+                            "variable":"$linekey1_label",
+                            "default_value":"",
+                            "description":"Touche {$count} Nom",
+                            "type":"input"
+                        },
+                        {
+                            "variable":"$linekey1_value",
+                            "default_value":"",
+                            "description":"Touche {$count} Valeur",
+                            "type":"input"
+                        },
+                        {
+                          "variable":"$linekey1_pickup",
+                          "default_value":"{$pickup_value}",
+                          "description":"Touche {$count} Pickup Number",
+                          "type":"input"
+                        },
+                        {
+                            "type":"break"
+                        }
+                        ]
+                    }
+                }
+                ]
+            }
+            ]
+        },
+		{
+            "name":"DSS-Keys",
+            "subcategory":[
+            {
+                "name":"basic",
+                "item":[
+                {
+                    "description":"Touches DSS 4 * 29/116 Page 1",
+                    "type":"loop",
+                    "loop_start":"1",
+                    "loop_end":"29",
+                    "data":{
+                        "item":[
+                        {
+                            "variable":"$dss1_type",
+                            "default_value":"",
+                            "description":"Touche DSS{$count} Page 1 Type",
+                            "type":"list",
+                            "data":[
+                            {
+                                "text":"Aucun",
+                                "value":"0"
+                            },
+                            {
+                                "text":"Touche Memoire",
+                                "value":"1"
+                            },
+                            {
+                                "text":"Ligne",
+                                "value":"2"
+                            },
+                            {
+                                "text":"Touche Evenement",
+                                "value":"3"
+                            },
+                            {
+                                "text":"Dtmf",
+                                "value":"4"
+                            } 
+                            ]
+                        },
+						                        {
+                            "variable":"$dss1_sous_type",
+                            "default_value":"92",
+                            "description":"Touche {$count} Sous Type",
+                            "type":"list",
+                            "data":[
+                            {
+                                "text":"Aucun",
+                                "value":"21"
+                            },
+                            {
+                                "text":"BLF/NEW CAll",
+                                "value":"90"
+                            },
+                            {
+                                "text":"BLF/BXFER",
+                                "value":"91"
+                            },
+                            {
+                                "text":"BLF/AXFER",
+                                "value":"92"
+                            },
+                            {
+                                "text":"Num Rapide",
+                                "value":"25"
+                            } 
+                            ]
+                        },
+                        {
+                            "variable":"$dss1_line",
+                            "default_value":"1",
+                            "description":"Touche {$count} Line",
+                            "type":"list",
+                            "data":[
+                            {
+                                "text":"Line 1",
+                                "value":"1"
+                            },
+                            {
+                                "text":"Line 2",
+                                "value":"2"
+                            },
+                            {
+                                "text":"Line 3",
+                                "value":"3"
+                            },
+                            {
+                                "text":"Line 4",
+                                "value":"4"
+                            },
+                            {
+                                "text":"Line 5",
+                                "value":"5"
+                            },
+                            {
+                                "text":"Line 6",
+                                "value":"6"
+                            }
+                            ]
+                        },
+                        {
+                            "variable":"$dss1_label",
+                            "default_value":"",
+                            "description":"Touche {$count} Nom",
+                            "type":"input"
+                        },
+                        {
+                            "variable":"$dss1_value",
+                            "default_value":"",
+                            "description":"Touche {$count} Valeur",
+                            "type":"input"
+                        },
+                        {
+                          "variable":"$dss1_pickup",
+                          "default_value":"{$pickup_value}",
+                          "description":"Touche {$count} Pickup Number",
+                          "type":"input"
+                        },
+                        {
+                            "type":"break"
+                        }
+                        ]
+                    }
+                },
+				{
+                    "description":"Touches DSS 4 * 29/116 Page 2",
+                    "type":"loop",
+                    "loop_start":"1",
+                    "loop_end":"29",
+                    "data":{
+                        "item":[
+                        {
+                            "variable":"$dss2_type",
+                            "default_value":"",
+                            "description":"Touche DSS{$count} Page 2 Type",
+                            "type":"list",
+                            "data":[
+                            {
+                                "text":"Aucun",
+                                "value":"0"
+                            },
+                            {
+                                "text":"Touche Memoire",
+                                "value":"1"
+                            },
+                            {
+                                "text":"Ligne",
+                                "value":"2"
+                            },
+                            {
+                                "text":"Touche Evenement",
+                                "value":"3"
+                            },
+                            {
+                                "text":"Dtmf",
+                                "value":"4"
+                            } 
+                            ]
+                        },
+						                        {
+                            "variable":"$dss2_sous_type",
+                            "default_value":"92",
+                            "description":"Touche {$count} Sous Type",
+                            "type":"list",
+                            "data":[
+                            {
+                                "text":"Aucun",
+                                "value":"21"
+                            },
+                            {
+                                "text":"BLF/NEW CAll",
+                                "value":"90"
+                            },
+                            {
+                                "text":"BLF/BXFER",
+                                "value":"91"
+                            },
+                            {
+                                "text":"BLF/AXFER",
+                                "value":"92"
+                            },
+                            {
+                                "text":"Num Rapide",
+                                "value":"25"
+                            } 
+                            ]
+                        },
+                        {
+                            "variable":"$dss2_line",
+                            "default_value":"1",
+                            "description":"Touche {$count} Line",
+                            "type":"list",
+                            "data":[
+                            {
+                                "text":"Line 1",
+                                "value":"1"
+                            },
+                            {
+                                "text":"Line 2",
+                                "value":"2"
+                            },
+                            {
+                                "text":"Line 3",
+                                "value":"3"
+                            },
+                            {
+                                "text":"Line 4",
+                                "value":"4"
+                            },
+                            {
+                                "text":"Line 5",
+                                "value":"5"
+                            },
+                            {
+                                "text":"Line 6",
+                                "value":"6"
+                            }
+                            ]
+                        },
+                        {
+                            "variable":"$dss2_label",
+                            "default_value":"",
+                            "description":"Touche {$count} Nom",
+                            "type":"input"
+                        },
+                        {
+                            "variable":"$dss2_value",
+                            "default_value":"",
+                            "description":"Touche {$count} Valeur",
+                            "type":"input"
+                        },
+                        {
+                          "variable":"$dss2_pickup",
+                          "default_value":"{$pickup_value}",
+                          "description":"Touche {$count} Pickup Number",
+                          "type":"input"
+                        },
+                        {
+                            "type":"break"
+                        }
+                        ]
+                    }
+                },
+				{
+                    "description":"Touches DSS 4 * 29/116 Page 1",
+                    "type":"loop",
+                    "loop_start":"1",
+                    "loop_end":"29",
+                    "data":{
+                        "item":[
+                        {
+                            "variable":"$dss3_type",
+                            "default_value":"",
+                            "description":"Touche DSS{$count} Page 3 Type",
+                            "type":"list",
+                            "data":[
+                            {
+                                "text":"Aucun",
+                                "value":"0"
+                            },
+                            {
+                                "text":"Touche Memoire",
+                                "value":"1"
+                            },
+                            {
+                                "text":"Ligne",
+                                "value":"2"
+                            },
+                            {
+                                "text":"Touche Evenement",
+                                "value":"3"
+                            },
+                            {
+                                "text":"Dtmf",
+                                "value":"4"
+                            } 
+                            ]
+                        },
+						                        {
+                            "variable":"$dss3_sous_type",
+                            "default_value":"92",
+                            "description":"Touche {$count} Sous Type",
+                            "type":"list",
+                            "data":[
+                            {
+                                "text":"Aucun",
+                                "value":"21"
+                            },
+                            {
+                                "text":"BLF/NEW CAll",
+                                "value":"90"
+                            },
+                            {
+                                "text":"BLF/BXFER",
+                                "value":"91"
+                            },
+                            {
+                                "text":"BLF/AXFER",
+                                "value":"92"
+                            },
+                            {
+                                "text":"Num Rapide",
+                                "value":"25"
+                            } 
+                            ]
+                        },
+                        {
+                            "variable":"$dss3_line",
+                            "default_value":"1",
+                            "description":"Touche {$count} Line",
+                            "type":"list",
+                            "data":[
+                            {
+                                "text":"Line 1",
+                                "value":"1"
+                            },
+                            {
+                                "text":"Line 2",
+                                "value":"2"
+                            },
+                            {
+                                "text":"Line 3",
+                                "value":"3"
+                            },
+                            {
+                                "text":"Line 4",
+                                "value":"4"
+                            },
+                            {
+                                "text":"Line 5",
+                                "value":"5"
+                            },
+                            {
+                                "text":"Line 6",
+                                "value":"6"
+                            }
+                            ]
+                        },
+                        {
+                            "variable":"$dss3_label",
+                            "default_value":"",
+                            "description":"Touche {$count} Nom",
+                            "type":"input"
+                        },
+                        {
+                            "variable":"$dss3_value",
+                            "default_value":"",
+                            "description":"Touche {$count} Valeur",
+                            "type":"input"
+                        },
+                        {
+                          "variable":"$dss3_pickup",
+                          "default_value":"{$pickup_value}",
+                          "description":"Touche {$count} Pickup Number",
+                          "type":"input"
+                        },
+                        {
+                            "type":"break"
+                        }
+                        ]
+                    }
+                },
+				{
+                    "description":"Touches DSS 4 * 29/116 Page 4",
+                    "type":"loop",
+                    "loop_start":"1",
+                    "loop_end":"29",
+                    "data":{
+                        "item":[
+                        {
+                            "variable":"$dss4_type",
+                            "default_value":"",
+                            "description":"Touche DSS{$count} Page 4 Type",
+                            "type":"list",
+                            "data":[
+                            {
+                                "text":"Aucun",
+                                "value":"0"
+                            },
+                            {
+                                "text":"Touche Memoire",
+                                "value":"1"
+                            },
+                            {
+                                "text":"Ligne",
+                                "value":"2"
+                            },
+                            {
+                                "text":"Touche Evenement",
+                                "value":"3"
+                            },
+                            {
+                                "text":"Dtmf",
+                                "value":"4"
+                            } 
+                            ]
+                        },
+						                        {
+                            "variable":"$dss4_sous_type",
+                            "default_value":"92",
+                            "description":"Touche {$count} Sous Type",
+                            "type":"list",
+                            "data":[
+                            {
+                                "text":"Aucun",
+                                "value":"21"
+                            },
+                            {
+                                "text":"BLF/NEW CAll",
+                                "value":"90"
+                            },
+                            {
+                                "text":"BLF/BXFER",
+                                "value":"91"
+                            },
+                            {
+                                "text":"BLF/AXFER",
+                                "value":"92"
+                            },
+                            {
+                                "text":"Num Rapide",
+                                "value":"25"
+                            } 
+                            ]
+                        },
+                        {
+                            "variable":"$dss4_line",
+                            "default_value":"1",
+                            "description":"Touche {$count} Line",
+                            "type":"list",
+                            "data":[
+                            {
+                                "text":"Line 1",
+                                "value":"1"
+                            },
+                            {
+                                "text":"Line 2",
+                                "value":"2"
+                            },
+                            {
+                                "text":"Line 3",
+                                "value":"3"
+                            },
+                            {
+                                "text":"Line 4",
+                                "value":"4"
+                            },
+                            {
+                                "text":"Line 5",
+                                "value":"5"
+                            },
+                            {
+                                "text":"Line 6",
+                                "value":"6"
+                            }
+                            ]
+                        },
+                        {
+                            "variable":"$dss4_label",
+                            "default_value":"",
+                            "description":"Touche {$count} Nom",
+                            "type":"input"
+                        },
+                        {
+                            "variable":"$dss4_value",
+                            "default_value":"",
+                            "description":"Touche {$count} Valeur",
+                            "type":"input"
+                        },
+                        {
+                          "variable":"$dss4_pickup",
+                          "default_value":"{$pickup_value}",
+                          "description":"Touche {$count} Pickup Number",
+                          "type":"input"
+                        },
+                        {
+                            "type":"break"
+                        }
+                        ]
+                    }
+                }
+                ]
+            }
+            ]
+        }
+        ]
+    }
+}

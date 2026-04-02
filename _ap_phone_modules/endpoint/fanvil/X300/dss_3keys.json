@@ -1,0 +1,89 @@
+{
+    "template_data":{
+        "category":[
+        {
+            "name":"keys",
+            "subcategory":[
+            {
+                "name":"basic",
+                "item":[
+                {
+                    "description":"Touches (1-3)",
+                    "type":"loop",
+                    "loop_start":"1",
+                    "loop_end":"3",
+                    "data":{
+                        "item":[
+                        {
+                            "variable":"$linekey1_type",
+                            "default_value":"",
+                            "description":"Touche {$count} Type",
+                            "type":"list",
+                            "data":[
+                            {
+                                "text":"Aucun",
+                                "value":"0"
+                            },
+                            {
+                                "text":"Touche Memoire",
+                                "value":"1"
+                            },
+                            {
+                                "text":"Ligne",
+                                "value":"2"
+                            } 
+                            ]
+                        },
+						                        {
+                            "variable":"$linekey1_soustype",
+                            "default_value":"",
+                            "description":"Touche {$count} Sous Type",
+                            "type":"list",
+                            "data":[
+                            {
+                                "text":"Aucun",
+                                "value":""
+                            },
+                            {
+                                "text":"BLF/NEW CAll",
+                                "value":"@1/bc"
+                            },
+                            {
+                                "text":"BLF/BXFER",
+                                "value":"@1/bb"
+                            },
+                            {
+                                "text":"BLF/AXFER",
+                                "value":"@1/ba"
+                            },
+                            {
+                                "text":"Num Rapide",
+                                "value":"@1/f"
+                            } 
+                            ]
+                        },
+                        {
+                            "variable":"$linekey1_label",
+                            "default_value":"",
+                            "description":"Touche {$count} Nom",
+                            "type":"input"
+                        },
+                        {
+                            "variable":"$linekey1_value",
+                            "default_value":"",
+                            "description":"Touche {$count} Valeur",
+                            "type":"input"
+                        },
+                        {
+                            "type":"break"
+                        }
+                        ]
+                    }
+                }
+                ]
+            }
+            ]
+        }
+        ]
+    }
+}

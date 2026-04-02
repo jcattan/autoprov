@@ -1,0 +1,39 @@
+{
+  "data": {
+    "brands": {
+      "name": "Fanvil",
+      "brand_id": "60",
+      "directory": "fanvil",
+      "package": "fanvil.tgz",
+      "md5sum": "3ee568bbcea02c8494f1007c74c8bd84",
+      "last_modified": 1722872909,
+      "family_list": [
+        {
+          "id": "1",
+          "name": "Fanvil V serie: [V62, V63, V64, V65, V67]",
+          "directory": "Vxx",
+          "description": "Il y a plus de paramètres disponibles dans l'interface utilisateur",
+          "changelog": "",
+          "last_modified": null
+        },
+        {
+          "id": "2",
+          "name": "Fanvil X300 serie: [X303, X301 P/G/W]",
+          "directory": "X300",
+          "description": "Il y a plus de paramètres disponibles dans l'interface utilisateur",
+          "changelog": "",
+          "last_modified": null
+        },
+        {
+          "id": "3",
+          "name": "Fanvil W61X serie: [W610W, W611W]",
+          "directory": "W61x",
+          "description": "Il y a plus de paramètres disponibles dans l'interface utilisateur",
+          "changelog": "",
+          "last_modified": null
+        }
+      ],
+      "changelog": "PACKAGER: "
+    }
+  }
+}

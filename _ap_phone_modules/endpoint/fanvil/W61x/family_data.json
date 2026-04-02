@@ -1,0 +1,37 @@
+{
+  "data":{
+    "name":"Fanvil W61X serie: [W610W, W611W]",
+    "id":"3",
+    "directory":"W61x",
+    "firmware_ver":"",
+    "firmware_pkg":"NULL",
+    "firmware_md5sum":"",
+    "description":"Make more settings available in user interface",
+    "configuration_files":"F0V$suffix.cfg,$mac.cfg",
+    "changelog":"",
+            "provisioning_types": [
+            "tftp",
+            "http"
+        ],
+    "model_list":[
+      {
+        "model":"W610W",
+        "lines":"4",
+        "id":"1",
+        "template_data":[
+          "template_data.json",
+	"dss_16keys.json"
+        ]
+      },
+      {
+        "model":"W611W",
+        "lines":"4",
+        "id":"2",
+        "template_data":[
+          "template_data.json",
+        "dss_16keys.json"
+        ]
+      }
+    ]
+  }
+}

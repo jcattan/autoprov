@@ -1,0 +1,41 @@
+{
+    "template_data":{
+        "category":[
+        {
+            "name":"preferences",
+            "subcategory":[
+            {
+                "name":"basic",
+                "item":[
+                {
+                    "description":"Annuaire distant XML",
+                    "type":"loop",
+                    "loop_start":"1",
+                    "loop_end":"4",
+                    "data":{
+                        "item":[
+                        {
+                            "variable":"$remotephonebook_name",
+                            "default_value":"",
+                            "description":"Annuaire {$count} Nom",
+                            "type":"input"
+                        },
+                        {
+                            "variable":"$remotephonebook_url",
+                            "default_value":"",
+                            "description":"Annuaire {$count} URL",
+                            "type":"input"
+                        },
+                        {
+                            "type":"break"
+                        }
+                        ]
+                    }
+                }
+                ]
+            }
+            ]
+        }
+        ]
+    }
+}
