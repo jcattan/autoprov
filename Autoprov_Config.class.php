@@ -878,9 +878,9 @@ public function epm_config_manager_hardware_get_list_all_hide_show(): array
                         $data = sql("SELECT id FROM autoprov_product_list WHERE id='" . $brand_id . $family_line_xml['data']['id'] . "'", 'getOne');
                         $short_name = preg_replace("/\[(.*?)\]/si", "", $family_line_xml['data']['name']);
                         if ($data) {
-                            $sql = "UPDATE autoprov_product_list SET short_name = '" . $short_name . "', long_name = '" . $family_line_xml['data']['name'] . "', cfg_ver = '" . $family_line_xml['data']['version'] . "', config_files='" . $family_line_xml['data']['configuration_files'] . "' WHERE id = '" . $brand_id . $family_line_xml['data']['id'] . "'";
+                            $sql = "UPDATE autoprov_product_list SET short_name = '" . $short_name . "', long_name = '" . $family_line_xml['data']['name'] . "', cfg_ver = '" . ($family_line_xml['data']['version'] ?? '') . "', config_files='" . $family_line_xml['data']['configuration_files'] . "' WHERE id = '" . $brand_id . $family_line_xml['data']['id'] . "'";
                         } else {
-                            $sql = "INSERT INTO autoprov_product_list (`id`, `brand`, `short_name`, `long_name`, `cfg_dir`, `cfg_ver`, `config_files`, `hidden`) VALUES ('" . $brand_id . $family_line_xml['data']['id'] . "', '" . $brand_id . "', '" . $short_name . "', '" . $family_line_xml['data']['name'] . "', '" . $family_line_xml['data']['directory'] . "', '" . $family_line_xml['data']['last_modified'] . "','" . $family_line_xml['data']['configuration_files'] . "', '0')";
+                            $sql = "INSERT INTO autoprov_product_list (`id`, `brand`, `short_name`, `long_name`, `cfg_dir`, `cfg_ver`, `config_files`, `hidden`) VALUES ('" . $brand_id . $family_line_xml['data']['id'] . "', '" . $brand_id . "', '" . $short_name . "', '" . $family_line_xml['data']['name'] . "', '" . $family_line_xml['data']['directory'] . "', '" . ($family_line_xml['data']['last_modified'] ?? '') . "','" . $family_line_xml['data']['configuration_files'] . "', '0')";
                         }
                         sql($sql);
 
@@ -1166,11 +1166,11 @@ public function epm_config_manager_hardware_get_list_all_hide_show(): array
 
 					if ($data) {
 						if ($this->configmod->get('debug')) echo "-Updating Family ".$short_name."<br/>";
-                        $sql = "UPDATE autoprov_product_list SET short_name = '" . str_replace("'", "''", $short_name) . "', long_name = '" . str_replace("'", "''", $family_line_xml['data']['name']) . "', cfg_ver = '" . $family_line_xml['data']['version'] . "', config_files='" . $family_line_xml['data']['configuration_files'] . "' WHERE id = '" . $brand_id . $family_line_xml['data']['id'] . "'";
+                        $sql = "UPDATE autoprov_product_list SET short_name = '" . str_replace("'", "''", $short_name) . "', long_name = '" . str_replace("'", "''", $family_line_xml['data']['name']) . "', cfg_ver = '" . ($family_line_xml['data']['version'] ?? '') . "', config_files='" . $family_line_xml['data']['configuration_files'] . "' WHERE id = '" . $brand_id . $family_line_xml['data']['id'] . "'";
                     }
 					else {
 						if ($this->configmod->get('debug')) echo "-Inserting Family ".$short_name."<br/>";
-                        $sql = "INSERT INTO autoprov_product_list (`id`, `brand`, `short_name`, `long_name`, `cfg_dir`, `cfg_ver`, `config_files`, `hidden`) VALUES ('" . $brand_id . $family_line_xml['data']['id'] . "', '" . $brand_id . "', '" . str_replace("'", "''", $short_name) . "', '" . str_replace("'", "''", $family_line_xml['data']['name']) . "', '" . $family_line_xml['data']['directory'] . "', '" . $family_line_xml['data']['last_modified'] . "','" . $family_line_xml['data']['configuration_files'] . "', '0')";
+                        $sql = "INSERT INTO autoprov_product_list (`id`, `brand`, `short_name`, `long_name`, `cfg_dir`, `cfg_ver`, `config_files`, `hidden`) VALUES ('" . $brand_id . $family_line_xml['data']['id'] . "', '" . $brand_id . "', '" . str_replace("'", "''", $short_name) . "', '" . str_replace("'", "''", $family_line_xml['data']['name']) . "', '" . $family_line_xml['data']['directory'] . "', '" . ($family_line_xml['data']['last_modified'] ?? '') . "','" . $family_line_xml['data']['configuration_files'] . "', '0')";
                     }
 					sql($sql);
 
@@ -1674,11 +1674,10 @@ if ($this->configmod->get('debug')) echo format_txt(_("---Inserting Model %_NAME
     									$var_nam = "lineloop|line_" . $i;
     									foreach ($item['data']['item'] as $item_loop) {
     										if ($item_loop['type'] != 'break') {
-    											$z = str_replace("\$", "", $item_loop['variable']);
+    											$z = str_replace("\$", "", $item_loop['variable'] ?? '');
     											$items_loop[$var_nam][$z] = $item_loop;
-    											$items_loop[$var_nam][$z]['description'] = str_replace('{$count}', $i, $items_loop[$var_nam][$z]['description']);
-    											$items_loop[$var_nam][$z]['default_value'] = $items_loop[$var_nam][$z]['default_value'];
-    											$items_loop[$var_nam][$z]['default_value'] = str_replace('{$count}', $i, $items_loop[$var_nam][$z]['default_value']);
+    											$items_loop[$var_nam][$z]['description'] = str_replace('{$count}', $i, $items_loop[$var_nam][$z]['description'] ?? '');
+    											$items_loop[$var_nam][$z]['default_value'] = str_replace('{$count}', $i, $items_loop[$var_nam][$z]['default_value'] ?? '');
     											$items_loop[$var_nam][$z]['line_loop'] = TRUE;
     											$items_loop[$var_nam][$z]['line_count'] = $i;
     										} elseif ($item_loop['type'] == 'break') {
@@ -1691,15 +1690,15 @@ if ($this->configmod->get('debug')) echo format_txt(_("---Inserting Model %_NAME
     								break;
     							case 'loop':
     								for ($i = $item['loop_start']; $i <= $item['loop_end']; $i++) {
-    									$name = explode("_", $item['data']['item'][0]['variable']);
+    									$name = explode("_", $item['data']['item'][0]['variable'] ?? '');
     									$var_nam = "loop|" . str_replace("\$", "", $name[0]) . "_" . $i;
     									foreach ($item['data']['item'] as $item_loop) {
     										if ($item_loop['type'] != 'break') {
-    											$z_tmp = explode("_", $item_loop['variable']);
+    											$z_tmp = explode("_", $item_loop['variable'] ?? '');
     											$z = isset($z_tmp[1]) ? $z_tmp[1] : '';
     											$items_loop[$var_nam][$z] = $item_loop;
-    											$items_loop[$var_nam][$z]['description'] = str_replace('{$count}', $i, $items_loop[$var_nam][$z]['description']);
-    											$items_loop[$var_nam][$z]['variable'] = str_replace('_', '_' . $i . '_', $items_loop[$var_nam][$z]['variable']);
+    											$items_loop[$var_nam][$z]['description'] = str_replace('{$count}', $i, $items_loop[$var_nam][$z]['description'] ?? '');
+    											$items_loop[$var_nam][$z]['variable'] = str_replace('_', '_' . $i . '_', $items_loop[$var_nam][$z]['variable'] ?? '');
     											$items_loop[$var_nam][$z]['default_value'] = isset($items_loop[$var_nam][$z]['default_value']) ? $items_loop[$var_nam][$z]['default_value'] : '';
     											$items_loop[$var_nam][$z]['loop'] = TRUE;
     											$items_loop[$var_nam][$z]['loop_count'] = $i;
