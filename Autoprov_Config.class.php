@@ -359,7 +359,7 @@ class Autoprov_Config
 			return array("status" => false, "message" => _("Type Save Config is not valid!")." [".$dget['typesavecfg']."]");
 		}
 
-		if (($dget['value'] > 1 ) and ($dget['value'] < 0)) {
+		if (($dget['value'] > 1 ) or ($dget['value'] < 0)) {
 			return array("status" => false, "message" => _("Invalid Value!"));
 		}
 

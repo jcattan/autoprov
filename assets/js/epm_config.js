@@ -1039,7 +1039,7 @@ function epm_config_tab_manager_bt_enable_disable_ajustar(iL0, itemData, level)
 	else if (level == "L3") 
 	{
 		//AJUSTAMOS BOTOSNES EN SU STATUS CORRECTO
-		if (itemData.enabled == "") {
+		if (itemData.enabled === "" || itemData.enabled === null || itemData.enabled === undefined) {
 			$("#" + iL0.prefijoid + "_enable").attr("disabled", true).prop( "checked", false);
 			$("#" + iL0.prefijoid + "_disable").attr("disabled", true).prop( "checked", false);
 			epm_global_html_find_hide_and_remove('#' + iL0.boxsubite);
@@ -1050,8 +1050,8 @@ function epm_config_tab_manager_bt_enable_disable_ajustar(iL0, itemData, level)
 				temp_input = "-1";
 			}
 			if (itemData.enabled !== temp_input) {
-				$("#" + iL0.prefijoid + "_enable").attr("disabled", false).prop( "checked", ((itemData.enabled == "1") ? true : false));
-				$("#" + iL0.prefijoid + "_disable").attr("disabled", false).prop( "checked", ((itemData.enabled == "0") ? true : false));
+				$("#" + iL0.prefijoid + "_enable").attr("disabled", false).prop( "checked", (itemData.enabled == 1));
+				$("#" + iL0.prefijoid + "_disable").attr("disabled", false).prop( "checked", (itemData.enabled == 0));
 			}
 		}
 		return;
