@@ -280,12 +280,12 @@ function autoprov_configpageload() {
                 $currentcomponent->addguielem($section, new gui_checkbox('epm_delete', $checked, 'Delete', 'Delete this Extension from Endpoint Manager'), 9);
 // phone web interface link
 	class gui_link_nw_tab extends guitext {
-    function __construct($elemname, $text, $url, $userlang = true) {
-        $parent_class = get_parent_class($this);
-        $this->html_text = "<a href=\"$url\" target=\"_blank\" id =\"$this->elemname\">$text</a>";
-    }
+//    function __construct($elemname, $text, $url, $userlang = true) {
+//        $parent_class = get_parent_class($this);
+//        $this->html_text = "<a href=\"$url\" target=\"_blank\" id =\"$this->elemname\">$text</a>";
+//    }
 }        
-				$currentcomponent->addguielem($section, new gui_link_nw_tab('epm_account_phone', 'Go to phone web interface', "http://$extension_address[0]"));
+//				$currentcomponent->addguielem($section, new gui_link_nw_tab('epm_account_phone', 'Go to phone web interface', "http://$extension_address[0]"));
 //
 				$currentcomponent->addguielem($section, new gui_textbox('epm_mac', $info['mac'], 'MAC Address', 'The MAC Address of the Phone Assigned to this Extension/Device. <br />(Leave Blank to Remove from Endpoint Manager)', '', 'Please enter a valid MAC Address', true, 17, false), 9);
                 $currentcomponent->addguielem($section, new gui_selectbox('epm_brand', $brand_list, $info['brand_id'], 'Brand', 'The Brand of this Phone.', false, 'frm_' . $display . '_brand_change(this.options[this.selectedIndex].value)', false), 9);
