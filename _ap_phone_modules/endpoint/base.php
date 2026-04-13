@@ -20,7 +20,8 @@ if (!function_exists('json_last_error')) {
     }
 
 }
-#[AllowDynamicProperties]
+
+#[\AllowDynamicProperties]
 abstract class endpoint_base {
 
     public $modules_path = "endpoint/";
@@ -167,9 +168,12 @@ abstract class endpoint_base {
      * You should call prepare_for_generateconfig() before calling this.
      * */
     protected function config_files() {
-        foreach (explode(",", $this->family_data['data']['configuration_files']) AS $configfile) {
-            $outputfile = str_replace(array_keys($this->config_file_replacements), array_values($this->config_file_replacements), $configfile);
-            $result[$outputfile] = $configfile;
+        $result = array();
+        if (isset($this->family_data['data']['configuration_files'])) {
+            foreach (explode(",", $this->family_data['data']['configuration_files']) AS $configfile) {
+                $outputfile = str_replace(array_keys($this->config_file_replacements), array_values($this->config_file_replacements), $configfile);
+                $result[$outputfile] = $configfile;
+            }
         }
         return $result;
     }
@@ -215,7 +219,12 @@ abstract class endpoint_base {
     private function open_config_file($filename) {
         //if there is no configuration file over ridding the default then load up $contents with the file's information, where $key is the name of the default configuration file
         if (!isset($this->config_files_override[$filename])) {
-            return file_get_contents($this->root_dir . $this->modules_path . $this->brand_name . "/" . $this->family_line . "/" . $filename);
+            $path = $this->root_dir . $this->modules_path . $this->brand_name . "/" . $this->family_line . "/" . $filename;
+            $contents = file_get_contents($path);
+            if ($contents === false) {
+                throw new Exception("Unable to read config file: " . $path);
+            }
+            return $contents;
         } else {
             return($this->config_files_override[$filename]);
         }
@@ -335,9 +344,9 @@ abstract class endpoint_base {
     }
 
     private function find_model($family_data) {
-        if (is_array($family_data['data']['model_list'])) {
+        if (isset($family_data['data']['model_list']) && is_array($family_data['data']['model_list'])) {
             $key = $this->arraysearchrecursive($this->model, $family_data, "model");
-            if ($key !== FALSE) {
+            if (is_array($key) && isset($key[2]) && $key !== FALSE) {
                 return($family_data['data']['model_list'][$key[2]]);
             }
         }
@@ -378,11 +387,11 @@ abstract class endpoint_base {
 
         //Setup defaults from global file
         $template_data_multi = $this->file2json($this->root_dir . $this->modules_path . '/global_template_data.json');
-        $template_data_multi = $template_data_multi['template_data']['category'];
+        $template_data_multi = $template_data_multi['template_data']['category'] ?? [];
         foreach ($template_data_multi as $categories) {
-            $subcats = $categories['subcategory'];
+            $subcats = $categories['subcategory'] ?? [];
             foreach ($subcats as $subs) {
-                $items = $subs['item'];
+                $items = $subs['item'] ?? [];
                 $template_data = array_merge($template_data, $items);
             }
         }
@@ -391,11 +400,11 @@ abstract class endpoint_base {
         foreach ($template_data_list as $files) {
             if (file_exists($this->root_dir . $this->modules_path . $this->brand_name . "/" . $this->family_line . "/" . $files)) {
                 $template_data_multi = $this->file2json($this->root_dir . $this->modules_path . $this->brand_name . "/" . $this->family_line . "/" . $files);
-                $template_data_multi = $template_data_multi['template_data']['category'];
+                $template_data_multi = $template_data_multi['template_data']['category'] ?? [];
                 foreach ($template_data_multi as $categories) {
-                    $subcats = $categories['subcategory'];
+                    $subcats = $categories['subcategory'] ?? [];
                     foreach ($subcats as $subs) {
-                        $items = $subs['item'];
+                        $items = $subs['item'] ?? [];
                         $template_data = array_merge($template_data, $items);
                     }
                 }
@@ -407,11 +416,11 @@ abstract class endpoint_base {
 
         if (file_exists($this->root_dir . $this->modules_path . $this->brand_name . "/" . $this->family_line . "/template_data_custom.json")) {
             $template_data_multi = $this->file2json($this->root_dir . $this->modules_path . $this->brand_name . "/" . $this->family_line . "/template_data_custom.json");
-            $template_data_multi = $template_data_multi['template_data']['category'];
+            $template_data_multi = $template_data_multi['template_data']['category'] ?? [];
             foreach ($template_data_multi as $categories) {
-                $subcats = $categories['subcategory'];
+                $subcats = $categories['subcategory'] ?? [];
                 foreach ($subcats as $subs) {
-                    $items = $subs['item'];
+                    $items = $subs['item'] ?? [];
                     $template_data = array_merge($template_data, $items);
                 }
             }
@@ -419,11 +428,11 @@ abstract class endpoint_base {
 
         if (file_exists($this->root_dir . $this->modules_path . $this->brand_name . "/" . $this->family_line . "/template_data_" . $this->model . "_custom.json")) {
             $template_data_multi = $this->file2json($this->root_dir . $this->modules_path . $this->brand_name . "/" . $this->family_line . "/template_data_" . $this->model . "_custom.json");
-            $template_data_multi = $template_data_multi['template_data']['category'];
+            $template_data_multi = $template_data_multi['template_data']['category'] ?? [];
             foreach ($template_data_multi as $categories) {
-                $subcats = $categories['subcategory'];
+                $subcats = $categories['subcategory'] ?? [];
                 foreach ($subcats as $subs) {
-                    $items = $subs['item'];
+                    $items = $subs['item'] ?? [];
                     $template_data = array_merge($template_data, $items);
                 }
             }
@@ -442,25 +451,32 @@ abstract class endpoint_base {
         foreach ($no_brackets as $variables) {
             $original_variable = $variables;
             $default_exp = preg_split("/\|/i", str_replace("$", "", $variables));
+            if ($default_exp === false || !isset($default_exp[0])) {
+                continue;
+            }
             $variables = $default_exp[0];
             $default = isset($default_exp[1]) ? $default_exp[1] : null;
 
             if (is_array($data)) {
-                if (isset($data[$variables])) {
-                    $data[$variables] = $this->replace_static_variables($data[$variables]);
-                    $this->debug("Replacing '{" . $original_variable . "}' with " . $data[$variables]);
+                if (isset($data[$variables]) && !is_bool($data[$variables])) {
+                    $dataValue = is_array($data[$variables]) ? '' : $data[$variables];
+                    $dataValue = $this->replace_static_variables($dataValue);
+                    $data[$variables] = $dataValue;
+                    $this->debug("Replacing '{" . $original_variable . "}' with " . $dataValue);
                     if (isset($data['line'])) {
                         $l = $data['line'];
-                        $this->replacement_array['lines'][$l][$original_variable] = $data[$variables];
+                        $this->replacement_array['lines'][$l][$original_variable] = $dataValue;
                     }
-                    $file_contents = str_replace('{' . $original_variable . '}', $data[$variables], $file_contents);
+                    $file_contents = str_replace('{' . $original_variable . '}', $dataValue, $file_contents);
                     continue;
                 }
             } else {
-                if (isset($this->settings[$variables])) {
-                    $this->settings[$variables] = $this->replace_static_variables($this->settings[$variables]);
-                    $this->replacement_array['other'][$original_variable] = $this->settings[$variables];
-                    $file_contents = str_replace('{' . $original_variable . '}', $this->settings[$variables], $file_contents);
+                if (isset($this->settings[$variables]) && !is_bool($this->settings[$variables])) {
+                    $settingValue = is_array($this->settings[$variables]) ? '' : $this->settings[$variables];
+                    $settingValue = $this->replace_static_variables($settingValue);
+                    $this->settings[$variables] = $settingValue;
+                    $this->replacement_array['other'][$original_variable] = $settingValue;
+                    $file_contents = str_replace('{' . $original_variable . '}', $settingValue, $file_contents);
                     continue;
                 }
             }
@@ -472,20 +488,22 @@ abstract class endpoint_base {
                 $default_hard_value = NULL;
 
                 //Check for looping statements. They are all setup logically the same. Ergo if the first multi-dimensional array has a variable key its not a loop.
-                if ($key1['1'] == 'variable') {
-                    if (is_array($data)) {
-                        $dhv = str_replace('{$count}', $data['line'], $this->template_data[$key1[0]]['default_value']);
+                if (is_array($key1) && isset($key1['1']) && $key1['1'] == 'variable') {
+                    if (is_array($data) && isset($data['line'])) {
+                        $dhv = isset($this->template_data[$key1[0]]['default_value']) ? $this->template_data[$key1[0]]['default_value'] : '';
+                        $dhv = str_replace('{$count}', $data['line'], $dhv);
                         $dhv = str_replace('{$number}', $data['line'], $dhv);
                     } else {
-                        $dhv = $this->template_data[$key1[0]]['default_value'];
+                        $dhv = isset($this->template_data[$key1[0]]['default_value']) ? $this->template_data[$key1[0]]['default_value'] : '';
                     }
                     $default_hard_value = $this->replace_static_variables($dhv);
-                } elseif ($key1['4'] == 'variable') {
-                    if (is_array($data)) {
-                        $dhv = str_replace('{$count}', $data['line'], $this->template_data[$key1[0]][$key1[1]][$key1[2]][$key1[3]]['default_value']);
+                } elseif (is_array($key1) && isset($key1['4']) && $key1['4'] == 'variable') {
+                    if (is_array($data) && isset($data['line'])) {
+                        $dhv = isset($this->template_data[$key1[0]][$key1[1]][$key1[2]][$key1[3]]['default_value']) ? $this->template_data[$key1[0]][$key1[1]][$key1[2]][$key1[3]]['default_value'] : '';
+                        $dhv = str_replace('{$count}', $data['line'], $dhv);
                         $dhv = str_replace('{$number}', $data['line'], $dhv);
                     } else {
-                        $dhv = $this->template_data[$key1[0]][$key1[1]][$key1[2]][$key1[3]]['default_value'];
+                        $dhv = isset($this->template_data[$key1[0]][$key1[1]][$key1[2]][$key1[3]]['default_value']) ? $this->template_data[$key1[0]][$key1[1]][$key1[2]][$key1[3]]['default_value'] : '';
                     }
                     $default_hard_value = $this->replace_static_variables($dhv);
                 }
@@ -521,7 +539,7 @@ abstract class endpoint_base {
      * @return string
      */
     private function replace_static_variables($contents, $data=NULL) {
-        //bad		
+        //bad
         $this->settings['network']['local_port'] = isset($this->settings['network']['local_port']) ? $this->settings['network']['local_port'] : '5060';
         $replace = array(
             # These first ones have an identical field name in the object and the template.
@@ -530,19 +548,19 @@ abstract class endpoint_base {
             '{$model}' => $this->model,
             '{$provisioning_type}' => $this->provisioning_type,
             '{$provisioning_path}' => $this->provisioning_path,
-            '{$vlan_id}' => $this->settings['network']['vlan']['id'],
-            '{$vlan_qos}' => $this->settings['network']['vlan']['qos'],
+            '{$vlan_id}' => isset($this->settings['network']['vlan']['id']) ? $this->settings['network']['vlan']['id'] : '',
+            '{$vlan_qos}' => isset($this->settings['network']['vlan']['qos']) ? $this->settings['network']['vlan']['qos'] : '',
             # These are not the same.
-            '{$timezone_gmtoffset}' => $this->timezone['gmtoffset'],
-            '{$timezone_timezone}' => $this->timezone['timezone'],
-            '{$timezone}' => $this->timezone['timezone'], # Should this be depricated??
-            '{$network_time_server}' => $this->settings['ntp'],
-            '{$local_port}' => $this->settings['network']['local_port'],
-            '{$syslog_server}' => $this->settings['network']['syslog_server'],
+            '{$timezone_gmtoffset}' => isset($this->timezone['gmtoffset']) ? $this->timezone['gmtoffset'] : '',
+            '{$timezone_timezone}' => isset($this->timezone['timezone']) ? $this->timezone['timezone'] : '',
+            '{$timezone}' => isset($this->timezone['timezone']) ? $this->timezone['timezone'] : '', # Should this be depricated??
+            '{$network_time_server}' => isset($this->settings['ntp']) ? $this->settings['ntp'] : '',
+            '{$local_port}' => isset($this->settings['network']['local_port']) ? $this->settings['network']['local_port'] : '',
+            '{$syslog_server}' => isset($this->settings['network']['syslog_server']) ? $this->settings['network']['syslog_server'] : '',
             #old
-            '{$srvip}' => $this->settings['line'][0]['server_host'],
-            '{$server.ip.1}' => $this->settings['line'][0]['server_host'],
-            '{$server.port.1}' => $this->settings['line'][0]['server_port']
+            '{$srvip}' => isset($this->settings['line'][0]['server_host']) ? $this->settings['line'][0]['server_host'] : '',
+            '{$server.ip.1}' => isset($this->settings['line'][0]['server_host']) ? $this->settings['line'][0]['server_host'] : '',
+            '{$server.port.1}' => isset($this->settings['line'][0]['server_port']) ? $this->settings['line'][0]['server_port'] : ''
         );
         $contents = str_replace(array_keys($replace), array_values($replace), $contents);
 
@@ -561,8 +579,11 @@ abstract class endpoint_base {
                 $variables = str_replace("$", "", $variables);
 
                 $line_exp = preg_split("/\./i", $variables);
+                if ($line_exp === false || !is_array($line_exp)) {
+                    continue;
+                }
 
-                if ((isset($line_exp[2]) AND (($line_exp[0] == 'line') OR ($line_exp[1] == 'line')))) {
+                if ((isset($line_exp[2]) AND isset($line_exp[0]) AND isset($line_exp[1]) AND (($line_exp[0] == 'line') OR ($line_exp[1] == 'line')))) {
                     if ($line_exp[0] == 'line') {
                         $line = explode("|", $line_exp[1]);
                         $default = isset($line[1]) ? $line[1] : NULL;
@@ -579,7 +600,7 @@ abstract class endpoint_base {
                     }
 
                     //If value (that line) wasn't found then ignore the next
-                    if ($key1 !== FALSE) {
+                    if ($key1 !== FALSE && is_array($key1) && isset($key1[0])) {
                         $data['number'] = $line;
                         $data['count'] = $line;
 
@@ -611,9 +632,13 @@ abstract class endpoint_base {
     private function get_gmtoffset($timezone) {
         # Divide the timezone up into it's 3 interesting parts; the sign (+/-), hours, and if they exist, minutes.
         # note that matches[0] is the entire matched string, so these 3 parts are $matches[1], [2] and [3].
-        preg_match('/([\-\+])([\d]+):?(\d*)/', $timezone, $matches);
+        $matches = [];
+        if (!preg_match('/([\-\+])([\d]+):?(\d*)/', $timezone, $matches) || !isset($matches[1]) || !isset($matches[2])) {
+            return 0;
+        }
         # $matches is now an array; $matches[1] is the sign (+ or -); $matches[2] is number of hours, $matches[3] is minutes (or empty)
-        return intval($matches[1] . "1") * ($matches[2] * 3600 + $matches[3] * 60);
+        $minutes = isset($matches[3]) && $matches[3] !== '' ? $matches[3] : 0;
+        return intval($matches[1] . "1") * ($matches[2] * 3600 + $minutes * 60);
     }
 
     /**
@@ -697,8 +722,9 @@ abstract class endpoint_base {
         }
         $file_contents = str_replace('{$provisioner_processor_info}', $this->processor_info, $file_contents);
         $file_contents = str_replace('{$provisioner_timestamp}', $this->processor_info, $file_contents);
-        $file_contents = str_replace('{$provisioner_brand_timestamp}', $this->brand_data['data']['brands']['last_modified'] . " (" . date('l jS \of F Y h:i:s A', $this->brand_data['data']['brands']['last_modified']) . ")", $file_contents);
-        $file_contents = str_replace('{$provisioner_family_timestamp}', $this->brand_data['data']['brands']['last_modified'] . " (" . date('l jS \of F Y h:i:s A', $this->brand_data['data']['brands']['last_modified']) . ")", $file_contents);
+        $last_modified = isset($this->brand_data['data']['brands']['last_modified']) ? $this->brand_data['data']['brands']['last_modified'] : time();
+        $file_contents = str_replace('{$provisioner_brand_timestamp}', $last_modified . " (" . date('l jS \of F Y h:i:s A', $last_modified) . ")", $file_contents);
+        $file_contents = str_replace('{$provisioner_family_timestamp}', $last_modified . " (" . date('l jS \of F Y h:i:s A', $last_modified) . ")", $file_contents);
         return($file_contents);
     }
 
@@ -744,7 +770,7 @@ abstract class endpoint_base {
 
             //TODO: fix NTP
             if (!isset($this->settings['ntp'])) {
-                $this->settings['ntp'] = $this->settings['line'][0]['server_host'];
+                $this->settings['ntp'] = isset($this->settings['line'][0]['server_host']) ? $this->settings['line'][0]['server_host'] : '';
             }
 
             $this->server_type = (isset($this->settings['provision']['type']) && in_array($this->settings['provision']['type'], $this->server_type_list)) ? $this->settings['provision']['type'] : $this->default_server_type;

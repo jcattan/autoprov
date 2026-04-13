@@ -55,6 +55,9 @@ class endpoint_yealinkv80_t5x_phone extends endpoint_yealinkv80_base {
        	$model_suffixes = array('T53W' => '95', 'T54W' => '96', 'T57W' => '97');
         //Yealink likes lower case letters in its mac address
         $this->mac = strtolower($this->mac);
+        if (!isset($model_suffixes[$this->model])) {
+            throw new Exception('Model suffix not found for model: ' . $this->model);
+        }
         $this->config_file_replacements['$suffix'] = $model_suffixes[$this->model];
         parent::prepare_for_generateconfig();
 

@@ -21,16 +21,18 @@ abstract class endpoint_yealinkv80_base extends endpoint_base {
 
     function prepare_for_generateconfig() {
         parent::prepare_for_generateconfig();
-        preg_match('/.*(-|\+)(\d*):(\d*)/i', $this->timezone['timezone'], $matches);
-        switch ($matches[3]) {
-            case '30':
-                $point = '.5';
-                break;
-            default:
-                $point = '';
-                break;
+        $matches = array();
+        if (preg_match('/.*(-|\+)(\d*):(\d*)/i', $this->timezone['timezone'], $matches) && isset($matches[1], $matches[2], $matches[3])) {
+            switch ($matches[3]) {
+                case '30':
+                    $point = '.5';
+                    break;
+                default:
+                    $point = '';
+                    break;
+            }
+            $this->timezone['timezone'] = $matches[1] . $matches[2] . $point;
         }
-        $this->timezone['timezone'] = $matches[1] . $matches[2] . $point;
     }
 
 }
