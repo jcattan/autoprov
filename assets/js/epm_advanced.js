@@ -22,6 +22,16 @@ function epm_advanced_document_ready () {
 		$(this).find('input, select').val("");
 	});
 	$('#AddDlgModal_bt_new').on("click", function(){ epm_advanced_tab_oui_manager_bt_new(); });
+
+	// Prevent "aria-hidden on focused element" warning: Bootstrap sets aria-hidden before
+	// releasing focus from the modal div (tabindex="-1"). Blur only the actually-focused
+	// element so Bootstrap's focus-trap on static-backdrop modals is not retriggered.
+	$(document).on('hide.bs.modal', '.modal', function () {
+		var active = document.activeElement;
+		if (active && (active === this || this.contains(active))) {
+			active.blur();
+		}
+	});
 }
 
 function epm_advanced_windows_load (nTab = "") {
@@ -46,11 +56,35 @@ function epm_advanced_select_tab_ajax(idtab = "")
 	{
 		epm_advanced_tab_poce_update_list_brand_bootnav();
 		if (cmeditor === null) {
+			// Inject selection colors via JS to bypass browser CSS file cache.
+			// Default CodeMirror colors (#d9d9d9 / #d7d4f0) are invisible on the
+			// #FFFFCC yellow background; use a blue with enough contrast.
+			if (!document.getElementById('epm_cm_selection_style')) {
+				var s = document.createElement('style');
+				s.id = 'epm_cm_selection_style';
+				s.textContent = [
+					/* Force pre transparency so the selection layer (z:1) shows through the text layer (z:2). */
+					'#epm_advanced .CodeMirror pre.CodeMirror-line',
+					'{ background: transparent !important; }',
+					'#epm_advanced .CodeMirror .CodeMirror-selected,',
+					'#epm_advanced .CodeMirror.CodeMirror-focused .CodeMirror-selected',
+					'{ background: rgba(0,80,200,0.65) !important; }',
+					'#epm_advanced .CodeMirror .CodeMirror-line::selection,',
+					'#epm_advanced .CodeMirror .CodeMirror-line > span::selection,',
+					'#epm_advanced .CodeMirror .CodeMirror-line > span > span::selection',
+					'{ background: rgba(0,80,200,0.65); }',
+					'#epm_advanced .CodeMirror .CodeMirror-line::-moz-selection,',
+					'#epm_advanced .CodeMirror .CodeMirror-line > span::-moz-selection,',
+					'#epm_advanced .CodeMirror .CodeMirror-line > span > span::-moz-selection',
+					'{ background: rgba(0,80,200,0.65); }'
+				].join(' ');
+				document.head.appendChild(s);
+			}
 			cmeditor = CodeMirror.fromTextArea(document.getElementById("config_textarea"), {
 				lineNumbers: true,
 				matchBrackets: true,
 				readOnly: true,
-				viewportMargin: Infinity,
+				dragDrop: false,
 				scrollbarStyle: "simple",
 				extraKeys: {
 					"F11": function(cm) {
@@ -459,9 +493,10 @@ waitingDialog.show();
 		dataType: 'json',
 		timeout: 60000,
 		error: function(xhr, ajaxOptions, thrownError) {
+			waitingDialog.hide();
 			fpbxToast('ERROR AJAX:' + thrownError,'ERROR (' + xhr.status + ')!','error');
 			$("#poce_file_name_path").text("Error ajax!");
-			
+
 			$('#config_textarea').prop('disabled', true);
 			if (cmeditor !== null) {
 				cmeditor.setValue("");
@@ -476,6 +511,7 @@ waitingDialog.show();
 			return false;
 		},
 		success: function(data) {
+			waitingDialog.hide();
 			if (data.status == true) {
 				$("#poce_file_name_path").text(data.location);
 				$('#config_textarea').prop('disabled', false);
@@ -483,6 +519,7 @@ waitingDialog.show();
 					$("#box_sec_source button").prop('disabled', false);
 					cmeditor.setValue(data.config_data);
 					cmeditor.setOption("readOnly",false);
+					setTimeout(function() { cmeditor.focus(); }, 400);
 				}
 				
 				if (data.type === "file") {
@@ -540,8 +577,7 @@ waitingDialog.show();
 				return false;
 			}
 		},
-	});	
-setTimeout(function () {waitingDialog.hide();}, 1000);	
+	});
 }
 
 function epm_advanced_tab_poce_bt_acction (command)

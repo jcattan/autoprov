@@ -60,7 +60,17 @@ var waitingDialog = waitingDialog || (function ($) {
 		 * Closes dialog
 		 */
 		hide: function () {
-			$dialog.modal('hide');
+			// Bootstrap 4 silently ignores modal('hide') while the show animation
+			// is still running (_isTransitioning). Queue the hide for after the
+			// transition completes in that case.
+			var bsModal = $dialog.data('bs.modal');
+			if (bsModal && bsModal._isTransitioning) {
+				$dialog.off('shown.bs.modal.wdhide').one('shown.bs.modal.wdhide', function () {
+					$dialog.modal('hide');
+				});
+			} else {
+				$dialog.modal('hide');
+			}
 		}
 	};
 

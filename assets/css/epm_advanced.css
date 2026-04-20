@@ -152,6 +152,7 @@
   
   margin-top: 5px;
   margin-bottom: 10px;
+  height: 500px;
   background-color: #FFFFCC;
   font-family: Courier, "dejavu sans mono","monaco","lucida console","courier new",monospace;
 }
@@ -175,3 +176,28 @@
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1) inset, 0px 0px 8px rgba(82, 168, 236, 0.6);
 }
 */
+
+/* Force pre transparency: CodeMirror's selection layer is z-index:1, the text layer
+   (pre.CodeMirror-line) is z-index:2. The selection is only visible if the pre is
+   transparent. Bootstrap and FreePBX may set a non-transparent background on pre. */
+#epm_advanced .CodeMirror pre.CodeMirror-line {
+	background: transparent !important;
+}
+
+/* Selection colors must contrast against the #FFFFCC (yellow) editor background.
+   Use the same visible blue for both focused and unfocused states so selection
+   is always visible even when CodeMirror loses focus (e.g. after waitingDialog closes). */
+#epm_advanced .CodeMirror .CodeMirror-selected,
+#epm_advanced .CodeMirror.CodeMirror-focused .CodeMirror-selected {
+	background: rgba(0, 80, 200, 0.65) !important;
+}
+#epm_advanced .CodeMirror .CodeMirror-line::selection,
+#epm_advanced .CodeMirror .CodeMirror-line > span::selection,
+#epm_advanced .CodeMirror .CodeMirror-line > span > span::selection {
+	background: rgba(0, 80, 200, 0.65);
+}
+#epm_advanced .CodeMirror .CodeMirror-line::-moz-selection,
+#epm_advanced .CodeMirror .CodeMirror-line > span::-moz-selection,
+#epm_advanced .CodeMirror .CodeMirror-line > span > span::-moz-selection {
+	background: rgba(0, 80, 200, 0.65);
+}

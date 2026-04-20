@@ -522,7 +522,7 @@ class Autoprov_Templates
 
                 $arrVal['VAR_IS_NUM'] = array("newclonetemplate");
                 foreach ($arrVal['VAR_IS_NUM'] as $valor) {
-                        if (! is_numeric($_REQUEST[$valor])) {
+                        if (! isset($_REQUEST[$valor]) || ! is_numeric($_REQUEST[$valor])) {
                                 return array("status" => false, "message" => _("Value send is not number!")." [".$valor."]");
                         }
                 }
@@ -535,10 +535,10 @@ class Autoprov_Templates
                 }
                 else {
                         $dget['newnametemplate'] = $_REQUEST['newnametemplate'];
-                        $dget['newclonetemplate'] = $_REQUEST['newclonetemplate'];
+                        $dget['newclonetemplate'] = (int) $_REQUEST['newclonetemplate'];
 
                         $db = $this->db;
-                        $sql = "INSERT INTO autoprov_template_list (product_id, model_id, global_custom_cfg_data, name) SELECT product_id, model_id, global_custom_cfg_data, '". $dget['newnametemplate']."' FROM autoprov_template_list WHERE id = '" .$dget['newclonetemplate']."'";
+                        $sql = "INSERT INTO autoprov_template_list (product_id, model_id, global_custom_cfg_data, name) SELECT product_id, model_id, global_custom_cfg_data, ? FROM autoprov_template_list WHERE id = ?";
                         $q = $db->prepare($sql);
                         $ob = $q->execute(array(addslashes($dget['newnametemplate']), $dget['newclonetemplate']));
                         $newid = $db->lastInsertId();
@@ -560,7 +560,7 @@ class Autoprov_Templates
 
                 $arrVal['VAR_IS_NUM'] = array("postecible");
                 foreach ($arrVal['VAR_IS_NUM'] as $valor) {
-                        if (! is_numeric($_REQUEST[$valor])) {
+                        if (! isset($_REQUEST[$valor]) || ! is_numeric($_REQUEST[$valor])) {
                                 return array("status" => false, "message" => _("Value send is not number!")." [".$valor."]");
                         }
                 }
@@ -572,13 +572,13 @@ class Autoprov_Templates
                         $retarr = array("status" => false, "message" => _("Clone Poste send is negative!"));
                 }
                 else {
-                        $dget['postesource'] = $_REQUEST['postesource'];
-                        $dget['postecible'] = $_REQUEST['postecible'];
+                        $dget['postesource'] = (int) $_REQUEST['postesource'];
+                        $dget['postecible'] = (int) $_REQUEST['postecible'];
 
                         $db = $this->db;
-						$sql="UPDATE autoprov_mac_list SET global_custom_cfg_data = ( SELECT * FROM (SELECT DISTINCT global_custom_cfg_data FROM autoprov_mac_list WHERE id = '".$dget['postesource']."' ) as conf) WHERE id = '".$dget['postecible']."'";
+                        $sql = "UPDATE autoprov_mac_list SET global_custom_cfg_data = ( SELECT * FROM (SELECT DISTINCT global_custom_cfg_data FROM autoprov_mac_list WHERE id = ? ) as conf) WHERE id = ?";
                         $q = $db->prepare($sql);
-                        $ob = $q->execute(array(addslashes($dget['postesource']), $dget['postecible']));
+                        $ob = $q->execute(array($dget['postesource'], $dget['postecible']));
                         $newid = $dget['postecible'];
 
                         $retarr = array("status" => true, "message" => _("Clone Poste OK!"), "newid" => $newid);
