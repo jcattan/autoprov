@@ -114,7 +114,11 @@ if (!empty($epmdbversion)) {
 
 // si nouvelle install
 if (empty($epmdbversion)) {
-
+	
+    out("Suppression auth provisioning port 84");
+    $sql = "UPDATE `sysadmin_options` SET `value` = 'none' where `key` = 'provisauth';"
+    $db->query($sql);
+	
     out("Creating Brand List Table");
     $sql = "CREATE TABLE IF NOT EXISTS `autoprov_brand_list` (
                   `id` varchar(11) NOT NULL,
@@ -240,7 +244,7 @@ if (empty($epmdbversion)) {
   `firmware_vers` varchar(255) NULL DEFAULT NULL,
   `firmware_files` text NULL DEFAULT NULL,
   `config_files` text,
-  `special_cfgs` blob NOT NULL,
+  `special_cfgs` blob NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
     $db->query($sql);
