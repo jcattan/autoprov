@@ -116,7 +116,7 @@ if (!empty($epmdbversion)) {
 if (empty($epmdbversion)) {
 	
     out("Suppression auth provisioning port 84");
-    $sql = "UPDATE `sysadmin_options` SET `value` = 'none' where `key` = 'provisauth';"
+    $sql = "UPDATE `sysadmin_options` SET `value` = 'none' where `key` = 'provisauth'";
     $db->query($sql);
 	
     out("Creating Brand List Table");
